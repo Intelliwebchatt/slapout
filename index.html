@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Warning — The Ryder McCoy Band | Free Album</title>
+<meta name="description" content="The Warning — the debut album from The Ryder McCoy Band. Southern Gothic outlaw trap, swamp blues, and dark country out of Slapout, Alabama. Stream all 12 tracks and download the album free.">
+<meta property="og:title" content="The Warning — The Ryder McCoy Band">
+<meta property="og:description" content="12 tracks of Southern Gothic outlaw music from Slapout, Alabama. Listen free. Take it with you.">
+<meta property="og:type" content="music.album">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#0b0a08;
+    --smoke:#171310;
+    --panel:#1d1813;
+    --neon:#ff8a2a;
+    --neon-hot:#ffc27a;
+    --crimson:#a31f1f;
+    --bone:#e9e0cf;
+    --ash:#9a8f7e;
+    --line:#2c241c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--asphalt);
+    color:var(--bone);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--crimson);color:var(--bone)}
+  a{color:var(--neon-hot)}
+  img{max-width:100%;display:block}
+
+  .display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-weight:400}
+  .type{font-family:'Special Elite',monospace}
+
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  /* ============ HERO ============ */
+  .hero{
+    min-height:92vh;
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+    text-align:center;position:relative;overflow:hidden;
+    padding:80px 20px 70px;
+    background:
+      linear-gradient(to bottom, rgba(11,10,8,.55) 0%, rgba(11,10,8,.25) 40%, rgba(11,10,8,.92) 82%, var(--asphalt) 100%),
+      url('hero-stage.jpg') center 30% / cover no-repeat,
+      var(--asphalt);
+  }
+  .hero::after{ /* wet asphalt sheen */
+    content:"";position:absolute;inset:auto 0 0 0;height:38%;
+    background:linear-gradient(to top, rgba(255,138,42,.05), transparent);
+    pointer-events:none;
+  }
+  .eyebrow{
+    color:var(--ash);font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;
+    margin-bottom:26px;
+  }
+  .neon{
+    font-family:'Anton',sans-serif;text-transform:uppercase;
+    font-size:clamp(2.6rem,10vw,5.8rem);
+    line-height:.95;letter-spacing:.03em;
+    color:var(--neon-hot);
+    text-shadow:
+      0 0 6px rgba(255,170,90,.9),
+      0 0 22px rgba(255,138,42,.65),
+      0 0 60px rgba(255,138,42,.45),
+      0 0 120px rgba(255,138,42,.28);
+    animation:buzz 6s infinite;
+  }
+  .neon .dim{ /* one letter wired bad */
+    animation:badwire 6s infinite;
+  }
+  @keyframes buzz{
+    0%,93%,100%{opacity:1}
+    94%{opacity:.86}
+    95%{opacity:1}
+    97.5%{opacity:.92}
+    98%{opacity:1}
+  }
+  @keyframes badwire{
+    0%,18%,23%,61%,64%,100%{opacity:1;text-shadow:inherit}
+    19%,22%{opacity:.25;text-shadow:none}
+    62%,63%{opacity:.4;text-shadow:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .neon,.neon .dim{animation:none}
+    html{scroll-behavior:auto}
+  }
+  .hero h2{
+    font-size:clamp(1.05rem,3vw,1.45rem);
+    letter-spacing:.32em;margin-top:22px;color:var(--bone);
+  }
+  .hero p.tag{
+    margin-top:26px;color:var(--ash);max-width:46ch;font-style:italic;
+  }
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:38px}
+  .btn{
+    display:inline-block;padding:15px 30px;text-decoration:none;
+    font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:1rem;
+    border:1px solid var(--neon);color:var(--neon-hot);background:transparent;
+    transition:background .2s,color .2s,box-shadow .2s;cursor:pointer;
+  }
+  .btn:hover,.btn:focus-visible{background:var(--neon);color:#1a0e02;box-shadow:0 0 28px rgba(255,138,42,.5)}
+  .btn.solid{background:var(--crimson);border-color:var(--crimson);color:var(--bone)}
+  .btn.solid:hover,.btn.solid:focus-visible{background:#c22727;box-shadow:0 0 28px rgba(163,31,31,.55)}
+  :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
+
+  /* ============ SECTIONS ============ */
+  section{padding:84px 0;border-top:1px solid var(--line)}
+  .sec-label{
+    font-family:'Special Elite',monospace;color:var(--neon);
+    font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;
+  }
+  .sec-title{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:18px;color:var(--bone)}
+  .lede{color:var(--ash);max-width:62ch}
+
+  /* ============ TRACK LOG ============ */
+  .log{margin-top:42px;border:1px solid var(--line);background:var(--smoke)}
+  .log-head{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:14px 18px;border-bottom:1px dashed var(--line);
+    font-family:'Special Elite',monospace;font-size:.78rem;color:var(--ash);
+    letter-spacing:.14em;text-transform:uppercase;
+  }
+  .track{
+    display:grid;grid-template-columns:52px 1fr auto auto;align-items:center;gap:12px;
+    padding:15px 18px;border-bottom:1px solid var(--line);
+    transition:background .15s;
+  }
+  .track:last-child{border-bottom:none}
+  .track:hover{background:var(--panel)}
+  .track.active{background:var(--panel);box-shadow:inset 3px 0 0 var(--neon)}
+  .t-num{
+    font-family:'Special Elite',monospace;color:var(--ash);font-size:.95rem;
+  }
+  .track.active .t-num{color:var(--neon)}
+  .t-title{font-size:1.05rem;color:var(--bone);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .t-dur{font-family:'Special Elite',monospace;font-size:.85rem;color:var(--ash)}
+  .icon-btn{
+    background:none;border:1px solid var(--line);color:var(--bone);
+    width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:border-color .15s,color .15s,background .15s;
+  }
+  .icon-btn:hover,.icon-btn:focus-visible{border-color:var(--neon);color:var(--neon-hot)}
+  .icon-btn svg{width:16px;height:16px;fill:currentColor}
+  a.icon-btn{text-decoration:none}
+
+  .dl-all{margin-top:30px;text-align:center}
+  .dl-note{margin-top:14px;font-family:'Special Elite',monospace;font-size:.8rem;color:var(--ash);letter-spacing:.08em}
+
+  /* ============ ABOUT ============ */
+  .band-grid{display:grid;gap:26px;margin-top:38px}
+  @media(min-width:640px){.band-grid{grid-template-columns:repeat(3,1fr)}}
+  .member{border:1px solid var(--line);background:var(--smoke);padding:24px}
+  .member h3{font-size:1.25rem;color:var(--neon-hot);margin-bottom:4px}
+  .member .role{font-family:'Special Elite',monospace;font-size:.75rem;color:var(--ash);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+  .member p{font-size:.95rem;color:var(--bone)}
+
+  /* ============ PLAYER BAR ============ */
+  .player{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(13,11,9,.97);border-top:1px solid var(--neon);
+    box-shadow:0 -8px 40px rgba(0,0,0,.7);
+    transform:translateY(110%);transition:transform .3s ease;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+  .player.show{transform:translateY(0)}
+  .p-inner{max-width:880px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+  .p-controls{display:flex;gap:8px}
+  .p-meta{min-width:0}
+  .p-title{font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .p-bar{height:4px;background:var(--line);margin-top:8px;cursor:pointer;position:relative}
+  .p-fill{height:100%;width:0%;background:var(--neon);box-shadow:0 0 10px rgba(255,138,42,.7)}
+  .p-time{font-family:'Special Elite',monospace;font-size:.75rem;color:var(--ash);white-space:nowrap}
+
+  /* ============ FOOTER ============ */
+  footer{
+    border-top:1px solid var(--line);padding:56px 20px calc(110px + env(safe-area-inset-bottom));
+    text-align:center;color:var(--ash);font-size:.9rem;
+  }
+  footer .label-mark{
+    font-family:'Special Elite',monospace;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--bone);margin-bottom:10px;
+  }
+  footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;margin-right:auto}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     EDIT YOUR TRACKS HERE.
+     title : exactly how you want it shown on the site
+     file  : the mp3 filename inside the /audio folder of the repo
+     Keep the order you want the album to play in.
+============================================================ -->
+<script>
+const TRACKS = [
+  { title: "The Warning",            file: "01 - The Warning.mp3" },
+  { title: "That Girl Named Lost",   file: "02 - That Girl Named Lost.mp3" },
+  { title: "Burnt Up Saints",        file: "03 - Burnt Up Saints.mp3" },
+  { title: "Rooster",                file: "04 - Rooster.mp3" },
+  { title: "That Summer",            file: "05 - That Summer.mp3" },
+  { title: "Walk That Road",         file: "06 - Walk That Road.mp3" },
+  { title: "Sinful Games",           file: "07 - Sinful Games.mp3" },
+  { title: "Out of That Life",       file: "08 - Out Of That Life.mp3" },
+  { title: "Montgomery Days",        file: "09 - Montgomery Days.mp3" },
+  { title: "The Crooked Mile",       file: "10 - The Crooked Mile.mp3" },
+  { title: "Nation of the Spun",     file: "11 - Nation Of The Spun.mp3" },
+  { title: "Crazy Girl, Crazy Night", file: "12 - Crazy Girl Crazy Night.mp3" }
+];
+const AUDIO_DIR = "";              // mp3s live in the repo root
+const BOOKING_EMAIL = "booking@biloxibluesrecords.com"; // <-- set your real booking email
+const SOCIALS = [
+  // Add the band's real profiles. Remove any line you don't use.
+  // { name: "YouTube",   url: "https://youtube.com/@..." },
+  // { name: "Spotify",   url: "https://open.spotify.com/artist/..." },
+  // { name: "Instagram", url: "https://instagram.com/..." },
+  // { name: "TikTok",    url: "https://tiktok.com/@..." },
+];
+</script>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <p class="eyebrow type">Slapout, Alabama &middot; Biloxi Blues Records</p>
+  <h1 class="neon" aria-label="The Ryder McCoy Band">THE RYDER<br>M<span class="dim">c</span>COY BAND</h1>
+  <p class="tag">Outlaw country, swamp blues, and slow-rolling Southern trap &mdash; songs from the backroads, written like they happened. Because they did.</p>
+  <h2 class="display" style="margin-top:30px;color:var(--neon-hot)">Debut Album &mdash; "The Warning" &mdash; Out Now</h2>
+  <div class="cta-row">
+    <a class="btn solid" href="#listen">Listen Free</a>
+    <a class="btn" href="#band">Meet the Band</a>
+  </div>
+</header>
+
+<!-- ============ TRACK LOG ============ -->
+<section id="listen">
+  <div class="wrap">
+    <p class="sec-label">The Album</p>
+    <h2 class="sec-title display">The Warning</h2>
+    <p class="lede">Twelve tracks. Press play on any of them. Every song downloads free &mdash; the arrow takes it home with you.</p>
+
+    <div class="log" role="list" aria-label="Album tracklist">
+      <div class="log-head">
+        <span>The Ryder McCoy Band</span>
+        <span>Biloxi Blues Records</span>
+      </div>
+      <div id="trackList"><!-- rows injected by script --></div>
+    </div>
+
+    <div class="dl-all">
+      <button class="btn solid" id="zipBtn">Download Full Album (.zip)</button>
+      <p class="dl-note" id="zipNote">12 tracks &middot; MP3 &middot; no email, no signup, no catch</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE STORY ============ -->
+<section id="story">
+  <div class="wrap">
+    <p class="sec-label">The Story</p>
+    <h2 class="sec-title display">Out of Slapout</h2>
+    <p class="lede">The Ryder McCoy Band comes out of Slapout, Alabama &mdash; the stretch of red dirt and river road between Holtville and Montgomery. The sound sits somewhere between outlaw country, swamp blues, Southern rock, and slow-rolling trap, and the songs come from real places: Waffle House booths, boat ramps, county roads, motel parking lots, and nights that didn't go the way anybody planned.</p>
+    <p class="lede" style="margin-top:16px">Ryder writes them like he saw them, because he did. <em>The Warning</em> is the first full record &mdash; twelve tracks cut for Biloxi Blues Records and given away free, because the people these songs are about shouldn't have to pay to hear them.</p>
+    <figure style="margin-top:38px;border:1px solid var(--line);background:var(--smoke)">
+      <img src="band-river.jpg" alt="The Ryder McCoy Band — Unc, Jessie James Jenkins, and Ryder McCoy by a campfire on the riverbank under a full moon, Harley parked beside them" loading="lazy" width="1672" height="941">
+      <figcaption class="type" style="padding:12px 16px;font-size:.75rem;color:var(--ash);letter-spacing:.14em;text-transform:uppercase">Unc &middot; Jessie James Jenkins &middot; Ryder McCoy &mdash; down at the river</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ THE BAND ============ -->
+<section id="band">
+  <div class="wrap">
+    <p class="sec-label">The Band</p>
+    <h2 class="sec-title display">Three Voices</h2>
+    <div class="band-grid">
+      <div class="member">
+        <h3 class="display">Ryder McCoy</h3>
+        <p class="role">Vocals &middot; Guitar &middot; Songwriter</p>
+        <p>Came from the mud, left long enough to see the pattern, came back because it's still home. He doesn't preach. He reports.</p>
+      </div>
+      <div class="member">
+        <h3 class="display">Jessie James Jenkins</h3>
+        <p class="role">Vocals</p>
+        <p>The blade in the middle of the noise. She sings the part Ryder won't say out loud, and the room gets smaller every time.</p>
+      </div>
+      <div class="member">
+        <h3 class="display">Unc</h3>
+        <p class="role">Vocals &middot; Whatever's Handy</p>
+        <p>Says things that sound crazy until the night proves him close enough. Don't ask. He's already told you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section id="booking">
+  <div class="wrap" style="text-align:center">
+    <p class="sec-label">Booking &amp; Press</p>
+    <h2 class="sec-title display">Get In Touch</h2>
+    <p class="lede" style="margin:0 auto">Shows, press, licensing, or anything else &mdash; reach the label directly.</p>
+    <div class="cta-row" style="margin-top:30px">
+      <a class="btn" id="bookingLink" href="#">Email Biloxi Blues Records</a>
+    </div>
+    <div id="socialRow" style="margin-top:26px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <p class="label-mark">Biloxi Blues Records</p>
+  <p>The Ryder McCoy Band &middot; Slapout, Alabama</p>
+  <p class="fine">&copy; <span id="yr"></span> Biloxi Blues Records. The album is free to download and share for personal listening. Backroads know.</p>
+</footer>
+
+<!-- ============ STICKY PLAYER ============ -->
+<div class="player" id="player" aria-label="Audio player">
+  <div class="p-inner">
+    <div class="p-controls">
+      <button class="icon-btn" id="btnPrev" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 2h2v12H2zM14 2v12L5 8z"/></svg></button>
+      <button class="icon-btn" id="btnPlay" aria-label="Play or pause"><svg id="iconPlay" viewBox="0 0 16 16"><path d="M3 2l11 6-11 6z"/></svg></button>
+      <button class="icon-btn" id="btnNext" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 2h2v12h-2zM2 2l9 6-9 6z"/></svg></button>
+    </div>
+    <div class="p-meta">
+      <div class="p-title" id="pTitle">&mdash;</div>
+      <div class="p-bar" id="pBar" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="p-fill" id="pFill"></div>
+      </div>
+    </div>
+    <div class="p-time" id="pTime">0:00 / 0:00</div>
+  </div>
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<script>
+(function(){
+  const audio = document.getElementById('audio');
+  const list  = document.getElementById('trackList');
+  const player= document.getElementById('player');
+  const pTitle= document.getElementById('pTitle');
+  const pFill = document.getElementById('pFill');
+  const pBar  = document.getElementById('pBar');
+  const pTime = document.getElementById('pTime');
+  const btnPlay = document.getElementById('btnPlay');
+  const iconPlay= document.getElementById('iconPlay');
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---- Full-album zip, built in the browser from the repo's own mp3s ----
+  const zipBtn = document.getElementById('zipBtn');
+  const zipNote = document.getElementById('zipNote');
+  let zipping = false;
+  zipBtn.addEventListener('click', async function(){
+    if(zipping) return;
+    zipping = true;
+    zipBtn.disabled = true;
+    try{
+      zipBtn.textContent = 'Loading…';
+      if(!window.JSZip){
+        await new Promise(function(res, rej){
+          const s = document.createElement('script');
+          s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+          s.onload = res; s.onerror = rej;
+          document.head.appendChild(s);
+        });
+      }
+      const zip = new JSZip();
+      for(let i = 0; i < TRACKS.length; i++){
+        zipBtn.textContent = 'Packing ' + (i+1) + ' / ' + TRACKS.length + '…';
+        const r = await fetch(AUDIO_DIR + TRACKS[i].file);
+        if(!r.ok) throw new Error(TRACKS[i].file);
+        zip.file(TRACKS[i].file, await r.arrayBuffer());
+      }
+      zipBtn.textContent = 'Building zip…';
+      const blob = await zip.generateAsync({ type:'blob', compression:'STORE' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'The_Ryder_McCoy_Band_-_The_Warning.zip';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+      zipBtn.textContent = 'Download Full Album (.zip)';
+    }catch(err){
+      zipBtn.textContent = 'Download Full Album (.zip)';
+      zipNote.textContent = 'Album download hit a snag — grab tracks one at a time with the arrows above.';
+    }finally{
+      zipping = false;
+      zipBtn.disabled = false;
+    }
+  });
+  document.getElementById('bookingLink').href = 'mailto:' + BOOKING_EMAIL + '?subject=Booking%20%E2%80%94%20The%20Ryder%20McCoy%20Band';
+  const sr = document.getElementById('socialRow');
+  SOCIALS.forEach(function(s){
+    const a = document.createElement('a');
+    a.href = s.url; a.textContent = s.name;
+    a.target = '_blank'; a.rel = 'noopener';
+    a.className = 'type';
+    a.style.cssText = 'color:var(--ash);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;border-bottom:1px solid var(--line);padding-bottom:2px';
+    sr.appendChild(a);
+  });
+
+  let current = -1;
+
+  const PLAY = 'M3 2l11 6-11 6z';
+  const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
+
+  function fmt(s){
+    if(!isFinite(s)) return '0:00';
+    s = Math.floor(s);
+    return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+  }
+
+  // Build rows
+  TRACKS.forEach(function(t, i){
+    const row = document.createElement('div');
+    row.className = 'track';
+    row.setAttribute('role','listitem');
+    row.innerHTML =
+      '<span class="t-num">' + String(i+1).padStart(2,'0') + '</span>' +
+      '<span class="t-title">' + t.title + '</span>' +
+      '<span class="t-dur" id="dur' + i + '">--:--</span>' +
+      '<span style="display:flex;gap:8px">' +
+        '<button class="icon-btn js-play" data-i="' + i + '" aria-label="Play ' + t.title + '"><svg viewBox="0 0 16 16"><path d="' + PLAY + '"/></svg></button>' +
+        '<a class="icon-btn" href="' + AUDIO_DIR + t.file + '" download aria-label="Download ' + t.title + '"><svg viewBox="0 0 16 16"><path d="M7 1h2v6.6l1.8-1.8 1.4 1.4L8 11.4 3.8 7.2l1.4-1.4L7 7.6z"/><path d="M2 13h12v2H2z"/></svg></a>' +
+      '</span>';
+    list.appendChild(row);
+
+    // fetch duration lazily
+    const probe = document.createElement('audio');
+    probe.preload = 'metadata';
+    probe.src = AUDIO_DIR + t.file;
+    probe.addEventListener('loadedmetadata', function(){
+      document.getElementById('dur' + i).textContent = fmt(probe.duration);
+    });
+  });
+
+  function setRowStates(){
+    document.querySelectorAll('.track').forEach(function(r, i){
+      r.classList.toggle('active', i === current);
+      const btn = r.querySelector('.js-play svg path');
+      btn.setAttribute('d', (i === current && !audio.paused) ? PAUSE : PLAY);
+    });
+    iconPlay.querySelector('path') ? iconPlay.querySelector('path').setAttribute('d', audio.paused ? PLAY : PAUSE)
+                                   : null;
+  }
+
+  function load(i, play){
+    current = ((i % TRACKS.length) + TRACKS.length) % TRACKS.length;
+    audio.src = AUDIO_DIR + TRACKS[current].file;
+    pTitle.textContent = String(current+1).padStart(2,'0') + ' — ' + TRACKS[current].title;
+    player.classList.add('show');
+    if(play) audio.play();
+    setRowStates();
+  }
+
+  list.addEventListener('click', function(e){
+    const b = e.target.closest('.js-play');
+    if(!b) return;
+    const i = parseInt(b.dataset.i, 10);
+    if(i === current){
+      audio.paused ? audio.play() : audio.pause();
+    } else {
+      load(i, true);
+    }
+  });
+
+  btnPlay.addEventListener('click', function(){
+    if(current === -1){ load(0, true); return; }
+    audio.paused ? audio.play() : audio.pause();
+  });
+  document.getElementById('btnNext').addEventListener('click', function(){ load(current + 1, true); });
+  document.getElementById('btnPrev').addEventListener('click', function(){
+    if(audio.currentTime > 3){ audio.currentTime = 0; } else { load(current - 1, true); }
+  });
+
+  audio.addEventListener('play', setRowStates);
+  audio.addEventListener('pause', setRowStates);
+  audio.addEventListener('ended', function(){
+    if(current < TRACKS.length - 1) load(current + 1, true);
+    else setRowStates();
+  });
+  audio.addEventListener('timeupdate', function(){
+    const pct = audio.duration ? (audio.currentTime / audio.duration * 100) : 0;
+    pFill.style.width = pct + '%';
+    pBar.setAttribute('aria-valuenow', Math.round(pct));
+    pTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+
+  function seek(clientX){
+    const r = pBar.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+    if(audio.duration) audio.currentTime = pct * audio.duration;
+  }
+  pBar.addEventListener('click', function(e){ seek(e.clientX); });
+  pBar.addEventListener('keydown', function(e){
+    if(!audio.duration) return;
+    if(e.key === 'ArrowRight'){ audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); }
+    if(e.key === 'ArrowLeft'){ audio.currentTime = Math.max(0, audio.currentTime - 5); }
+  });
+})();
+</script>
+</body>
+</html>
