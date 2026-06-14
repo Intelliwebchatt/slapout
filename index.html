@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Warning — The Ryder McCoy Band | Free Album</title>
-<meta name="description" content="The Warning — the debut album from The Ryder McCoy Band. Southern Gothic outlaw trap, swamp blues, and dark country out of Slapout, Alabama. Stream all 12 tracks and download the album free.">
+<meta name="description" content="The Warning is a free album from The Ryder McCoy Band: outlaw country, swamp blues, Southern trap, and backroad Alabama songs with the dirt still on them.">
 <meta property="og:title" content="The Warning — The Ryder McCoy Band">
 <meta property="og:description" content="12 tracks of Southern Gothic outlaw music from Slapout, Alabama. Listen free. Take it with you.">
 <meta property="og:type" content="music.album">
@@ -44,7 +44,6 @@
 
   .wrap{max-width:880px;margin:0 auto;padding:0 20px}
 
-  /* ============ HERO ============ */
   /* ============ HERO (mobile-first) ============ */
   .hero{position:relative;background:var(--asphalt)}
   .hero-img{
@@ -110,6 +109,26 @@
   .hero p.tag{
     margin-top:26px;color:var(--ash);max-width:46ch;font-style:italic;
   }
+  .hero-rotate{
+    margin-top:22px;color:var(--neon-hot);max-width:48ch;
+    font-size:.92rem;letter-spacing:.04em;line-height:1.5;min-height:2.6em;
+    opacity:0;transition:opacity .6s ease;
+  }
+  .hero-rotate.in{opacity:.92}
+  .genre-strip{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--smoke);
+  }
+  .genre-strip .wrap{
+    display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center;
+    padding-top:18px;padding-bottom:18px;
+  }
+  .genre-tag{
+    font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ash);
+    border:1px solid var(--line);padding:6px 12px;white-space:nowrap;
+  }
+  .genre-tag.hot{color:var(--neon-hot);border-color:rgba(255,138,42,.4)}
   .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:38px}
   .btn{
     display:inline-block;padding:15px 30px;text-decoration:none;
@@ -130,6 +149,54 @@
   }
   .sec-title{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:18px;color:var(--bone)}
   .lede{color:var(--ash);max-width:62ch}
+
+  /* ============ REELS (video trailers) ============ */
+  .reels-rail{
+    margin-top:38px;display:flex;gap:16px;overflow-x:auto;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding-bottom:14px;
+  }
+  .reels-rail::-webkit-scrollbar{height:6px}
+  .reels-rail::-webkit-scrollbar-thumb{background:var(--line)}
+  .reel{
+    position:relative;flex:0 0 auto;width:230px;scroll-snap-align:start;
+    border:1px solid var(--line);background:var(--smoke);cursor:pointer;
+    transition:border-color .2s;
+  }
+  .reel:hover,.reel:focus-within{border-color:var(--neon)}
+  .reel video{
+    width:100%;height:330px;object-fit:cover;display:block;background:#000;
+  }
+  .reel-cap{
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+    padding:11px 13px;border-top:1px solid var(--line);
+  }
+  .reel-song{
+    font-family:'Special Elite',monospace;font-size:.78rem;color:var(--bone);
+    letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .reel-play{
+    flex:0 0 auto;font-family:'Special Elite',monospace;font-size:.7rem;
+    color:var(--neon-hot);border:1px solid var(--line);padding:3px 8px;
+    text-transform:uppercase;letter-spacing:.1em;
+  }
+  .reel-badge{
+    position:absolute;top:9px;left:9px;z-index:2;
+    font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--bone);
+    background:rgba(11,10,8,.72);padding:3px 8px;border:1px solid rgba(255,138,42,.4);
+  }
+  .reel-mute{
+    position:absolute;top:9px;right:9px;z-index:2;width:30px;height:30px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(11,10,8,.72);border:1px solid var(--line);color:var(--bone);
+    cursor:pointer;
+  }
+  .reel-mute svg{width:14px;height:14px;fill:currentColor}
+  .reels-note{
+    margin-top:8px;font-family:'Special Elite',monospace;font-size:.78rem;
+    color:var(--ash);letter-spacing:.06em;
+  }
 
   /* ============ TRACK LOG ============ */
   .log{margin-top:42px;border:1px solid var(--line);background:var(--smoke)}
@@ -152,6 +219,30 @@
   }
   .track:hover{background:var(--panel)}
   .track.active{background:var(--panel);box-shadow:inset 3px 0 0 var(--neon)}
+  .fn-drawer{
+    grid-column:1 / -1;display:none;
+    border-top:1px dashed var(--line);margin-top:4px;padding:18px 4px 6px;
+    background:transparent;
+  }
+  .fn-drawer.open{display:block;animation:fnfade .35s ease}
+  @keyframes fnfade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .fn-doc{
+    border:1px solid var(--line);background:var(--asphalt);
+    padding:18px 18px 14px;position:relative;
+  }
+  .fn-doc::before{
+    content:"FIELD NOTES";position:absolute;top:-9px;left:14px;
+    background:var(--asphalt);padding:0 8px;
+    font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:.22em;
+    color:var(--neon);
+  }
+  .fn-doc p{font-family:'Special Elite',monospace;font-size:.84rem;line-height:1.7;color:var(--ash);margin-bottom:9px}
+  .fn-doc p:last-child{margin-bottom:0}
+  .fn-doc .fn-k{color:var(--bone);letter-spacing:.04em}
+  .fn-doc .fn-from{color:var(--bone)}
+  .fn-doc .fn-status{color:var(--neon-hot);border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
+  .icon-btn.fn-btn.fn-on{border-color:var(--neon);color:var(--neon-hot)}
+  .icon-btn.fn-btn{font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:.08em;width:auto;padding:0 10px;color:var(--neon-hot);border-color:rgba(255,138,42,.45)}
   .t-num{
     font-family:'Special Elite',monospace;color:var(--ash);font-size:.95rem;
   }
@@ -212,25 +303,59 @@
 <!-- ============================================================
      EDIT YOUR TRACKS HERE.
      title : exactly how you want it shown on the site
-     file  : the mp3 filename inside the /audio folder of the repo
-     Keep the order you want the album to play in.
+     file  : the mp3 filename in the repo root
+     Order = album play order. (Reordered to the album arc:
+     opens on The Warning, walks the descent, lands on
+     acceptance, closes on the exhale.)
 ============================================================ -->
 <script>
 const TRACKS = [
-  { title: "The Warning",            file: "01 - The Warning.mp3" },
-  { title: "That Girl Named Lost",   file: "02 - That Girl Named Lost.mp3" },
-  { title: "Burnt Up Saints",        file: "03 - Burnt Up Saints.mp3" },
-  { title: "Rooster",                file: "04 - Rooster.mp3" },
-  { title: "That Summer",            file: "05 - That Summer.mp3" },
-  { title: "Walk That Road",         file: "06 - Walk That Road.mp3" },
-  { title: "Sinful Games",           file: "07 - Sinful Games.mp3" },
-  { title: "Out of That Life",       file: "08 - Out Of That Life.mp3" },
-  { title: "Montgomery Days",        file: "09 - Montgomery Days.mp3" },
-  { title: "The Crooked Mile",       file: "10 - The Crooked Mile.mp3" },
-  { title: "Nation of the Spun",     file: "11 - Nation Of The Spun.mp3" },
-  { title: "Crazy Girl, Crazy Night", file: "12 - Crazy Girl Crazy Night.mp3" }
+  { title: "The Warning",             file: "01 - The Warning.mp3", notes: "<p class='fn-from'>Recovered from: a house with no windows, no light. Later, a ditch off a dirt road.</p><p><span class='fn-k'>Subject's state:</span> flies in the skull, teeth grinding all night, mud in the veins, ash in the soul, a mark on the neck.</p><p><span class='fn-k'>Objects recovered:</span> a sack, a glass pipe lit like a prayer, a Bible with every page stained. Wallpaper peeled back like a serpent's skin.</p><p><span class='fn-k'>Also logged:</span> a man with a snake tattoo on his face &mdash; \"the Dragon sleeps under the nuclear base.\" Preachers on the corner selling dimebag psalms. Seven crows on a powerline, singing end-time songs.</p><p><span class='fn-k'>Transmission intercepted:</span> \"Ride, boy, ride with the Horsemen four.\" The sky split, the moon bled red. Gabriel's trumpet, heard from a strip-club pole.</p><p class='fn-status'>Status: crawled from the wreck. Came back &mdash; brief. This ain't a story. It's a warning.</p>" },
+  { title: "That Girl Named Lost",    file: "02 - That Girl Named Lost.mp3", notes: "<p class='fn-from'>Last seen: a gas station off the pine woods, humming like a midnight cross, past midnight.</p><p><span class='fn-k'>Subject:</span> a girl called Lost &mdash; storm-cloud eyes, shaking hands. Running from a preacher's town where salvation talks but the pills go round.</p><p><span class='fn-k'>Objects recovered:</span> silver spoon, soda can, glass pipe rolling on the table edge, a jukebox crying a busted hymn.</p><p><span class='fn-k'>Also present:</span> Crow &mdash; trailer behind the mill, eyes like shattered glass, torn Bible with burn marks. Said the harvest was coming soon, then started screaming at the moon.</p><p class='fn-status'>Status: chasing grace in the chemicals. Somewhere between the cross and the cost. Not found.</p>" },
+  { title: "Four Flat Tires and a Dented Hood", file: "FOUR FLAT TIRES AND A DENTED HOOD (1).mp3", notes: "<p><span class='fn-k'>Condition on arrival:</span> four flat tires, dented hood, sparks on the rim like the devil could come dance through the pinewood night.</p><p><span class='fn-k'>The pit:</span> roosters fighting “for the right to bleed for men who never win, but keep betting sackless dreams again.” Run by Bobby Two-Fangs &mdash; spurs on his birds, a Bible he lit. “We’re all just feathers in a hurricane’s prayer.”</p><p><span class='fn-k'>Wanda’s place:</span> double-wide shrine, red light on a clothesline. Danced barefoot in sequins, magazine smile. “Ten bucks, baby, I’ll show you the stars &mdash; they all burn out in these rust-belt bars.”</p><p><span class='fn-k'>Slinky Joe:</span> serpent tongue, selling truth from a basement rung. “Each crystal a sermon, each hit a lie.” “God lives in the third glass eye.”</p><p><span class='fn-k'>The bonfire pit:</span> where Crystal bled and Tank took three to the chest &mdash; “If I live through this I’m changing, bro. But the wind said nah, and he let it go.”</p><p><span class='fn-k'>The Queen with the shattered crown:</span> see-through gown, grinned through flame. “You made it, baby &mdash; ain’t it all the same?” Kissed your throat, took your name, vanished like a trailer game.</p><p class='fn-status'>Status: sunrise through a busted screen. Sack gone south with the rooster kings, soul pawned off for minor things. Round and round again. This ain’t salvation &mdash; just the end.</p>" },
+  { title: "Out of That Life",        file: "08 - Out Of That Life.mp3", notes: "<p class='fn-from'>Recovered from: Montgomery. The sign said Welcome &mdash; the Devil held the key. Motel row, a trailer park past a rusting Chevy heap.</p><p><span class='fn-k'>Subject:</span> a girl called Crank &mdash; shattered emerald prophecy, shallow breath, daddy was a preacher's son. Held the glass pipe like a cross across the wasted lands.</p><p><span class='fn-k'>Objects recovered:</span> an empty syringe, a glass pipe, a motel sign reading Babylon, a butane torch (clicked three times).</p><p><span class='fn-k'>Also logged:</span> a man called Worm &mdash; no sleep in a fortnight, teeth ground to nubs. Said the government hides angels in the back of dive bars. Called the ceiling fan Beelzebub's rotator.</p><p><span class='fn-k'>Last words on the highway:</span> \"You can't escape the harvest.\"</p><p class='fn-status'>Status: left Crank sleeping, staring at empty space. Still clinging to Montgomery dust. Trying to get out. Not out.</p>" },
+  { title: "Rooster",                 file: "04 - Rooster.mp3", notes: "<p><span class='fn-k'>Known as:</span> Rooster. Real name never asked &mdash; the road names them first.</p><p><span class='fn-k'>Vehicle:</span> dirty cars, tags half dead, one headlight blinking like it knew something more. Ashtray full of roaches, a Bible in the bed.</p><p><span class='fn-k'>Effects recovered:</span> a glass bowl wrapped in a red shop rag, kept like a little altar in a grocery bag. A torch that clicked his face blue.</p><p><span class='fn-k'>On the record:</span> \"Tomorrow ain't coming if you burn up today.\" \"Sobriety is a room with no curtains pulled.\"</p><p><span class='fn-k'>Known associate:</span> a girl called Crank. Quit a few times. Never for five days.</p><p><span class='fn-k'>The harvest, again:</span> \"comes quiet when the tank runs low. And every rooster quits crowing when the sun don't show.\"</p><p class='fn-status'>Status: parked by the store, said he was quitting after this one ride. Some people get saved. Some get gone. Some just keep driving till the road sings along.</p>" },
+  { title: "Burnt Up Saints",         file: "03 - Burnt Up Saints.mp3", notes: "<p class='fn-from'>Route: Alabama backroads, rusted gas stations, motel shade, blood-red dust. \"No Bible in my glove box &mdash; just a loaded dream, gasoline veins, and a cracked moonbeam.\"</p><p><span class='fn-k'>Diesel John:</span> behind the store, cooking visions on a concrete floor. Cross on his neck, mason-jar shine. \"The Lord don't ride no truck &mdash; he left town broke when the church ran out of luck.\"</p><p><span class='fn-k'>Saint Crystaline:</span> meth-pipe cross to her knee, gold-tooth grin, neon eyes, a Bible full of razor blades. \"Faith's just fire in your throat.\" \"You live when you learn to die.\"</p><p><span class='fn-k'>The Preacher With No Eyes:</span> blind man by the county jail, voice like thunder. \"God's tired, the throne gone cold &mdash; he's hiding in addicts and the stories they told.\" Walked off through the dust: \"in sin we trust.\"</p><p><span class='fn-k'>The Queen at the Gas Station:</span> rusted pump, lightning cracking. Blood-red dress, smoke halo. \"You want a crown? Here's one you can't afford.\"</p><p class='fn-status'>Status: \"They all sold truth, and I bought mine.\" Some roads don't lead nowhere &mdash; they just teach you what you've been riding with.</p>" },
+  { title: "That Summer",             file: "05 - That Summer.mp3", notes: "<p class='fn-from'>Recovered from: a dirt road, gold dust thick in the sun, a bridge in the rearview. A truck left ticking hot in the weeds.</p><p><span class='fn-k'>Two subjects:</span> young, bare feet up on the dash, hair blowing wild, a laugh too fast. \"Old enough to know better, young enough not to care.\" Two broke saints looking for fire.</p><p><span class='fn-k'>Objects recovered:</span> a glass bowl glowing in the Alabama light, passed back and forth like forbidden advice.</p><p><span class='fn-k'>Scene logged:</span> walked past the fence line into the trees like Adam and Eve &mdash; no garden gates, no fig leaves. Carved the apple into a smoking device. \"And somehow that felt like the cleanest soul.\"</p><p><span class='fn-k'>On the record:</span> \"We thought sin had to look bigger. Thunder. Blood. Judgment. But sometimes it's just two kids in the woods, mistaking escape for deliverance.\"</p><p class='fn-status'>Status: the dust cloud settled but never disappeared. \"For one hot summer, it almost felt clear.\"</p>" },
+  { title: "Sinful Games",            file: "07 - Sinful Games.mp3", notes: "<p><span class='fn-k'>Type:</span> the ritual, recorded close. No names, no road &mdash; just the act, broken into its steps.</p><p><span class='fn-k'>Procedure logged:</span> torch click, a long slow draw. \"The fire hits. Glass heats. Ice starts to release.\" Lungs fill, barrier breached, pulse up. \"The dance has started. The ride begins.\"</p><p><span class='fn-k'>The terms:</span> \"The perfect lie. The seductive high. Inhibitions leave. Who needs sleep? Three points deep.\"</p><p><span class='fn-k'>The vow:</span> \"Secrets of the night, ours to keep.\" \"Sun's a witness.\" \"In too deep. Playing a sinful game.\"</p><p><span class='fn-k'>Cross-reference:</span> see Nation of the Spun. Same ritual, different witness &mdash; this one intimate, two people keeping a secret.</p><p class='fn-status'>Closing: \"The daylight is trying to break through the curtains, but it's a thousand miles away. We're right here. Three points deep.\"</p>" },
+  { title: "Nation of the Spun",      file: "11 - Nation Of The Spun.mp3", notes: "<p><span class='fn-k'>Type:</span> the ritual, wider angle. Companion to Sinful Games. Same act &mdash; this witness is poetic, sultry, a nation not a secret.</p><p class='fn-from'>Recovered from: swamp light through the trees, knees deep in mud. A cloudy glass held up to the moon. \"Nowhere to run. Nowhere left to hide.\"</p><p><span class='fn-k'>The procedure:</span> match strike. \"Ritual is done. Welcome to the Nation of the Spun.\" \"Time melts like plastic on the dash.\"</p><p><span class='fn-k'>Entity logged:</span> \"The storm ain't outside, it's under the skin. Open the door. Let the Hat Man in.\"</p><p><span class='fn-k'>The seduction:</span> \"The devils dance at the seeker's command. If the truth is screaming, only the sinner hears it. We burn the day just to survive the night.\"</p><p class='fn-status'>Population: us.</p>" },
+  { title: "Walk That Road",          file: "06 - Walk That Road.mp3", notes: "<p><span class='fn-k'>Type:</span> intercepted recording. Speaker unidentified, mid-transaction.</p><p><span class='fn-k'>Heard in the background:</span> chemical bubbling, a lighter flick, distant sirens by the end.</p><p><span class='fn-k'>Location, by reference:</span> the woods, the tree line, a lab in the hills &mdash; \"Fire on the Mountain.\" \"A lab in the hills where everything goes wrong.\"</p><p><span class='fn-k'>Product:</span> blue glass, \"ninety-nine percent pure, glass grade.\" Looking for the clear, not the cloudy.</p><p><span class='fn-k'>Terms logged:</span> \"Don't step on the product. Don't step on the toes. The mountain don't sleep. The mountain knows.\"</p><p><span class='fn-k'>Addressed to you:</span> \"You wear the boots but you ain't got the mud.\" \"You lookin' for a vibe? I'm lookin' for a vein.\"</p><p class='fn-status'>Sign-off: \"Stay off the mountain.\"</p>" },
+  { title: "Montgomery Days",         file: "09 - Montgomery Days.mp3", notes: "<p class='fn-from'>Recovered from: The Gump (Montgomery). A concrete tomb of a room. Blue Label breakfast, liquid gold at noon. Hands shaking.</p><p><span class='fn-k'>In the walls:</span> Zilla &mdash; screaming echo bouncing round the room. \"Zilla... shut up.\"</p><p><span class='fn-k'>The hustle:</span> Riverwalk, where the vultures lean. A one-eyed prophet with a golden scheme. Sister Sarah's den &mdash; three cards made of python skin. The Pawnshop Prophet's crystal gaze. The Crystal Queen, in a basement deeper than a junkie's dream.</p><p><span class='fn-k'>The loss:</span> \"the Devil's got a joke that ain't never funny.\" Wind caught the sack like autumn leaves, scattered the crystals in the Montgomery night.</p><p class='fn-status'>Status &mdash; the loop: \"Same old dance in different shoes. Same old circular hustle blues. Round and round.\"</p>" },
+  { title: "Who So Ever Will Church", file: "who so ever will church..mp3", notes: "<p><span class='fn-k'>Subject:</span> Tommy Two-Fang. Something happened when he lost his dad &mdash; “not loud, not quick, just something went bad.” “In Slapout you don’t hear Milton get passed around.”</p><p><span class='fn-k'>The structure:</span> a shed back behind the trees. Wire run crooked to a light that barely breathed. Tin roof patched with campaign signs. A pine cross nailed rough over the leaning doorway.</p><p><span class='fn-k'>The sign (hand-painted):</span> ALWAYS OPEN &mdash; COME WHEN YOU CAN &mdash; NO MONEY NEEDED &mdash; IN HERE WE JUST TALK ABOUT THE FALLEN MAN.</p><p><span class='fn-k'>Doctrine recovered:</span> folding chairs, a coffee can, a Bible marked up by a shaking hand. “The devil didn’t cause the fall of man &mdash; that’s just the excuse when we don’t follow the plan.” “Every fallen angel still thinks he can stand.”</p><p><span class='fn-k'>On the record:</span> “Ain’t nobody here better. Ain’t nobody here worse. We just sitting in the wreckage trying to name the curse.”</p><p class='fn-status'>Status: door still unlocked, light still burning past twelve. His daddy got out last spring &mdash; local prison, just down from Slapout. “Some doors stay open ’cause they need to be.”</p>" },
+  { title: "The Crooked Mile",        file: "10 - The Crooked Mile.mp3", notes: "<p class='fn-from'>Recovered from: an empty room, trailer-park view, clothes wet from what you wish you knew. The afternoon sun a bleeding stain.</p><p><span class='fn-k'>Saint logged:</span> a prophet on a propane tank, all sweat, reading fortunes in a rusted F-150 door. \"The path you're lookin' for ain't been here before.\" \"Heaven's just a rumor the lonely reinvent.\"</p><p><span class='fn-k'>Location:</span> a club called The Rusty Angel's Sigh &mdash; kudzu climbing to choke the neon eye.</p><p><span class='fn-k'>Wild Girl logged:</span> the Queen of Lost Causes, dancing on the bar, tears on a dead man's guitar. \"Every soul in here is just a bird stuck in a cage.\" \"The door you came in through, you can't go out again.\"</p><p><span class='fn-k'>The fixed game:</span> \"the chicken fights are fixed by bitter gods.\"</p><p class='fn-status'>Status: \"I ain't searchin' for no savior, 'cause there's nothin' left to find. This is the only damn road that feels like mine.\"</p>" },
+  { title: "Crazy Girl, Crazy Night", file: "12 - Crazy Girl Crazy Night.mp3", notes: "<p><span class='fn-k'>Met:</span> behind a truck-stop diner, half past midnight, rain in the air. Black boots muddy, hood pulled low, silver lighter in her hand. \"You ain't from around here.\"</p><p><span class='fn-k'>Objects on the table:</span> a glass pipe rolling across like a coin no one claimed.</p><p><span class='fn-k'>Route:</span> out past the river bridge, toward a trailer row in the trees.</p><p><span class='fn-k'>Also present:</span> a man named Luther &mdash; folks said Worm. Teeth ground down, holding a photo torn in half. \"Babylon's hiding in the mile markers.\" \"Every road leads somewhere burning.\"</p><p class='fn-status'>Status: she fell asleep in the passenger seat, lighter warm in her palm. Kept driving. \"Some stories start like trouble and don't stop till daylight.\"</p>" }
 ];
-const AUDIO_DIR = "";              // mp3s live in the repo root
+
+// Rotating hero lines — cycle under the title. Add/remove freely.
+const HERO_LINES = [
+  "This is not Nashville polish. This is red clay on the floorboard.",
+  "For the ones who miss when the pain still had dirt on it.",
+  "If you don't know the people in these songs, you know people like them.",
+  "No fake saints. No clean endings. Just the song and what it cost."
+];
+
+/* ============================================================
+   EDIT YOUR REELS HERE (the rotating video trailers).
+   file : the .mp4 filename in the repo root (upload them there)
+   song : the exact track title above to jump to when tapped
+   badge: short tag shown on the clip (optional, keep it tiny)
+   Add or remove lines freely. 4–6 looks best. Videos have
+   sound — they start muted and unmute on tap.
+   Filenames below are placeholders; rename your files to match
+   (or change these to match your files). When you remake the
+   clips shorter, just drop the new files in under these names.
+============================================================ */
+const REELS = [
+  { file: "reel-burnt-out-preacher.mp4", song: "The Warning",        badge: "Slapout" },
+  { file: "reel-gasoline-baptism.mp4",   song: "Burnt Up Saints",    badge: "The River" },
+  { file: "reel-montgomery-days.mp4",    song: "Montgomery Days",    badge: "The Gump" },
+  { file: "reel-that-girl-lost.mp4",     song: "That Girl Named Lost", badge: "Lost" },
+  { file: "reel-that-summer.mp4",        song: "That Summer",        badge: "Before" },
+  { file: "reel-out-of-that-life.mp4",   song: "Out of That Life",   badge: "Hollow Eye" }
+];
+
+const AUDIO_DIR = "";              // mp3s + mp4s live in the repo root
+const REEL_DIR  = "";              // same root for the videos
 const BOOKING_EMAIL = "booking@biloxibluesrecords.com"; // <-- set your real booking email
 const SOCIALS = [
   // Add the band's real profiles. Remove any line you don't use.
@@ -247,21 +372,46 @@ const SOCIALS = [
   <div class="hero-content">
     <p class="eyebrow type">Slapout, Alabama &middot; Biloxi Blues Records</p>
     <h1 class="neon" aria-label="The Ryder McCoy Band">THE RYDER<br>M<span class="dim">c</span>COY BAND</h1>
-    <p class="tag">Outlaw country, swamp blues, and slow-rolling Southern trap &mdash; songs from the backroads, written like they happened. Because they did.</p>
-    <h2 class="display" style="margin-top:30px;color:var(--neon-hot)">Debut Album &mdash; "The Warning" &mdash; Out Now</h2>
+    <h2 class="display" style="margin-top:24px;color:var(--neon-hot)">The Warning &mdash; A Free Album</h2>
+    <p class="tag" style="font-style:normal;margin-top:18px">No Nashville shine. No cleaned-up confession.<br>Just outlaw country, swamp blues, and slow trap drums from the backroads &mdash; where the stories still have dirt under their nails.</p>
+    <p class="hero-rotate type" id="heroRotate" aria-live="polite">&nbsp;</p>
     <div class="cta-row">
-      <a class="btn solid" href="#listen">Listen Free</a>
-      <a class="btn" href="#band">Meet the Band</a>
+      <a class="btn solid" href="#listen">Play Full Album</a>
+      <a class="btn" href="#listen">Tracklist</a>
+      <a class="btn" href="#listen">Download Tracks</a>
     </div>
   </div>
 </header>
+
+<!-- ============ GENRE STRIP ============ -->
+<div class="genre-strip" aria-label="The sound, in our own words">
+  <div class="wrap">
+    <span class="genre-tag hot">Outlaw Country Trap</span>
+    <span class="genre-tag">Delta Blues Stomp</span>
+    <span class="genre-tag">Outlaw Gospel Noir</span>
+    <span class="genre-tag">Southern Trap Phonk</span>
+    <span class="genre-tag hot">Slapout Reality Roc</span>
+  </div>
+</div>
+
+<!-- ============ REELS ============ -->
+<section id="reels">
+  <div class="wrap">
+    <p class="sec-label">Field Footage</p>
+    <h2 class="sec-title display">The Reels</h2>
+    <p class="lede">Short films cut from the world the songs come out of. Tap one to unmute &mdash; tap the title to play the song.</p>
+    <div class="reels-rail" id="reelsRail" aria-label="Video trailers"><!-- reels injected by script --></div>
+    <p class="reels-note" id="reelsNote">Swipe for more &middot; sound on tap</p>
+  </div>
+</section>
 
 <!-- ============ TRACK LOG ============ -->
 <section id="listen">
   <div class="wrap">
     <p class="sec-label">The Album</p>
     <h2 class="sec-title display">The Warning</h2>
-    <p class="lede">Twelve tracks. Press play on any of them. Every song downloads free &mdash; the arrow takes it home with you.</p>
+    <p class="lede"><span id="trackCount">12</span> tracks. Stream them free. No email gate. No fake fan-club signup. Tap the arrow beside a song and it is yours.</p>
+    <p class="type" style="margin-top:12px;color:var(--neon-hot);font-size:.82rem;letter-spacing:.06em">Tap <strong style="color:var(--bone)">Field Notes</strong> on any track to open the case file &mdash; what got left behind, pulled cold from the song.</p>
 
     <div class="log" role="list" aria-label="Album tracklist">
       <div class="log-head">
@@ -273,7 +423,7 @@ const SOCIALS = [
 
     <div class="dl-all">
       <button class="btn solid" id="zipBtn">Download Full Album (.zip)</button>
-      <p class="dl-note" id="zipNote">12 tracks &middot; MP3 &middot; no email, no signup, no catch</p>
+      <p class="dl-note" id="zipNote">Each track downloads free &middot; MP3 &middot; no email &middot; no signup &middot; no catch</p>
     </div>
   </div>
 </section>
@@ -283,8 +433,11 @@ const SOCIALS = [
   <div class="wrap">
     <p class="sec-label">The Story</p>
     <h2 class="sec-title display">Out of Slapout</h2>
-    <p class="lede">The Ryder McCoy Band comes out of Slapout, Alabama &mdash; the stretch of red dirt and river road between Holtville and Montgomery. The sound sits somewhere between outlaw country, swamp blues, Southern rock, and slow-rolling trap, and the songs come from real places: Waffle House booths, boat ramps, county roads, motel parking lots, and nights that didn't go the way anybody planned.</p>
-    <p class="lede" style="margin-top:16px">Ryder writes them like he saw them, because he did. <em>The Warning</em> is the first full record &mdash; twelve tracks cut for Biloxi Blues Records and given away free, because the people these songs are about shouldn't have to pay to hear them.</p>
+    <p class="lede">From the Montgomery, Alabama area &mdash; Slapout, the stretch of red dirt and river road Nashville drives past without slowing down. Not the postcard South. The other one. Gas stations where somebody is always waiting on somebody who is already late.</p>
+    <p class="lede" style="margin-top:16px">The first few seconds might fool you. A slide guitar. A gospel voice. A country line. Then the floor drops. This is poverty, paranoia, dope smoke, backroad theology, busted humor, and Southern survival translated into sound. The stories may be distorted by smoke, but the truth stays clean underneath.</p>
+    <p class="lede type" style="margin-top:20px;color:var(--neon-hot);font-size:.98rem;line-height:1.55">Sounds like Eazy-E raised up in Slapout by Hank Williams Jr., then run off to Memphis with the country-rap boys coming up off the street.</p>
+    <p class="lede" style="margin-top:20px">This world is not fantasy. It is right beside yours. You just don't see it until life drags you close enough to the shadow.</p>
+    <p class="lede" style="margin-top:16px"><em>The Warning</em> is the first full record from Biloxi Blues Records &mdash; free, because these songs are not dressed up for a market. They are for the folks who have lived close enough to the edge to recognize the view. We don't write songs. We report from the brink.</p>
     <figure style="margin-top:38px;border:1px solid var(--line);background:var(--smoke)">
       <img src="band-bridge.jpg" alt="The Ryder McCoy Band — Unc, Jessie James Jenkins, and Ryder McCoy around a campfire under the river bridge at night, full moon over the water" loading="lazy" width="1536" height="1024">
       <figcaption class="type" style="padding:12px 16px;font-size:.75rem;color:var(--ash);letter-spacing:.14em;text-transform:uppercase">Unc &middot; Jessie James Jenkins &middot; Ryder McCoy &mdash; down at the river</figcaption>
@@ -301,17 +454,17 @@ const SOCIALS = [
       <div class="member">
         <h3 class="display">Ryder McCoy</h3>
         <p class="role">Vocals &middot; Guitar &middot; Songwriter</p>
-        <p>Came from the mud, left long enough to see the pattern, came back because it's still home. He doesn't preach. He reports.</p>
+        <p>Ryder writes from the ditch side of the road. He is not trying to sound cleaned up, saved, or radio-ready. The songs come out low, plain, and bruised &mdash; like somebody telling the truth before daylight talks him out of it.</p>
       </div>
       <div class="member">
         <h3 class="display">Jessie James Jenkins</h3>
         <p class="role">Vocals</p>
-        <p>The blade in the middle of the noise. She sings the part Ryder won't say out loud, and the room gets smaller every time.</p>
+        <p>Jessie carries the smoke in the room. She brings the church weight, the hurt, and the part of the song that still wants to live. When she comes in, it stops being a story and starts sounding like somebody's name.</p>
       </div>
       <div class="member">
         <h3 class="display">Unc</h3>
-        <p class="role">Vocals &middot; Whatever's Handy</p>
-        <p>Says things that sound crazy until the night proves him close enough. Don't ask. He's already told you.</p>
+        <p class="role">Vocals &middot; Spoken Word &middot; Backroad Noise</p>
+        <p>Unc is the old voice on the porch, half warning and half dare. He says the ugly part out loud, laughs when he should not, and reminds everybody that the road always collects what it is owed.</p>
       </div>
     </div>
   </div>
@@ -322,7 +475,7 @@ const SOCIALS = [
   <div class="wrap" style="text-align:center">
     <p class="sec-label">Booking &amp; Press</p>
     <h2 class="sec-title display">Get In Touch</h2>
-    <p class="lede" style="margin:0 auto">Shows, press, licensing, or anything else &mdash; reach the label directly.</p>
+    <p class="lede" style="margin:0 auto">Shows, press, licensing, strange questions, or road business &mdash; send it to the label.</p>
     <div class="cta-row" style="margin-top:30px">
       <a class="btn" id="bookingLink" href="#">Email Biloxi Blues Records</a>
     </div>
@@ -334,7 +487,8 @@ const SOCIALS = [
 <footer>
   <p class="label-mark">Biloxi Blues Records</p>
   <p>The Ryder McCoy Band &middot; Slapout, Alabama</p>
-  <p class="fine">&copy; <span id="yr"></span> Biloxi Blues Records. The album is free to download and share for personal listening. Backroads know.</p>
+  <p class="fine">&copy; <span id="yr"></span> Biloxi Blues Records. Free to download. Free to share for personal listening.</p>
+  <p class="fine" style="margin-top:10px;color:var(--bone);letter-spacing:.04em">No fake saints. No clean endings. Backroads know.</p>
 </footer>
 
 <!-- ============ STICKY PLAYER ============ -->
@@ -369,6 +523,31 @@ const SOCIALS = [
   const btnPlay = document.getElementById('btnPlay');
   const iconPlay= document.getElementById('iconPlay');
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Track count pulls from TRACKS so copy never goes stale
+  var tcEl = document.getElementById('trackCount');
+  if(tcEl) tcEl.textContent = TRACKS.length;
+  var znEl = document.getElementById('zipNote');
+
+  // Rotating hero lines
+  (function(){
+    var el = document.getElementById('heroRotate');
+    if(!el || typeof HERO_LINES === 'undefined' || !HERO_LINES.length) return;
+    var i = 0;
+    function show(){
+      el.textContent = HERO_LINES[i];
+      el.classList.add('in');
+    }
+    show();
+    if(HERO_LINES.length < 2) return;
+    setInterval(function(){
+      el.classList.remove('in');
+      setTimeout(function(){
+        i = (i + 1) % HERO_LINES.length;
+        show();
+      }, 600);
+    }, 5200);
+  })();
 
   // ---- Full-album zip, built in the browser from the repo's own mp3s ----
   const zipBtn = document.getElementById('zipBtn');
@@ -438,6 +617,9 @@ const SOCIALS = [
     const row = document.createElement('div');
     row.className = 'track';
     row.setAttribute('role','listitem');
+    var fnBtn = t.notes
+      ? '<button class="icon-btn fn-btn js-fn" data-i="' + i + '" aria-expanded="false" aria-label="Field notes for ' + t.title + '">Field Notes</button>'
+      : '';
     row.innerHTML =
       '<span class="t-num">' + String(i+1).padStart(2,'0') + '</span>' +
       '<span class="t-title">' + t.title + '</span>' +
@@ -445,7 +627,9 @@ const SOCIALS = [
       '<span style="display:flex;gap:8px">' +
         '<button class="icon-btn js-play" data-i="' + i + '" aria-label="Play ' + t.title + '"><svg viewBox="0 0 16 16"><path d="' + PLAY + '"/></svg></button>' +
         '<a class="icon-btn" href="' + AUDIO_DIR + t.file + '" download aria-label="Download ' + t.title + '"><svg viewBox="0 0 16 16"><path d="M7 1h2v6.6l1.8-1.8 1.4 1.4L8 11.4 3.8 7.2l1.4-1.4L7 7.6z"/><path d="M2 13h12v2H2z"/></svg></a>' +
-      '</span>';
+        fnBtn +
+      '</span>' +
+      (t.notes ? '<div class="fn-drawer" id="fn' + i + '"><div class="fn-doc">' + t.notes + '</div></div>' : '');
     list.appendChild(row);
 
     // fetch duration lazily
@@ -457,6 +641,19 @@ const SOCIALS = [
     });
   });
 
+  // Field Notes toggle
+  list.addEventListener('click', function(e){
+    const fb = e.target.closest('.js-fn');
+    if(!fb) return;
+    e.stopPropagation();
+    const i = parseInt(fb.dataset.i, 10);
+    const drawer = document.getElementById('fn' + i);
+    if(!drawer) return;
+    const open = drawer.classList.toggle('open');
+    fb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    fb.classList.toggle('fn-on', open);
+  });
+
   function setRowStates(){
     document.querySelectorAll('.track').forEach(function(r, i){
       r.classList.toggle('active', i === current);
@@ -465,6 +662,11 @@ const SOCIALS = [
     });
     iconPlay.querySelector('path') ? iconPlay.querySelector('path').setAttribute('d', audio.paused ? PLAY : PAUSE)
                                    : null;
+  }
+
+  function indexByTitle(title){
+    for(let i=0;i<TRACKS.length;i++){ if(TRACKS[i].title === title) return i; }
+    return -1;
   }
 
   function load(i, play){
@@ -520,6 +722,59 @@ const SOCIALS = [
     if(e.key === 'ArrowRight'){ audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); }
     if(e.key === 'ArrowLeft'){ audio.currentTime = Math.max(0, audio.currentTime - 5); }
   });
+
+  // ============ REELS (video trailers) ============
+  const rail = document.getElementById('reelsRail');
+  const reelsNote = document.getElementById('reelsNote');
+  const SPK = '<svg viewBox="0 0 16 16"><path d="M3 6v4h3l4 3V3L6 6H3z"/><path d="M11 5.5a3 3 0 010 5l.9.9a4.3 4.3 0 000-6.8z"/></svg>';
+  const MUTE= '<svg viewBox="0 0 16 16"><path d="M3 6v4h3l4 3V3L6 6H3z"/><path d="M11 5l3 3-1 1-3-3zM13 5l-3 3-1-1 3-3z" transform="translate(0 0)"/></svg>';
+
+  if(rail && Array.isArray(REELS) && REELS.length){
+    REELS.forEach(function(r){
+      const card = document.createElement('div');
+      card.className = 'reel';
+      const songIdx = indexByTitle(r.song);
+      card.innerHTML =
+        (r.badge ? '<span class="reel-badge">' + r.badge + '</span>' : '') +
+        '<button class="reel-mute" aria-label="Toggle sound">' + MUTE + '</button>' +
+        '<video src="' + REEL_DIR + r.file + '" muted loop playsinline preload="metadata"></video>' +
+        '<div class="reel-cap">' +
+          '<span class="reel-song">' + r.song + '</span>' +
+          '<span class="reel-play js-reel-song" data-i="' + songIdx + '">Play song</span>' +
+        '</div>';
+      rail.appendChild(card);
+
+      const vid = card.querySelector('video');
+      const muteBtn = card.querySelector('.reel-mute');
+
+      // tap video: play + unmute this one, mute/pause the others
+      vid.addEventListener('click', function(){
+        document.querySelectorAll('.reel video').forEach(function(v){
+          if(v !== vid){ v.muted = true; v.pause(); }
+        });
+        if(vid.paused){ vid.play(); }
+        vid.muted = !vid.muted;
+        muteBtn.innerHTML = vid.muted ? MUTE : SPK;
+      });
+      muteBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        vid.muted = !vid.muted;
+        if(!vid.muted && vid.paused){ vid.play(); }
+        muteBtn.innerHTML = vid.muted ? MUTE : SPK;
+      });
+      // tap the song label: pause videos, jump to the track
+      card.querySelector('.js-reel-song').addEventListener('click', function(e){
+        e.stopPropagation();
+        const i = parseInt(this.dataset.i, 10);
+        document.querySelectorAll('.reel video').forEach(function(v){ v.muted = true; v.pause(); });
+        if(i >= 0) load(i, true);
+      });
+      // if a video file is missing, drop its card quietly
+      vid.addEventListener('error', function(){ card.remove(); if(!rail.children.length){ document.getElementById('reels').remove(); } });
+    });
+  } else if(document.getElementById('reels')){
+    document.getElementById('reels').remove();
+  }
 })();
 </script>
 </body>
