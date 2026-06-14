@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wall of Warnings — The Ryder McCoy Band</title>
+<meta name="description" content="The Wall of Warnings — the sharpest lines from The Ryder McCoy Band, pulled cold from the songs. Outlaw country, swamp blues, and Southern trap out of Slapout, Alabama.">
+<meta property="og:title" content="The Wall of Warnings — The Ryder McCoy Band">
+<meta property="og:description" content="The lines, pulled cold from the songs. Slapout, Alabama.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#0b0a08;--smoke:#171310;--panel:#1d1813;
+    --neon:#ff8a2a;--neon-hot:#ffc27a;--crimson:#a31f1f;
+    --bone:#e9e0cf;--ash:#9a8f7e;--line:#2c241c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--asphalt);color:var(--bone);font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--crimson);color:var(--bone)}
+  a{color:var(--neon-hot)}
+  .display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.04em}
+  .type{font-family:'Special Elite',monospace}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  /* nav */
+  .topnav{border-bottom:1px solid var(--line);background:rgba(11,10,8,.9);position:sticky;top:0;z-index:40;backdrop-filter:blur(6px)}
+  .topnav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:14px}
+  .topnav a{font-family:'Special Elite',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);text-decoration:none}
+  .topnav a.home{color:var(--neon-hot)}
+  .topnav a:hover{color:var(--neon-hot)}
+
+  /* header */
+  .wall-head{text-align:center;padding:70px 20px 30px;border-bottom:1px solid var(--line)}
+  .wall-head .eyebrow{color:var(--neon);font-family:'Special Elite',monospace;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:18px}
+  .wall-head h1{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(2.4rem,9vw,4.6rem);line-height:.95;letter-spacing:.03em;color:var(--neon-hot);
+    text-shadow:0 0 6px rgba(255,170,90,.8),0 0 24px rgba(255,138,42,.5),0 0 70px rgba(255,138,42,.3)}
+  .wall-head p{color:var(--ash);max-width:48ch;margin:22px auto 0;font-style:italic}
+
+  /* puller */
+  .puller{padding:54px 20px;border-bottom:1px solid var(--line);background:var(--smoke)}
+  .puller .card{max-width:760px;margin:0 auto;border:1px solid var(--line);background:var(--asphalt);padding:40px 28px 30px;position:relative;text-align:center}
+  .puller .card::before{content:"PULLED AT RANDOM";position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--asphalt);padding:0 10px;font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.24em;color:var(--neon)}
+  #pullQuote{font-size:clamp(1.3rem,4.4vw,2rem);line-height:1.4;color:var(--bone);min-height:2.6em;transition:opacity .4s}
+  #pullSrc{font-family:'Special Elite',monospace;font-size:.82rem;letter-spacing:.1em;color:var(--neon-hot);margin-top:18px;text-transform:uppercase}
+  .pull-btns{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 26px;font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:.92rem;border:1px solid var(--neon);color:var(--neon-hot);background:transparent;cursor:pointer;text-decoration:none;transition:background .2s,color .2s,box-shadow .2s}
+  .btn:hover,.btn:focus-visible{background:var(--neon);color:#1a0e02;box-shadow:0 0 26px rgba(255,138,42,.45)}
+  .btn.solid{background:var(--crimson);border-color:var(--crimson);color:var(--bone)}
+  .btn.solid:hover{background:#c22727}
+  :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
+  .copied{font-family:'Special Elite',monospace;font-size:.74rem;color:var(--neon);letter-spacing:.1em;margin-top:14px;height:1em;opacity:0;transition:opacity .2s}
+  .copied.show{opacity:1}
+
+  /* archive */
+  .archive{padding:64px 0 90px}
+  .archive .sec-label{font-family:'Special Elite',monospace;color:var(--neon);font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+  .archive h2{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(1.7rem,5vw,2.4rem);color:var(--bone);margin-bottom:6px}
+  .archive .note{color:var(--ash);font-size:.92rem;margin-bottom:30px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+  .chip{font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);border:1px solid var(--line);background:var(--smoke);padding:7px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{color:var(--neon-hot);border-color:var(--neon)}
+  .chip.on{color:#1a0e02;background:var(--neon);border-color:var(--neon)}
+  .spines{border-top:1px solid var(--line)}
+  .spine{display:block;width:100%;text-align:left;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--bone);
+    padding:20px 4px;cursor:pointer;font-family:Georgia,serif;font-size:1.08rem;line-height:1.45;transition:background .15s,padding-left .15s;position:relative}
+  .spine:hover{background:var(--panel);padding-left:14px}
+  .spine .src{display:block;font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ash);text-transform:uppercase;margin-top:8px}
+  .spine:hover .src{color:var(--neon-hot)}
+  .spine .copytag{position:absolute;right:6px;top:20px;font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--neon);opacity:0;text-transform:uppercase}
+  .spine:hover .copytag{opacity:.8}
+
+  footer{border-top:1px solid var(--line);padding:50px 20px 80px;text-align:center;color:var(--ash);font-size:.9rem}
+  footer .label-mark{font-family:'Special Elite',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);margin-bottom:10px}
+  footer .fine{font-size:.78rem;margin-top:14px}
+  footer a{text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="home" href="index.html">&larr; The Ryder McCoy Band</a>
+    <a href="index.html#listen">The Album</a>
+  </div>
+</nav>
+
+<header class="wall-head">
+  <p class="eyebrow">Slapout, Alabama &middot; Biloxi Blues Records</p>
+  <h1>The Wall of<br>Warnings</h1>
+  <p>The lines, pulled cold from the songs. Read them like the spines of a case archive &mdash; tap any one to copy it.</p>
+</header>
+
+<section class="puller">
+  <div class="card">
+    <div id="pullQuote">&nbsp;</div>
+    <div id="pullSrc">&nbsp;</div>
+    <div class="pull-btns">
+      <button class="btn solid" id="pullBtn">Pull Another</button>
+      <button class="btn" id="copyBtn">Copy This Line</button>
+    </div>
+    <div class="copied" id="copiedMsg">Copied.</div>
+  </div>
+</section>
+
+<section class="archive">
+  <div class="wrap">
+    <p class="sec-label">The Archive</p>
+    <h2 class="display">Every Line on the Wall</h2>
+    <p class="note"><span id="lineCount"></span> lines and counting. Tap one to copy it.</p>
+    <div class="filters" id="filters"></div>
+    <div class="spines" id="spines"></div>
+  </div>
+</section>
+
+<footer>
+  <p class="label-mark">Biloxi Blues Records</p>
+  <p><a href="index.html">The Ryder McCoy Band</a> &middot; Slapout, Alabama</p>
+  <p class="fine">No fake saints. No clean endings. Backroads know.</p>
+</footer>
+
+<script>
+const WALL = [
+  {q:"A lap could be a girl dancing off the pole — or time and distance when you're losing your soul.",s:"Rooster",r:"The Warning"},
+  {q:"Some folks don't get high to see heaven. They get high because regular earth keeps showing its teeth.",s:"Rooster",r:"The Warning"},
+  {q:"Glass pipe rolling across the table like a coin no one claimed.",s:"Crazy Girl, Crazy Night",r:"The Warning"},
+  {q:"You lookin' for a vibe? I'm lookin' for a vein.",s:"Walk That Road",r:"The Warning"},
+  {q:"Ain't no halo where I roam — just burnt-up saints and busted phones.",s:"Burnt Up Saints",r:"The Warning"},
+  {q:"Faith's just fear with a tie and a lie.",s:"Burnt Up Saints",r:"The Warning"},
+  {q:"In sin we trust.",s:"Burnt Up Saints",r:"The Warning"},
+  {q:"We're all just feathers in a hurricane's prayer. Ain't no heaven but the smoke in the air.",s:"Four Flat Tires and a Dented Hood",r:"The Warning"},
+  {q:"I walked through trailers like tombs with doors.",s:"Four Flat Tires and a Dented Hood",r:"The Warning"},
+  {q:"Each crystal a sermon, each hit a lie.",s:"Four Flat Tires and a Dented Hood",r:"The Warning"},
+  {q:"Round and round again. This ain't salvation — just the end.",s:"Four Flat Tires and a Dented Hood",r:"The Warning"},
+  {q:"Ain't nobody here better. Ain't nobody here worse. We just sitting in the wreckage trying to name the curse.",s:"Who So Ever Will Church",r:"The Warning"},
+  {q:"Don't call every shed a sanctuary. Don't call every bag deliverance. But don't mock a man for building a door when grief won't give him entrance.",s:"Who So Ever Will Church",r:"The Warning"},
+  {q:"In Slapout you don't hear Milton get passed around.",s:"Who So Ever Will Church",r:"The Warning"},
+  {q:"The serpent don't always speak. Sometimes it just waits in a young man's hand.",s:"That Summer",r:"The Warning"},
+  {q:"We thought sin had to look bigger. Thunder. Blood. Judgment. But sometimes it's just two kids in the woods, mistaking escape for deliverance.",s:"That Summer",r:"The Warning"},
+  {q:"Old enough to know better, young enough not to care.",s:"That Summer",r:"The Warning"},
+  {q:"The daylight is trying to break through the curtains, but it's a thousand miles away. We're right here. Three points deep. And the secret belongs to us.",s:"Sinful Games",r:"The Warning"},
+  {q:"Trading tomorrow for a pocket of ash.",s:"Nation of the Spun",r:"The Warning"},
+  {q:"The storm ain't outside, it's under the skin. Open the door. Let the Hat Man in.",s:"Nation of the Spun",r:"The Warning"},
+  {q:"Nation of the Spun. Population: us.",s:"Nation of the Spun",r:"The Warning"},
+  {q:"Heaven's just a rumor the lonely reinvent.",s:"The Crooked Mile",r:"The Warning"},
+  {q:"We sing about the sky, but we've forgotten how to fly.",s:"The Crooked Mile",r:"The Warning"},
+  {q:"The door you came in through, you can't go out again.",s:"The Crooked Mile",r:"The Warning"},
+  {q:"Every time I think I'm home, wind up right where I started from — alone.",s:"Montgomery Days",r:"The Warning"},
+  {q:"Trading holy water for that crystal dream.",s:"Montgomery Days",r:"The Warning"},
+  {q:"The gospel of these Montgomery days.",s:"Montgomery Days",r:"The Warning"},
+  {q:"There ain't no clean way to watch somebody vanish — one bad week at a time.",s:"Out Past Deliverance",r:"The Bench"},
+  {q:"I seen folks call it freedom when it was just another chain.",s:"Out Past Deliverance",r:"The Bench"},
+  {q:"Some people pray to get clean. Some just pray not to feel.",s:"Out Past Deliverance",r:"The Bench"},
+  {q:"It ain't water, it's a ledger. It ain't mercy, it's a mouth.",s:"Gasoline Baptism",r:"The Flood"},
+  {q:"Every man wants clean till clean gets deep.",s:"Gasoline Baptism",r:"The Flood"},
+  {q:"I saw those angels with panic in their eyes — and every one of them looked too much like mine.",s:"Gasoline Baptism",r:"The Flood"},
+  {q:"The flood don't come with trumpets loud. Sometimes it comes as a county road, washed out.",s:"The Burnt Out Preacher",r:"The Books"},
+  {q:"You're just a witness, counting ghosts that still got names.",s:"The Burnt Out Preacher",r:"The Books"},
+  {q:"Don't call it prophecy when it's just hunger wearing Sunday clothes.",s:"The Burnt Out Preacher",r:"The Books"},
+  {q:"Babylon ain't no far-off place. It's a rented room with a burned-out face.",s:"The Burnt Out Preacher",r:"The Books"},
+  {q:"That ain't hooves you hear, that's pistons.",s:"Mud and Wire",r:"The Flood"},
+  {q:"We didn't rise. We just stayed down in the dirt where we belonged.",s:"The Sixth Seal",r:"The Flood"},
+  {q:"The fall ain't a moment — it's a lifetime of fallin'.",s:"The Last Bowl",r:"The Bloodline"},
+  {q:"That boy never left. He's just wearin' your boots now.",s:"Ten Year Old Eyes",r:"The Bloodline"},
+  {q:"The rooms I ran from raised me.",s:"The Room Still Knows",r:"The Bloodline"},
+  {q:"Some nights I remember her laughing. Some nights I remember fear. Some nights I think those are the same thing.",s:"Jenny in the Porch Light",r:"Ground Level"},
+  {q:"When the heat gets close, everything change.",s:"Through That Cut",r:"Ground Level"},
+  {q:"Some cages ain't locked. They're just familiar.",s:"Seven-Day Girl",r:"Ground Level"},
+  {q:"I was searchin' for what I dropped, but I found what I never wanted.",s:"The Carpet Gospel",r:"The Books"},
+  {q:"The devil don't always kick down doors. Sometimes he waits inside the floor.",s:"The Carpet Gospel (song version)",r:"The Books"},
+  {q:"The truth they bring is a mountain I can't climb. A life sentence served, one minute at a time.",s:"The Last Trailer on the Right",r:"The Bench"},
+  {q:"I ain't searchin' for no savior, 'cause there's nothin' left to find.",s:"The Crooked Mile",r:"The Warning"},
+  {q:"Don't call every relapse a resurrection. Don't call every pipe a silver cross.",s:"Rooster",r:"The Warning"},
+  {q:"Every saint in Slapout is still just a man.",s:"Rooster",r:"The Warning"},
+  {q:"Held the glass pipe like a cross across the wasted lands.",s:"Out of That Life",r:"The Warning"},
+  {q:"The Gospel's an echo in the empty syringe.",s:"Out of That Life",r:"The Warning"},
+  {q:"Babylon is the name on the motel sign.",s:"Out of That Life",r:"The Warning"},
+  {q:"This ain't a story. It's a warning.",s:"The Warning",r:"The Warning"},
+  {q:"Heard Gabriel's trumpet from a strip club pole.",s:"The Warning",r:"The Warning"},
+  {q:"The Lamb's got a needle stickin' out of its fold.",s:"The Warning",r:"The Warning"},
+  {q:"Looking for grace in the chemicals.",s:"That Girl Named Lost",r:"The Warning"},
+  {q:"Somewhere between the cross and the cost, I fell in love with a girl named Lost.",s:"That Girl Named Lost",r:"The Warning"}
+];
+
+(function(){
+  // ---- random puller ----
+  var pq = document.getElementById('pullQuote');
+  var ps = document.getElementById('pullSrc');
+  var last = -1, currentPull = null;
+  function pull(){
+    var i = Math.floor(Math.random()*WALL.length);
+    if(WALL.length>1){ while(i===last){ i = Math.floor(Math.random()*WALL.length); } }
+    last = i; currentPull = WALL[i];
+    pq.style.opacity = 0;
+    setTimeout(function(){
+      pq.textContent = '\u201c' + currentPull.q + '\u201d';
+      ps.textContent = '\u2014 ' + currentPull.s;
+      pq.style.opacity = 1;
+    }, 200);
+  }
+  document.getElementById('pullBtn').addEventListener('click', pull);
+
+  var copiedMsg = document.getElementById('copiedMsg');
+  function flashCopied(){ copiedMsg.classList.add('show'); setTimeout(function(){ copiedMsg.classList.remove('show'); }, 1400); }
+  function copyText(t){
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(flashCopied, function(){}); }
+    else { var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');flashCopied();}catch(e){} ta.remove(); }
+  }
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    if(!currentPull) return;
+    copyText('\u201c'+currentPull.q+'\u201d \u2014 '+currentPull.s+', The Ryder McCoy Band');
+  });
+  pull();
+
+  // ---- archive + filters ----
+  document.getElementById('lineCount').textContent = WALL.length;
+  var spines = document.getElementById('spines');
+  var filterWrap = document.getElementById('filters');
+  var records = ['All']; 
+  WALL.forEach(function(w){ if(records.indexOf(w.r)<0) records.push(w.r); });
+  var activeFilter = 'All';
+
+  function render(){
+    spines.innerHTML='';
+    WALL.forEach(function(w){
+      if(activeFilter!=='All' && w.r!==activeFilter) return;
+      var b=document.createElement('button');
+      b.className='spine';
+      b.innerHTML = '\u201c'+w.q+'\u201d<span class="src">\u2014 '+w.s+'</span><span class="copytag">Copy</span>';
+      b.addEventListener('click', function(){ copyText('\u201c'+w.q+'\u201d \u2014 '+w.s+', The Ryder McCoy Band'); });
+      spines.appendChild(b);
+    });
+  }
+  records.forEach(function(r){
+    var c=document.createElement('button');
+    c.className='chip'+(r==='All'?' on':'');
+    c.textContent=r;
+    c.addEventListener('click', function(){
+      activeFilter=r;
+      Array.prototype.forEach.call(filterWrap.children,function(ch){ch.classList.toggle('on',ch.textContent===r);});
+      render();
+    });
+    filterWrap.appendChild(c);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
