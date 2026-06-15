@@ -1,0 +1,10 @@
+# Netlify headers for the Slapout site image assets
+# The trailer park file is named .png but contains JPEG data, so force the browser/host to serve it as JPEG.
+
+/slapouttp.png
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=60
+
+/rain.road.jpg
+  Content-Type: image/jpeg
+  Cache-Control: public, max-age=60
