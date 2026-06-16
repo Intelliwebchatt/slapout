@@ -8,7 +8,22 @@ export default async (request, context) => {
 
   let html = await response.text();
 
-  const storyOverlay = `\n  /* Darker overlay for the church/story image so text reads better on mobile */\n  #story.bg-photo::after{\n    background:linear-gradient(to bottom, rgba(11,10,8,.98) 0%, rgba(11,10,8,.90) 34%, rgba(11,10,8,.93) 70%, var(--asphalt) 100%) !important;\n  }\n  #story .lede{\n    color:rgba(233,224,207,.88);\n    text-shadow:0 2px 12px rgba(0,0,0,.85);\n  }\n`;
+  const storyOverlay = `
+  /* Darker overlay for the church/story image so text reads better on mobile */
+  #story.bg-photo::after{
+    background:linear-gradient(to bottom, rgba(11,10,8,.98) 0%, rgba(11,10,8,.90) 34%, rgba(11,10,8,.93) 70%, var(--asphalt) 100%) !important;
+  }
+  #story .lede{
+    color:rgba(233,224,207,.88);
+    text-shadow:0 2px 12px rgba(0,0,0,.85);
+  }
+  #story .lede p{
+    margin-bottom:1.35rem;
+  }
+  #story .lede p:last-child{
+    margin-bottom:0;
+  }
+`;
 
   html = html.replace("</style>", `${storyOverlay}</style>`);
 
