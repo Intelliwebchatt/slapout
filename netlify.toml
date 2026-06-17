@@ -1,3 +1,7 @@
-[[edge_functions]]
+[[[edge_functions]]
   path = "/*"
   function = "darken-story"
+
+[[edge_functions]]
+  path = "/"
+  function = "album-bg"
