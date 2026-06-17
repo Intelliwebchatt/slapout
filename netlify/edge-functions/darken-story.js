@@ -83,7 +83,7 @@
       transparent 68%,
       rgba(255,138,42,.10)
     );
-    opacity:.45;
+    opacity:.65;
   }
 
   .btn:hover,
