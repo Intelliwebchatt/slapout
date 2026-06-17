@@ -1,4 +1,4 @@
-  export default async (request, context) => {
+export default async (request, context) => {
   const response = await context.next();
   const contentType = response.headers.get("content-type") || "";
 
@@ -7,6 +7,10 @@
   }
 
   let html = await response.text();
+
+  // Patch two track filenames where the live file names differ from the index.html references.
+  html = html.replace('file: "12 - Crazy Girl Crazy Night.mp3"', 'file: "12 - Crazy Girl, Crazy Night.mp3"');
+  html = html.replace('file: "who so ever will church..mp3"', 'file: "who  so ever will church..mp3"');
 
   const visualUpgrade = `
   /* Darker overlay for the church/story image so text reads better on mobile */
