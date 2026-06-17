@@ -44,7 +44,7 @@ export default async (request, context) => {
     inset:0;
     z-index:49;
     pointer-events:none;
-    opacity:.045;
+    opacity:.065;
     mix-blend-mode:screen;
     background-image:
       radial-gradient(circle at 20% 30%, rgba(255,138,42,.16) 0 1px, transparent 1px),
@@ -236,6 +236,38 @@ export default async (request, context) => {
 `;
 
   html = html.replace("</style>", `${visualUpgrade}</style>`);
+
+  const contactFooter = `
+<!-- CONTACT & FOOTER SECTION -->
+<section id="booking" style="background-color:#111111;color:#D9D2C3;font-family:'IBM Plex Sans',sans-serif;padding:80px 20px;text-align:center;border-top:1px solid #8A4B32;">
+  <p style="font-family:'Cormorant Garamond',serif;font-size:14px;text-transform:uppercase;letter-spacing:4px;color:#8A4B32;margin-bottom:15px;">
+    Cult Over Commodity
+  </p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;color:#D9D2C3;margin:0 0 25px 0;letter-spacing:1px;">
+    Get In Touch
+  </h2>
+  <p style="max-width:600px;margin:0 auto 40px auto;font-size:16px;line-height:1.6;color:#D9D2C3;opacity:.85;">
+    For booking, press, vinyl distribution, or road business, reach out directly to the label.
+  </p>
+  <a id="bookingLink" href="mailto:info@biloxibluesrecords.com" style="display:inline-block;background-color:transparent;color:#D9D2C3;border:1px solid #8A4B32;padding:15px 35px;font-size:14px;text-transform:uppercase;letter-spacing:2px;text-decoration:none;transition:all .3s ease;font-weight:600;">
+    Email Biloxi Blues Records
+  </a>
+  <div id="socialRow" style="display:none"></div>
+  <div style="width:60px;height:1px;background-color:#8A4B32;margin:60px auto 40px auto;opacity:.5;"></div>
+  <footer style="font-size:13px;letter-spacing:1px;line-height:1.8;opacity:.7;padding:0;border-top:none;color:#D9D2C3;">
+    <p style="font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:3px;color:#D9D2C3;margin-bottom:10px;text-transform:uppercase;">
+      Biloxi Blues Records
+    </p>
+    <p style="margin:5px 0;">The Ryder McCoy Band &bull; Slapout, Alabama</p>
+    <p style="margin:5px 0;font-size:12px;">&copy; <span id="yr"></span> Biloxi Blues Records. Free to download. Free to share for personal listening.</p>
+    <p style="margin:20px 0 0 0;font-style:italic;color:#8A4B32;letter-spacing:2px;font-size:12px;text-transform:uppercase;">
+      No fake saints. No clean endings. Backroads know.
+    </p>
+  </footer>
+</section>
+`;
+
+  html = html.replace(/<!-- ============ BOOKING ============ -->[\s\S]*?<!-- ============ STICKY PLAYER ============ -->/, `${contactFooter}\n<!-- ============ STICKY PLAYER ============ -->`);
 
   const headers = new Headers(response.headers);
   headers.set("content-type", contentType);
