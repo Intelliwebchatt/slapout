@@ -47,40 +47,88 @@ export default async (request, context) => {
     100%{transform:translate3d(0,0,0)}
   }
 
-  /* Cards keep depth, but no glossy button look */
+  /* Heavier depth pass: cards, tags, track log, field notes */
   .genre-tag,
   .member,
   .log,
   .fn-doc,
   .reel{
-    background:linear-gradient(180deg, rgba(31,25,20,.98), rgba(12,10,8,.98)) !important;
-    box-shadow:0 18px 38px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.045), inset 0 -1px 0 rgba(0,0,0,.55);
+    background:linear-gradient(180deg, rgba(36,29,22,.99), rgba(9,8,7,.99)) !important;
+    box-shadow:
+      0 28px 58px rgba(0,0,0,.62),
+      0 9px 18px rgba(0,0,0,.52),
+      inset 0 1px 0 rgba(255,255,255,.065),
+      inset 0 -1px 0 rgba(0,0,0,.72),
+      inset 0 0 0 1px rgba(138,75,50,.08) !important;
   }
-  .genre-tag{border-color:rgba(138,75,50,.45) !important;}
-  .genre-tag.hot{color:#D9D2C3 !important;border-color:rgba(255,138,42,.42) !important;}
-  .log{border-color:rgba(138,75,50,.38) !important;}
-  .log-head{background:linear-gradient(180deg, rgba(34,28,22,.80), rgba(15,12,10,.92));box-shadow:inset 0 -1px 0 rgba(0,0,0,.5);}
-  .track{background:linear-gradient(180deg, rgba(255,255,255,.018), rgba(0,0,0,.08));}
-  .track:hover{background:linear-gradient(180deg, rgba(138,75,50,.10), rgba(0,0,0,.12)) !important;}
-  .track.active{background:linear-gradient(180deg, rgba(138,75,50,.14), rgba(0,0,0,.16)) !important;box-shadow:inset 4px 0 0 #8A4B32, inset 0 1px 0 rgba(255,255,255,.045) !important;}
-  .member{border-color:rgba(138,75,50,.30) !important;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;}
-  .member:hover{transform:translateY(-3px);border-color:rgba(138,75,50,.72) !important;box-shadow:0 24px 48px rgba(0,0,0,.52), 0 0 22px rgba(138,75,50,.14), inset 0 1px 0 rgba(255,255,255,.06);}
-  .fn-doc{border-color:rgba(138,75,50,.38) !important;box-shadow:0 18px 34px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.04);}
-  .reel{border-color:rgba(138,75,50,.35) !important;}
-  .reel:hover,.reel:focus-within{transform:translateY(-2px);box-shadow:0 22px 45px rgba(0,0,0,.55), 0 0 24px rgba(138,75,50,.16), inset 0 1px 0 rgba(255,255,255,.06);}
+  .genre-tag{
+    border-color:rgba(138,75,50,.55) !important;
+    box-shadow:0 14px 30px rgba(0,0,0,.50), inset 0 1px 0 rgba(255,255,255,.04) !important;
+  }
+  .genre-tag.hot{color:#D9D2C3 !important;border-color:rgba(255,138,42,.48) !important;}
+  .log{border-color:rgba(138,75,50,.46) !important;}
+  .log-head{
+    background:linear-gradient(180deg, rgba(46,36,27,.88), rgba(13,10,8,.94));
+    box-shadow:inset 0 -1px 0 rgba(0,0,0,.65), 0 8px 18px rgba(0,0,0,.25);
+  }
+  .track{
+    background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(0,0,0,.14));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+  }
+  .track:hover{
+    background:linear-gradient(180deg, rgba(138,75,50,.16), rgba(0,0,0,.18)) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 10px 20px rgba(0,0,0,.22) !important;
+  }
+  .track.active{
+    background:linear-gradient(180deg, rgba(138,75,50,.20), rgba(0,0,0,.22)) !important;
+    box-shadow:
+      inset 5px 0 0 #8A4B32,
+      inset 0 1px 0 rgba(255,255,255,.06),
+      0 12px 26px rgba(0,0,0,.35) !important;
+  }
+  .member,
+  .fn-doc,
+  .reel{
+    border-color:rgba(138,75,50,.44) !important;
+  }
+  .member{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;}
+  .member:hover{
+    transform:translateY(-4px);
+    border-color:rgba(138,75,50,.82) !important;
+    box-shadow:
+      0 34px 70px rgba(0,0,0,.68),
+      0 0 28px rgba(138,75,50,.18),
+      inset 0 1px 0 rgba(255,255,255,.08),
+      inset 0 -1px 0 rgba(0,0,0,.72) !important;
+  }
+  .fn-doc{
+    background:linear-gradient(180deg, rgba(18,15,12,.99), rgba(5,5,4,.99)) !important;
+    box-shadow:
+      0 30px 60px rgba(0,0,0,.66),
+      0 9px 22px rgba(0,0,0,.46),
+      inset 0 1px 0 rgba(255,255,255,.055),
+      inset 0 0 0 1px rgba(138,75,50,.08) !important;
+  }
+  .reel:hover,.reel:focus-within{
+    transform:translateY(-3px);
+    box-shadow:
+      0 34px 70px rgba(0,0,0,.68),
+      0 0 28px rgba(138,75,50,.20),
+      inset 0 1px 0 rgba(255,255,255,.08) !important;
+  }
 
-  /* Button rebuild: flatter, dirtier, more record-label */
+  /* Button rebuild: heavier shade, still flatter than neon */
   .btn,
   #bookingLink{
     position:relative !important;
     display:inline-flex !important;
     align-items:center !important;
     justify-content:center !important;
-    min-height:48px !important;
-    padding:13px 24px !important;
-    border:1px solid rgba(138,75,50,.90) !important;
+    min-height:50px !important;
+    padding:14px 25px !important;
+    border:1px solid rgba(138,75,50,.96) !important;
     border-radius:2px !important;
-    background:linear-gradient(180deg, rgba(25,21,17,.96), rgba(8,7,6,.98)) !important;
+    background:linear-gradient(180deg, rgba(33,26,20,.98), rgba(5,5,4,.99)) !important;
     color:#D9D2C3 !important;
     font-family:'Special Elite', monospace !important;
     font-size:.74rem !important;
@@ -90,7 +138,12 @@ export default async (request, context) => {
     text-transform:uppercase !important;
     text-decoration:none !important;
     text-shadow:none !important;
-    box-shadow:0 12px 24px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.055), inset 0 0 0 1px rgba(255,194,122,.035) !important;
+    box-shadow:
+      0 20px 38px rgba(0,0,0,.62),
+      0 6px 13px rgba(0,0,0,.48),
+      inset 0 1px 0 rgba(255,255,255,.075),
+      inset 0 -2px 0 rgba(0,0,0,.62),
+      inset 0 0 0 1px rgba(255,194,122,.045) !important;
     overflow:hidden !important;
   }
   .btn::before,
@@ -99,32 +152,40 @@ export default async (request, context) => {
     position:absolute !important;
     inset:0 !important;
     pointer-events:none !important;
-    opacity:.22 !important;
-    background:linear-gradient(110deg, transparent 0%, rgba(217,210,195,.16) 28%, transparent 46%, rgba(138,75,50,.16) 100%) !important;
+    opacity:.25 !important;
+    background:linear-gradient(110deg, transparent 0%, rgba(217,210,195,.18) 26%, transparent 45%, rgba(138,75,50,.20) 100%) !important;
   }
   .btn:hover,
   .btn:focus-visible,
   #bookingLink:hover,
   #bookingLink:focus-visible{
     color:#F0E6D2 !important;
-    border-color:rgba(217,210,195,.72) !important;
-    background:linear-gradient(180deg, rgba(39,29,22,.98), rgba(13,10,8,.98)) !important;
-    transform:translateY(-1px) !important;
-    box-shadow:0 16px 30px rgba(0,0,0,.52), 0 0 18px rgba(138,75,50,.20), inset 0 1px 0 rgba(255,255,255,.07) !important;
+    border-color:rgba(217,210,195,.75) !important;
+    background:linear-gradient(180deg, rgba(48,35,25,.99), rgba(10,8,6,.99)) !important;
+    transform:translateY(-2px) !important;
+    box-shadow:
+      0 26px 48px rgba(0,0,0,.70),
+      0 0 22px rgba(138,75,50,.24),
+      inset 0 1px 0 rgba(255,255,255,.09),
+      inset 0 -2px 0 rgba(0,0,0,.60) !important;
   }
   .btn.solid,
   #zipBtn{
-    background:linear-gradient(180deg, #5b2119, #24100c) !important;
-    border-color:rgba(166,85,55,.95) !important;
+    background:linear-gradient(180deg, #6c281e, #210d09) !important;
+    border-color:rgba(166,85,55,1) !important;
     color:#F0E6D2 !important;
-    box-shadow:0 14px 30px rgba(0,0,0,.50), 0 0 20px rgba(138,75,50,.14), inset 0 1px 0 rgba(255,255,255,.06) !important;
+    box-shadow:
+      0 24px 48px rgba(0,0,0,.68),
+      0 0 24px rgba(138,75,50,.20),
+      inset 0 1px 0 rgba(255,255,255,.08),
+      inset 0 -2px 0 rgba(0,0,0,.62) !important;
   }
   .btn.solid:hover,
   #zipBtn:hover,
   .btn.solid:focus-visible,
   #zipBtn:focus-visible{
-    background:linear-gradient(180deg, #733022, #2c120e) !important;
-    border-color:rgba(217,210,195,.64) !important;
+    background:linear-gradient(180deg, #7d3324, #2a100b) !important;
+    border-color:rgba(217,210,195,.66) !important;
   }
   .cta-row{gap:12px !important;}
 
