@@ -7,6 +7,7 @@ export default async (request, context) => {
 
   html = html.replace('file: "12 - Crazy Girl Crazy Night.mp3"', 'file: "12 - Crazy Girl, Crazy Night.mp3"');
   html = html.replace('file: "who so ever will church..mp3"', 'file: "who  so ever will church..mp3"');
+  html = html.replace('<div class="cta-row" style="margin-top:14px">\n      <a class="btn" href="wall.html">The Wall</a>\n      <a class="btn" href="dirt-road.html">The Dirt Road</a>\n    </div>', '<div class="cta-row" style="margin-top:14px">\n      <a class="btn" href="glass-rose-sessions.html">The Glass Rose Sessions</a>\n      <a class="btn" href="wall.html">The Wall</a>\n      <a class="btn" href="dirt-road.html">The Dirt Road</a>\n    </div>');
 
   const mediaSrc = String.fromCharCode(47,119,97,114,110,105,110,103,45,115,105,103,110,46,109,112,52);
   const mediaTag = '<video class="album-bg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="' + mediaSrc + '" type="video/mp4"></video>';
