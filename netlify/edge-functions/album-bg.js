@@ -4,6 +4,8 @@ export default async (request, context) => {
   if (!t.includes("text/html")) return r;
 
   let h = await r.text();
+  h = h.replace(/(<div class="cta-row" style="margin-top:14px">\s*)(<a class="btn" href="wall\.html">The Wall<\/a>)/, '$1<a class="btn" href="glass-rose-sessions.html">The Glass Rose Sessions</a>\n      $2');
+
   const src = String.fromCharCode(47,119,97,114,110,105,110,103,45,115,105,103,110,46,109,112,52);
 
   const css = `
