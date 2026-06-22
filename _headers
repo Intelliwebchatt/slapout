@@ -1,11 +1,37 @@
-# Long cache for static media — speeds up repeat visits
+# Netlify headers for The Ryder McCoy Band site
+# Long cache for static media — speeds up repeat visits.
+
+# Preload main visual assets for key pages.
+# This helps the browser discover CSS/background images earlier.
+/
+  Link: </hero-stage.jpg>; rel=preload; as=image
+
+/index.html
+  Link: </hero-stage.jpg>; rel=preload; as=image
+
+/warning.html
+  Link: </warning-cover.jpg>; rel=preload; as=image
+
+/glass-rose.html
+  Link: </glass-rose-bg.jpg>; rel=preload; as=image
+
 /*.jpg
   Cache-Control: public, max-age=31536000, immutable
+
 /*.jpeg
   Cache-Control: public, max-age=31536000, immutable
+
 /*.png
   Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.mp3
   Cache-Control: public, max-age=31536000, immutable
+
 /*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
   Cache-Control: public, max-age=31536000, immutable
