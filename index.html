@@ -258,7 +258,7 @@ section[id],header[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center 22%;
+  object-position:center center;
 }
 .hero::before{
   content:"";
@@ -328,7 +328,7 @@ section[id],header[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
   gap:14px;
   width:100%;
   max-width:430px;
-  margin:32px auto 0;
+  margin:34px auto 0;
 }
 .btn{
   min-height:58px;
@@ -341,32 +341,29 @@ section[id],header[id]{scroll-margin-top:calc(var(--nav-h) + 12px)}
   text-transform:uppercase;
   letter-spacing:.12em;
   font-size:.95rem;
+  line-height:1.2;
   border:1px solid var(--neon);
   color:var(--neon-hot);
-  background:rgba(0,0,0,.35);
+  background:rgba(0,0,0,.28);
   cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s,transform .12s;
 }
-.btn:hover,.btn:focus-visible{background:rgba(255,138,42,.12);border-color:var(--neon-hot)}
-.btn:active{transform:scale(.98)}
 .btn.solid{background:var(--crimson);border-color:var(--crimson);color:var(--bone)}
-.btn.solid:hover,.btn.solid:focus-visible{background:#c22727;color:var(--bone)}
+.btn:hover,.btn:focus-visible{border-color:var(--neon-hot);color:var(--bone)}
+.btn:active{transform:scale(.98)}
+.btn .arrow{font-size:1rem}
 
 /* Sections */
-section{padding:72px 0;border-top:1px solid var(--line)}
+section{padding:68px 0;border-top:1px solid var(--line)}
 .sec-label{
   font-family:'Special Elite','Courier New',monospace;
   color:var(--neon);
-  font-size:.85rem;
-  letter-spacing:.2em;
+  font-size:.82rem;
+  letter-spacing:.18em;
   text-transform:uppercase;
   margin-bottom:14px;
 }
 .sec-title{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:18px;color:var(--bone)}
 .lede{color:var(--ash);max-width:62ch}
-
-/* Reveal classes are now passive. No scroll animation cost. */
-.reveal,.reveal-d1,.reveal-d2,.reveal-d3,.reveal-d4{opacity:1;transform:none}
 
 /* Genre Strip */
 .genre-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--smoke);overflow:hidden}
@@ -393,38 +390,100 @@ section{padding:72px 0;border-top:1px solid var(--line)}
   background:var(--smoke);
   overflow:hidden;
   color:inherit;
-  transition:border-color .2s,box-shadow .2s;
 }
-.record-card:hover{border-color:var(--neon);box-shadow:0 14px 36px rgba(0,0,0,.38)}
-.card-glare{display:none}
+.record-card:hover{border-color:var(--neon)}
 .record-cover{aspect-ratio:16/10;position:relative;background:#000;overflow:hidden}
-.record-cover img{width:100%;height:100%;object-fit:cover;opacity:1}
-.record-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(11,10,8,.78),transparent 58%);pointer-events:none;z-index:2}
+.record-cover img{width:100%;height:100%;object-fit:cover}
+.record-cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(11,10,8,.85),transparent 60%);
+  pointer-events:none;
+}
 .record-body{padding:16px 18px 18px;position:relative;z-index:3}
-.record-kicker{font-family:'Special Elite','Courier New',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
-.record-name{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;font-size:1.5rem;letter-spacing:.02em;color:var(--bone);line-height:1;margin-top:6px}
-.record-meta{font-family:'Special Elite','Courier New',monospace;font-size:.72rem;color:var(--neon-hot);margin-top:8px;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
-.record-meta .play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid var(--neon-hot)}
-.record-badge{position:absolute;top:10px;right:10px;z-index:6;font-family:'Special Elite','Courier New',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#08070a;background:var(--neon);padding:4px 8px}
-.record-card.is-rose:hover{border-color:var(--rose);box-shadow:0 14px 36px rgba(255,59,107,.12)}
-.record-card.is-rose .record-badge{background:var(--rose);color:#08070a}
+.record-kicker{
+  font-family:'Special Elite','Courier New',monospace;
+  font-size:.62rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ash);
+}
+.record-name{
+  font-family:'Anton',Impact,sans-serif;
+  text-transform:uppercase;
+  font-size:1.5rem;
+  letter-spacing:.02em;
+  color:var(--bone);
+  line-height:1;
+  margin-top:6px;
+}
+.record-meta{
+  font-family:'Special Elite','Courier New',monospace;
+  font-size:.72rem;
+  color:var(--neon-hot);
+  margin-top:8px;
+  letter-spacing:.04em;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid var(--neon-hot)}
+.record-badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:6;
+  font-family:'Special Elite','Courier New',monospace;
+  font-size:.58rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#08070a;
+  background:var(--rose);
+  padding:4px 8px;
+}
+.record-card.is-rose:hover{border-color:var(--rose)}
 .record-card.is-rose .record-meta{color:var(--rose-soft)}
 .record-card.is-rose .play-icon{border-left-color:var(--rose-soft)}
 
-/* Background Photo Sections - no fixed/parallax */
-.bg-photo{position:relative;border-top:1px solid var(--line);background:var(--asphalt);overflow:hidden}
+/* Background photo sections */
+.bg-photo{position:relative;border-top:1px solid var(--line);overflow:hidden}
 .bg-photo>.wrap{position:relative;z-index:2}
-.bg-photo::before{content:"";position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:.58}
-.bg-photo::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(11,10,8,.96) 0%,rgba(11,10,8,.78) 38%,rgba(11,10,8,.86) 72%,var(--asphalt) 100%)}
+.bg-photo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.bg-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(to bottom,rgba(11,10,8,.94) 0%,rgba(11,10,8,.78) 35%,rgba(11,10,8,.82) 70%,var(--asphalt) 100%);
+}
 #story.bg-photo::before{background-image:url("rain.road.jpg?v=2")}
 #band.bg-photo::before{background-image:url("slapouttp.png?v=2")}
 
 /* Band Grid */
 .band-grid{display:grid;gap:18px;margin-top:38px}
-.member{border:1px solid var(--line);background:rgba(23,19,16,.84);padding:24px;transition:border-color .2s,transform .2s,box-shadow .2s}
-.member:hover{border-color:rgba(255,138,42,.3);transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.24)}
+.member{
+  border:1px solid var(--line);
+  background:rgba(23,19,16,.86);
+  padding:24px;
+}
 .member h3{font-size:1.25rem;color:var(--neon-hot);margin-bottom:4px}
-.member .role{font-family:'Special Elite','Courier New',monospace;font-size:.75rem;color:var(--ash);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.member .role{
+  font-family:'Special Elite','Courier New',monospace;
+  font-size:.75rem;
+  color:var(--ash);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
 .member p{font-size:.95rem;color:var(--bone)}
 
 /* Figure */
@@ -443,21 +502,29 @@ section{padding:72px 0;border-top:1px solid var(--line)}
   font-size:1rem;
   padding:16px 14px 8px;
   border-radius:2px;
-  transition:border-color .2s,box-shadow .2s;
 }
-.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--neon);box-shadow:0 0 0 3px rgba(255,138,42,.1)}
-.field label{position:absolute;top:50%;left:14px;transform:translateY(-50%);font-family:'Special Elite','Courier New',monospace;font-size:.82rem;letter-spacing:.08em;color:var(--ash);pointer-events:none;transition:all .2s ease;padding:0 2px}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--neon)}
+.field label{
+  position:absolute;
+  top:50%;
+  left:14px;
+  transform:translateY(-50%);
+  font-family:'Special Elite','Courier New',monospace;
+  font-size:.82rem;
+  letter-spacing:.08em;
+  color:var(--ash);
+  pointer-events:none;
+  transition:all .2s ease;
+}
 .field textarea~label{top:16px;transform:none}
-.field input:focus+label,.field input:not(:placeholder-shown)+label,
-.field textarea:focus+label,.field textarea:not(:placeholder-shown)+label,
-.field select:focus+label,.field select:not([data-empty])+label{
+.field:has(input:focus) label,.field:has(input:not(:placeholder-shown)) label,
+.field:has(textarea:focus) label,.field:has(textarea:not(:placeholder-shown)) label{
   top:6px;
   transform:none;
   font-size:.58rem;
   letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--neon);
-  background:var(--smoke);
 }
 .field textarea{resize:vertical;min-height:120px}
 .field select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239a8f7e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
@@ -473,8 +540,8 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
 /* Back to Top */
 .btt{
   position:fixed;
-  bottom:24px;
-  right:24px;
+  bottom:20px;
+  right:20px;
   width:44px;
   height:44px;
   border-radius:50%;
@@ -488,15 +555,14 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
   z-index:100;
   opacity:0;
   transform:translateY(10px);
-  transition:opacity .25s,transform .25s,background .2s,color .2s;
+  transition:opacity .25s ease,transform .25s ease;
   pointer-events:none;
 }
 .btt.show{opacity:1;transform:translateY(0);pointer-events:auto}
-.btt:hover{background:var(--neon);color:var(--asphalt);border-color:var(--neon)}
 
 /* Toast */
 #toastBox{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10001;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
-.toast{font-family:'Special Elite','Courier New',monospace;font-size:.85rem;letter-spacing:.04em;padding:14px 24px;border-radius:3px;pointer-events:auto;opacity:0;transform:translateY(16px);transition:opacity .25s,transform .25s;white-space:nowrap}
+.toast{font-family:'Special Elite','Courier New',monospace;font-size:.85rem;letter-spacing:.04em;padding:14px 20px;border-radius:3px;pointer-events:auto;opacity:0;transform:translateY(16px);transition:all .25s ease;white-space:nowrap}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.ok{background:rgba(26,38,18,.96);border:1px solid rgba(80,140,50,.4);color:#a8d86e}
 .toast.err{background:rgba(45,18,18,.96);border:1px solid rgba(180,50,50,.4);color:#ff8a8a}
@@ -524,7 +590,7 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  *{transition:none!important;animation:none!important}
 }
 </style>
 </head>
@@ -559,14 +625,16 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
 <!-- Hero -->
 <header class="hero" id="top">
   <picture class="hero-media">
-    <!-- Replace hero-stage.jpg with hero-mobile.webp / hero-desktop.webp later if you add optimized versions. -->
+    <!-- Mobile uses embedded optimized hero. Desktop keeps the existing wide stage image. -->
     <source media="(min-width: 769px)" srcset="hero-stage.jpg">
-    <img src="hero-stage.jpg" alt="The Ryder McCoy Band on stage" width="1400" height="1800" fetchpriority="high" decoding="async">
+    <img src="DATA_URI_PLACEHOLDER" alt="The Ryder McCoy Band on stage" width="941" height="1672" fetchpriority="high" decoding="async">
   </picture>
 
   <div class="hero-content">
     <p class="eyebrow type">Slapout, Alabama &middot; Biloxi Blues Records</p>
-    <h1 class="neon" aria-label="The Ryder McCoy Band">THE RYDER<br>McCOY BAND</h1>
+    <div class="neon-wrap">
+      <h1 class="neon" aria-label="The Ryder McCoy Band">THE RYDER<br>McCOY BAND</h1>
+    </div>
     <h2 class="display">Free Albums From The Backroads</h2>
     <p class="tag">Outlaw country, swamp blues, and slow trap drums with dirt under their nails.</p>
     <div class="cta-row">
@@ -584,13 +652,11 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
     <p class="lede">The homepage is now the front door. Full players live on their own album pages so the site loads cleaner and the records stand on their own.</p>
     <div class="record-grid">
       <a class="record-card" href="warning.html" aria-label="The Warning">
-        <div class="card-glare" aria-hidden="true"></div>
         <div class="record-cover"><img src="warning-cover.jpg" alt="The Warning album cover" loading="lazy" decoding="async" width="1400" height="875"></div>
         <div class="record-body"><div class="record-kicker">Record One</div><div class="record-name">The Warning</div><div class="record-meta"><span class="play-icon" aria-hidden="true"></span>14 Tracks &middot; Free</div></div>
       </a>
       <a class="record-card is-rose" href="glass-rose.html" aria-label="The Glass Rose Sessions">
         <span class="record-badge">New</span>
-        <div class="card-glare" aria-hidden="true"></div>
         <div class="record-cover"><img src="glass-rose-cover.jpg" alt="The Glass Rose Sessions album cover" loading="lazy" decoding="async" width="1400" height="875"></div>
         <div class="record-body"><div class="record-kicker">Record Two</div><div class="record-name">The Glass Rose Sessions</div><div class="record-meta"><span class="play-icon" aria-hidden="true"></span>14 Tracks &middot; Free</div></div>
       </a>
@@ -660,13 +726,7 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
         <label for="cf-email">Email</label>
       </div>
       <div class="field">
-        <select id="cf-subject" name="subject" data-empty>
-          <option value="Booking">Booking</option>
-          <option value="Press / Interview">Press / Interview</option>
-          <option value="Licensing">Licensing</option>
-          <option value="Just saying hey">Just saying hey</option>
-          <option value="Other">Other</option>
-        </select>
+        <select id="cf-subject" name="subject"><option>Booking</option><option>Press / Interview</option><option>Licensing</option><option>Just saying hey</option><option>Other</option></select>
         <label for="cf-subject">Reason</label>
       </div>
       <div class="field">
@@ -679,7 +739,6 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <p class="label-mark">Biloxi Blues Records</p>
   <p>The Ryder McCoy Band &middot; Slapout, Alabama</p>
@@ -687,7 +746,6 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
   <p class="backroads">No fake saints. No clean endings. Backroads know.</p>
 </footer>
 
-<!-- Back to Top -->
 <button class="btt" id="bttBtn" aria-label="Back to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
 </button>
@@ -700,11 +758,9 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
 
   var path = location.pathname.split('/').pop().toLowerCase();
   if(!path) path = "index.html";
-
   document.querySelectorAll('.slap-nav a[data-page]').forEach(function(a){
     if(a.getAttribute('data-page').toLowerCase() === path) a.classList.add('here');
   });
-
   document.querySelectorAll('.mobile-menu a[data-mm]').forEach(function(a){
     if(a.getAttribute('data-mm').toLowerCase() === path) a.style.color = 'var(--neon-hot)';
   });
@@ -712,7 +768,6 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
   var hamburger = document.getElementById('hamburgerBtn');
   var mobileMenu = document.getElementById('mobileMenu');
   var menuOpen = false;
-
   function toggleMenu(){
     menuOpen = !menuOpen;
     hamburger.classList.toggle('open', menuOpen);
@@ -720,35 +775,35 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
     mobileMenu.classList.toggle('open', menuOpen);
     document.body.style.overflow = menuOpen ? 'hidden' : '';
   }
-
-  hamburger.addEventListener('click', toggleMenu);
-  mobileMenu.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ if(menuOpen) toggleMenu(); });
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && menuOpen) toggleMenu();
-  });
+  if(hamburger && mobileMenu){
+    hamburger.addEventListener('click', toggleMenu);
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ if(menuOpen) toggleMenu(); });
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && menuOpen) toggleMenu(); });
+  }
 
   var progressBar = document.getElementById('scrollProgress');
   var bttBtn = document.getElementById('bttBtn');
   var ticking = false;
-
   function onScroll(){
     if(!ticking){
       requestAnimationFrame(function(){
         var scrollTop = window.scrollY || document.documentElement.scrollTop;
         var docHeight = document.documentElement.scrollHeight - window.innerHeight;
         var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        progressBar.style.width = pct + '%';
-        bttBtn.classList.toggle('show', scrollTop > 600);
+        if(progressBar) progressBar.style.width = pct + '%';
+        if(bttBtn) bttBtn.classList.toggle('show', scrollTop > 600);
         ticking = false;
       });
       ticking = true;
     }
   }
-
   window.addEventListener('scroll', onScroll, {passive:true});
-  bttBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  if(bttBtn){
+    bttBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
 
   var form = document.getElementById('contactForm');
   if(form){
@@ -757,40 +812,25 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
       var name = form.querySelector('#cf-name').value.trim();
       var email = form.querySelector('#cf-email').value.trim();
       var msg = form.querySelector('#cf-msg').value.trim();
-
-      if(!name || !email || !msg){
-        showToast('Please fill in all required fields.', 'err');
-        return;
-      }
-      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-        showToast('Please enter a valid email address.', 'err');
-        return;
-      }
-
+      if(!name || !email || !msg){ showToast('Please fill in all required fields.', 'err'); return; }
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('Please enter a valid email address.', 'err'); return; }
       fetch('/', {
-        method: 'POST',
-        headers: {'Content-Type':'application/x-www-form-urlencoded'},
-        body: new URLSearchParams(new FormData(form)).toString()
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams(new FormData(form)).toString()
       }).then(function(res){
-        if(res.ok) {
-          showToast('Message sent. We\'ll be in touch.', 'ok');
-          form.reset();
-          var sel = document.getElementById('cf-subject');
-          if(sel) sel.setAttribute('data-empty','');
-        } else {
-          throw new Error('Network error');
-        }
+        if(res.ok){ showToast('Message sent. We\'ll be in touch.', 'ok'); form.reset(); }
+        else throw new Error('Network error');
       }).catch(function(){
         showToast('Message sent. We\'ll be in touch.', 'ok');
         form.reset();
-        var sel = document.getElementById('cf-subject');
-        if(sel) sel.setAttribute('data-empty','');
       });
     });
   }
 
   function showToast(message, type){
     var box = document.getElementById('toastBox');
+    if(!box) return;
     var t = document.createElement('div');
     t.className = 'toast ' + (type || 'ok');
     t.textContent = message;
@@ -799,17 +839,11 @@ footer .backroads{margin-top:12px;color:var(--bone);letter-spacing:.04em;font-st
     setTimeout(function(){
       t.classList.remove('show');
       setTimeout(function(){ t.remove(); }, 300);
-    }, 3800);
+    }, 4000);
   }
 
   var yr = document.getElementById('yr');
   if(yr) yr.textContent = new Date().getFullYear();
-
-  var sel = document.getElementById('cf-subject');
-  if(sel){
-    sel.addEventListener('change', function(){ sel.removeAttribute('data-empty'); });
-  }
-
   onScroll();
 })();
 </script>
