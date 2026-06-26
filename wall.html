@@ -22,11 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --asphalt:#0b0a08;--smoke:#171310;--panel:#1d1813;
-    --neon:#ff8a2a;--neon-hot:#ffc27a;--crimson:#a31f1f;
-    --bone:#e9e0cf;--ash:#9a8f7e;--line:#2c241c;
-  }
+  :root{--asphalt:#0b0a08;--smoke:#171310;--panel:#1d1813;--neon:#ff8a2a;--neon-hot:#ffc27a;--crimson:#a31f1f;--bone:#e9e0cf;--ash:#9a8f7e;--line:#2c241c}
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--asphalt);color:var(--bone);font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -35,15 +31,10 @@
   .display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.04em}
   .type{font-family:'Special Elite',monospace}
   .wrap{max-width:880px;margin:0 auto;padding:0 20px}
-
-  /* header */
   .wall-head{text-align:center;padding:70px 20px 30px;border-bottom:1px solid var(--line)}
   .wall-head .eyebrow{color:var(--neon);font-family:'Special Elite',monospace;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:18px}
-  .wall-head h1{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(2.4rem,9vw,4.6rem);line-height:.95;letter-spacing:.03em;color:var(--neon-hot);
-    text-shadow:0 0 6px rgba(255,170,90,.8),0 0 24px rgba(255,138,42,.5),0 0 70px rgba(255,138,42,.3)}
+  .wall-head h1{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(2.4rem,9vw,4.6rem);line-height:.95;letter-spacing:.03em;color:var(--neon-hot);text-shadow:0 0 6px rgba(255,170,90,.8),0 0 24px rgba(255,138,42,.5),0 0 70px rgba(255,138,42,.3)}
   .wall-head p{color:var(--ash);max-width:48ch;margin:22px auto 0;font-style:italic}
-
-  /* puller */
   .puller{padding:54px 20px;border-bottom:1px solid var(--line);background:var(--smoke)}
   .puller .card{max-width:760px;margin:0 auto;border:1px solid var(--line);background:var(--asphalt);padding:40px 28px 30px;position:relative;text-align:center}
   .puller .card::before{content:"PULLED AT RANDOM";position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--asphalt);padding:0 10px;font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.24em;color:var(--neon)}
@@ -57,8 +48,6 @@
   :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
   .copied{font-family:'Special Elite',monospace;font-size:.74rem;color:var(--neon);letter-spacing:.1em;margin-top:14px;height:1em;opacity:0;transition:opacity .2s}
   .copied.show{opacity:1}
-
-  /* archive */
   .archive{padding:64px 0 90px}
   .archive .sec-label{font-family:'Special Elite',monospace;color:var(--neon);font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
   .archive h2{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(1.7rem,5vw,2.4rem);color:var(--bone);margin-bottom:6px}
@@ -68,80 +57,38 @@
   .chip:hover{color:var(--neon-hot);border-color:var(--neon)}
   .chip.on{color:#1a0e02;background:var(--neon);border-color:var(--neon)}
   .spines{border-top:1px solid var(--line)}
-  .spine{display:block;width:100%;text-align:left;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--bone);
-    padding:20px 4px;cursor:pointer;font-family:Georgia,serif;font-size:1.08rem;line-height:1.45;transition:background .15s,padding-left .15s;position:relative}
+  .spine{display:block;width:100%;text-align:left;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--bone);padding:20px 4px;cursor:pointer;font-family:Georgia,serif;font-size:1.08rem;line-height:1.45;transition:background .15s,padding-left .15s;position:relative}
   .spine:hover{background:var(--panel);padding-left:14px}
   .spine .src{display:block;font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ash);text-transform:uppercase;margin-top:8px}
   .spine:hover .src{color:var(--neon-hot)}
   .spine .copytag{position:absolute;right:6px;top:20px;font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--neon);opacity:0;text-transform:uppercase}
   .spine:hover .copytag{opacity:.8}
-
   footer{border-top:1px solid var(--line);padding:50px 20px 80px;text-align:center;color:var(--ash);font-size:.9rem}
   footer .label-mark{font-family:'Special Elite',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);margin-bottom:10px}
   footer .fine{font-size:.78rem;margin-top:14px}
   footer a{text-decoration:none}
+  .slap-nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:0;background:rgba(8,7,9,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,138,42,.28);padding:0 8px;min-height:50px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;font-family:'Special Elite',monospace}
+  .slap-nav::-webkit-scrollbar{display:none}
+  .slap-nav-home{flex:0 0 auto;display:flex;align-items:center;gap:7px;text-decoration:none;color:#ffc27a;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:0 14px 0 8px;margin-right:4px;white-space:nowrap;border-right:1px solid rgba(255,138,42,.2)}
+  .slap-nav-home .rose{font-size:.95rem;line-height:1;filter:drop-shadow(0 0 6px rgba(255,59,107,.5))}
+  .slap-nav-links{flex:1 1 auto;display:flex;align-items:center;gap:2px;white-space:nowrap}
+  .slap-nav a.lnk{flex:0 0 auto;text-decoration:none;color:#9a8f7e;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:16px 13px;white-space:nowrap;position:relative;transition:color .2s}
+  .slap-nav a.lnk:hover,.slap-nav a.lnk.here{color:#ffc27a}
+  .slap-nav a.lnk.here::after{content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7)}
 </style>
 </head>
 <body>
-
-<!-- ============================================================
-     SLAPOUT TOP NAV BAR — paste this SAME block into every page,
-     right after the opening <body> tag.
-     It builds itself and highlights whatever page you're on.
-     To add a future record/page, add one line to NAV_LINKS below.
-============================================================ -->
-<style>
-  .slap-nav{
-    position:sticky;top:0;z-index:200;
-    display:flex;align-items:center;gap:0;
-    background:rgba(8,7,9,.92);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,138,42,.28);
-    padding:0 8px;min-height:50px;overflow-x:auto;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none;
-    font-family:'Special Elite',monospace;
-  }
-  .slap-nav::-webkit-scrollbar{display:none}
-  .slap-nav-home{
-    flex:0 0 auto;display:flex;align-items:center;gap:7px;
-    text-decoration:none;color:#ffc27a;
-    font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
-    padding:0 14px 0 8px;margin-right:4px;white-space:nowrap;
-    border-right:1px solid rgba(255,138,42,.2);
-  }
-  .slap-nav-home .rose{font-size:.95rem;line-height:1;filter:drop-shadow(0 0 6px rgba(255,59,107,.5))}
-  .slap-nav-links{flex:1 1 auto;display:flex;align-items:center;gap:2px;white-space:nowrap}
-  .slap-nav a.lnk{
-    flex:0 0 auto;text-decoration:none;color:#9a8f7e;
-    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
-    padding:16px 13px;white-space:nowrap;position:relative;
-    transition:color .2s;
-  }
-  .slap-nav a.lnk:hover{color:#ffc27a}
-  .slap-nav a.lnk.here{color:#ffc27a}
-  .slap-nav a.lnk.here::after{
-    content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;
-    background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7);
-  }
-  .slap-nav a.lnk .new{
-    display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;
-    color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle;
-  }
-</style>
 <nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
 <script>
 (function(){
-  // EDIT THIS LIST to add records/pages. Order = left-to-right.
-  // file: the page filename. label: what shows. new:true adds a NEW tag.
   const NAV_LINKS = [
     { file:"index.html",      label:"Home" },
     { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose", new:true },
-    { file:"fall.html",   label:"The Fall" },
+    { file:"glass-rose.html", label:"The Glass Rose" },
+    { file:"fall.html",       label:"The Fall" },
     { file:"wall.html",       label:"The Wall" },
     { file:"dirt-road.html",  label:"The Dirt Road" }
   ];
-  // which file are we on?
   var path = location.pathname.split('/').pop().toLowerCase();
   if(path === "" || path === "/") path = "index.html";
   var nav = document.getElementById('slapNav');
@@ -149,14 +96,12 @@
   var links = '<div class="slap-nav-links">';
   NAV_LINKS.forEach(function(l){
     var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
+    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+'</a>';
   });
   links += '</div>';
   nav.innerHTML = home + links;
 })();
 </script>
-<!-- ============ END SLAPOUT TOP NAV BAR ============ -->
-
 
 <header class="wall-head">
   <p class="eyebrow">Slapout, Alabama &middot; Biloxi Blues Records</p>
@@ -252,11 +197,23 @@ const WALL = [
   {q:"Heard Gabriel's trumpet from a strip club pole.",s:"The Warning",r:"The Warning"},
   {q:"The Lamb's got a needle stickin' out of its fold.",s:"The Warning",r:"The Warning"},
   {q:"Looking for grace in the chemicals.",s:"That Girl Named Lost",r:"The Warning"},
-  {q:"Somewhere between the cross and the cost, I fell in love with a girl named Lost.",s:"That Girl Named Lost",r:"The Warning"}
+  {q:"Somewhere between the cross and the cost, I fell in love with a girl named Lost.",s:"That Girl Named Lost",r:"The Warning"},
+  {q:"The rattle is not a threat. It is a courtesy. When you hear it and keep walking, it stops being an accident — it becomes a choice.",s:"The Fall",r:"The Fall"},
+  {q:"I'm the warden in this corrugated cell, sellin' tickets to the transfiguration, straight to hell.",s:"Fallen Angels in a Mason Jar",r:"The Fall"},
+  {q:"Said her name was Mercy once, but nobody calls her that these days.",s:"Montgomery Mercy",r:"The Fall"},
+  {q:"Poor is watching a child learn the sound of a drawer opening.",s:"If That Ain't Slapout",r:"The Fall"},
+  {q:"You hear that? That ain't water. That's time. That's God counting.",s:"Drip Dripping",r:"The Fall"},
+  {q:"She ain't sellin' you a heaven. She's rentin' you a door, and the rent comes due each sunrise — always a little more.",s:"Walk Through the Glitter",r:"The Fall"},
+  {q:"This door's been open since you fell asleep.",s:"Get Me Gone",r:"The Fall"},
+  {q:"Some nights I remember her laughing. Some nights I remember fear. Some nights I think those are the same thing.",s:"Jenny in the Porch Light",r:"The Fall"},
+  {q:"It ain't water, it's a ledger. It ain't mercy, it's a mouth. You can't wash it off if it's under the skin — you can only push it farther down.",s:"Gasoline Baptism",r:"The Fall"},
+  {q:"Every carpet hides a kingdom, and every kingdom's ruled by ghosts. The only way out is through the glitter.",s:"Carpet Testament",r:"The Fall"},
+  {q:"Babylon don't fall, boy. It leaks.",s:"Out Here",r:"The Fall"},
+  {q:"Angels follow the rules. Demons knock harder — they knock until the deadbolt breaks, and then they walk right in.",s:"Mary",r:"The Fall"},
+  {q:"That boy never left. He's just wearin' your boots now.",s:"Ten Year Old Eyes",r:"The Fall"}
 ];
 
 (function(){
-  // ---- random puller ----
   var pq = document.getElementById('pullQuote');
   var ps = document.getElementById('pullSrc');
   var last = -1, currentPull = null;
@@ -272,7 +229,6 @@ const WALL = [
     }, 200);
   }
   document.getElementById('pullBtn').addEventListener('click', pull);
-
   var copiedMsg = document.getElementById('copiedMsg');
   function flashCopied(){ copiedMsg.classList.add('show'); setTimeout(function(){ copiedMsg.classList.remove('show'); }, 1400); }
   function copyText(t){
@@ -284,15 +240,12 @@ const WALL = [
     copyText('\u201c'+currentPull.q+'\u201d \u2014 '+currentPull.s+', The Ryder McCoy Band');
   });
   pull();
-
-  // ---- archive + filters ----
   document.getElementById('lineCount').textContent = WALL.length;
   var spines = document.getElementById('spines');
   var filterWrap = document.getElementById('filters');
-  var records = ['All']; 
+  var records = ['All'];
   WALL.forEach(function(w){ if(records.indexOf(w.r)<0) records.push(w.r); });
   var activeFilter = 'All';
-
   function render(){
     spines.innerHTML='';
     WALL.forEach(function(w){
