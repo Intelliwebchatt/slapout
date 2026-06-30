@@ -6,6 +6,7 @@ export default async (request, context) => {
   }
 
   const url = new URL(request.url);
+  const path = url.pathname.toLowerCase();
   let html = await response.text();
 
   // Keep the top nav clean: no New / Soon badges anywhere.
@@ -20,22 +21,24 @@ export default async (request, context) => {
   html = html.replaceAll("url('woods-cover.jpg')", "url('/woods-cover.jpg?v=5')");
 
   // Add a continuous blue police-light reflection to the Woods page only.
-  const path = url.pathname.toLowerCase();
-  if (path === "/woods.html" || path.endsWith("/woods.html")) {
+  if (path === "/woods.html" || path.endsWith("/woods.html") || path === "/woods") {
     const woodsPoliceLights = `<style id="woods-police-light-flash">
-html{background:#05070b}
-body{position:relative;isolation:isolate}
-body:before,body:after{content:"";position:fixed;inset:-18vh -18vw;pointer-events:none;z-index:9997;mix-blend-mode:screen}
-body:before{background:radial-gradient(circle at 82% 18%,rgba(47,145,255,.62) 0 7%,rgba(47,145,255,.24) 15%,transparent 36%),radial-gradient(circle at 18% 72%,rgba(20,95,255,.32) 0 8%,transparent 34%),linear-gradient(115deg,transparent 0 28%,rgba(0,98,255,.20) 44%,transparent 64%);opacity:.14;animation:woodsBluePulse 1.55s infinite steps(2,end)}
-body:after{background:linear-gradient(100deg,transparent 0 35%,rgba(62,153,255,.30) 46%,rgba(14,77,255,.18) 54%,transparent 72%);opacity:.08;filter:blur(10px);animation:woodsBlueSweep 3.1s linear infinite}
-.nav,.album-hero,.hero,.card,.track,.player,.fplayer,.audio-player,footer,section{position:relative;box-shadow:0 0 0 rgba(0,126,255,0);animation:woodsBlueEdge 1.55s infinite steps(2,end)}
-.fplayer,.player,.audio-player{box-shadow:0 -10px 36px rgba(22,119,255,.18),0 0 24px rgba(22,119,255,.16)!important}
-@keyframes woodsBluePulse{0%,100%{opacity:.10}12%{opacity:.36}24%{opacity:.16}38%{opacity:.42}52%{opacity:.12}70%{opacity:.32}}
-@keyframes woodsBlueSweep{0%{transform:translateX(-38%) skewX(-10deg);opacity:.03}35%{opacity:.19}70%{opacity:.06}100%{transform:translateX(38%) skewX(-10deg);opacity:.03}}
-@keyframes woodsBlueEdge{0%,100%{filter:none;box-shadow:0 0 0 rgba(0,126,255,0)}12%,38%,70%{filter:drop-shadow(0 0 9px rgba(41,128,255,.22));box-shadow:0 0 22px rgba(31,123,255,.12)}}
-@media (prefers-reduced-motion: reduce){body:before,body:after,.nav,.album-hero,.hero,.card,.track,.player,.fplayer,.audio-player,footer,section{animation:none!important}body:before{opacity:.18}}
+html{background:#030712!important}
+body{position:relative!important;isolation:auto!important}
+#woodsBluePoliceFlash{position:fixed!important;inset:0!important;z-index:2147483000!important;pointer-events:none!important;background:radial-gradient(circle at 88% 15%,rgba(77,166,255,.95) 0 5%,rgba(77,166,255,.55) 10%,transparent 31%),radial-gradient(circle at 10% 85%,rgba(19,100,255,.55) 0 7%,transparent 28%),linear-gradient(112deg,transparent 0 30%,rgba(29,124,255,.42) 43%,rgba(88,179,255,.24) 52%,transparent 68%);mix-blend-mode:screen!important;opacity:.18;animation:woodsPoliceStrobe 1.05s infinite steps(2,end),woodsPoliceSweep 2.6s linear infinite;filter:blur(.2px) saturate(1.25)}
+#woodsBluePoliceFlash:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,135,255,.18),transparent 18%,transparent 62%,rgba(31,104,255,.22));opacity:.55;animation:woodsPoliceBlink .7s infinite steps(2,end)}
+.nav,.slap-nav,.album-hero,.hero,.cover,.card,.track,.song-card,.player,.fplayer,.audio-player,.deck,footer,section{animation:woodsPoliceGlow 1.05s infinite steps(2,end)!important}
+.fplayer,.player,.audio-player,.deck{box-shadow:0 -10px 42px rgba(36,142,255,.35),0 0 34px rgba(36,142,255,.24)!important}
+@keyframes woodsPoliceStrobe{0%,100%{opacity:.12}10%{opacity:.58}20%{opacity:.18}34%{opacity:.66}50%{opacity:.14}66%{opacity:.50}82%{opacity:.20}}
+@keyframes woodsPoliceBlink{0%,100%{opacity:.20}45%{opacity:.78}70%{opacity:.32}}
+@keyframes woodsPoliceSweep{0%{transform:translateX(-12%) skewX(-8deg)}50%{transform:translateX(9%) skewX(-8deg)}100%{transform:translateX(-12%) skewX(-8deg)}}
+@keyframes woodsPoliceGlow{0%,100%{filter:none}10%,34%,66%{filter:drop-shadow(0 0 12px rgba(70,156,255,.45)) brightness(1.08)}}
+@media (prefers-reduced-motion: reduce){#woodsBluePoliceFlash,.nav,.slap-nav,.album-hero,.hero,.cover,.card,.track,.song-card,.player,.fplayer,.audio-player,.deck,footer,section{animation:none!important}#woodsBluePoliceFlash{opacity:.24!important}}
 </style>`;
     html = html.replace("</head>", woodsPoliceLights + "</head>");
+    if (!html.includes('id="woodsBluePoliceFlash"')) {
+      html = html.replace("<body>", '<body><div id="woodsBluePoliceFlash" aria-hidden="true"></div>');
+    }
   }
 
   // Add Welcome to the Woods to plain static nav rows when a page does not have it yet.
