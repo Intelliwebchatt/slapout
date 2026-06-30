@@ -13,6 +13,12 @@ export default async (request, context) => {
   html = html.replaceAll('<span class="new">Soon</span>', '');
   html = html.replaceAll('<span class="new">Coming Soon</span>', '');
 
+  // Force fresh Woods cover loading on pages/cards after upload/cache changes.
+  html = html.replaceAll('src="woods-cover.jpg"', 'src="/woods-cover.jpg?v=3"');
+  html = html.replaceAll('poster="woods-cover.jpg"', 'poster="/woods-cover.jpg?v=3"');
+  html = html.replaceAll("url('woods-cover.jpg')", "url('/woods-cover.jpg?v=3')");
+  html = html.replaceAll('content="https://rydermccoy.com/woods-cover.jpg"', 'content="https://rydermccoy.com/woods-cover.jpg?v=3"');
+
   // Keep the homepage hero on the Ryder McCoy logo art and restore the clean logo-button version.
   if (url.pathname === "/" || url.pathname.endsWith("/index.html")) {
     html = html.replaceAll(
@@ -71,7 +77,7 @@ export default async (request, context) => {
 
   // Add the new album card to the home page records grid when the source page does not have it yet.
   if ((url.pathname === "/" || url.pathname.endsWith("/index.html")) && !html.includes('href="woods.html"')) {
-    const woodsCard = '<a class="card" href="woods.html"><div class="cover"><img src="woods-cover.jpg" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a>';
+    const woodsCard = '<a class="card" href="woods.html"><div class="cover"><img src="/woods-cover.jpg?v=3" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a>';
     html = html.replace(
       '</div></div></section><div class="strip">',
       woodsCard + '</div></div></section><div class="strip">'
