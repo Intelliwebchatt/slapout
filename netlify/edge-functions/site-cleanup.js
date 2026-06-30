@@ -13,6 +13,26 @@ export default async (request, context) => {
   html = html.replaceAll('<span class="new">Soon</span>', '');
   html = html.replaceAll('<span class="new">Coming Soon</span>', '');
 
+  // Keep the homepage hero on the Ryder McCoy logo art, not the old band/stage art.
+  if (url.pathname === "/" || url.pathname.endsWith("/index.html")) {
+    html = html.replaceAll(
+      "background-image:url('hero-mobile.png?v=7'),url('hero-stage.jpg')",
+      "background-image:url('ryder-mccoy-logo-hero-square.webp?v=4'),url('ryder-mccoy-logo-hero-wide-2.webp?v=4')"
+    );
+    html = html.replaceAll(
+      "background-image:url('hero-stage.jpg')",
+      "background-image:url('ryder-mccoy-logo-hero-wide-2.webp?v=4')"
+    );
+    html = html.replaceAll(
+      "background-size:cover,cover;background-position:center 30%,center 22%;background-repeat:no-repeat",
+      "background-size:contain,cover;background-position:center center,center center;background-repeat:no-repeat"
+    );
+    html = html.replaceAll(
+      "background-position:center 22%}.hero-img:after",
+      "background-size:contain;background-position:center 34%;background-repeat:no-repeat}.hero-img:after"
+    );
+  }
+
   // Add Welcome to the Woods to plain static nav rows.
   if (!html.includes('href="woods.html"')) {
     html = html.replaceAll(
@@ -43,7 +63,7 @@ export default async (request, context) => {
 
   // Add the new album card to the home page records grid when the source page does not have it yet.
   if ((url.pathname === "/" || url.pathname.endsWith("/index.html")) && !html.includes('href="woods.html"')) {
-    const woodsCard = '<a class="card" href="woods.html"><div class="cover"><img src="woods-cover.jpg" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a>';
+    const woodsCard = '<a class="card" href="woods.html"><div class="cover"><img src="woods-cover.png" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a>';
     html = html.replace(
       '</div></div></section><div class="strip">',
       woodsCard + '</div></div></section><div class="strip">'
