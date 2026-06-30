@@ -13,6 +13,12 @@ export default async (request, context) => {
   html = html.replaceAll('<span class="new">Soon</span>', '');
   html = html.replaceAll('<span class="new">Coming Soon</span>', '');
 
+  // Force the Woods card/page cover to reload from the root asset instead of the old cached broken card image.
+  html = html.replaceAll('src="woods-cover.jpg"', 'src="/woods-cover.jpg?v=5"');
+  html = html.replaceAll("src='woods-cover.jpg'", "src='/woods-cover.jpg?v=5'");
+  html = html.replaceAll('poster="woods-cover.jpg"', 'poster="/woods-cover.jpg?v=5"');
+  html = html.replaceAll("url('woods-cover.jpg')", "url('/woods-cover.jpg?v=5')");
+
   // Add Welcome to the Woods to plain static nav rows when a page does not have it yet.
   if (!html.includes('href="woods.html"')) {
     html = html.replaceAll(
