@@ -41,6 +41,31 @@ body{position:relative!important;isolation:auto!important}
     }
   }
 
+  // Add the Warning video hero when warning-hero.mp4 is present in the repo root.
+  if (path === "/warning.html" || path.endsWith("/warning.html")) {
+    const warningVideoStyle = `<style id="warning-video-hero-patch">
+.album-hero{isolation:isolate!important}
+.album-hero .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:0;background:#000}
+.album-hero:before{z-index:-2!important}
+.album-hero.video-ready:before{opacity:0!important}
+.album-hero:after{z-index:1!important}
+.album-hero .wrap{z-index:2!important}
+</style>`;
+    html = html.replace("</head>", warningVideoStyle + "</head>");
+    if (!html.includes('warning-hero.mp4')) {
+      html = html.replace(
+        '<header class="album-hero">',
+        '<header class="album-hero" id="top"><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="warning-cover.jpg" aria-hidden="true"><source src="warning-hero.mp4" type="video/mp4"></video>'
+      );
+      html = html.replace(
+        "</body>",
+        `<script id="warning-video-ready">
+(function(){var v=document.getElementById('heroVideo'),h=document.querySelector('.album-hero');if(v&&h){v.addEventListener('canplay',function(){h.classList.add('video-ready')});v.play().catch(function(){});}})();
+</script></body>`
+      );
+    }
+  }
+
   // Add Welcome to the Woods to plain static nav rows when a page does not have it yet.
   if (!html.includes('href="woods.html"')) {
     html = html.replaceAll(
