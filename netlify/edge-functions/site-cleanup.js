@@ -14,6 +14,12 @@ export default async (request, context) => {
   html = html.replaceAll('<span class="new">Soon</span>', '');
   html = html.replaceAll('<span class="new">Coming Soon</span>', '');
 
+  // Fix an older Warning/album drawer selector typo so Field Notes chevrons rotate correctly.
+  html = html.replaceAll(
+    '.card.open .card.open .c-fn .chev{transform:rotate(180deg)}',
+    '.card.open .c-fn .chev{transform:rotate(180deg)}'
+  );
+
   // Force the Woods card/page cover to reload from the root asset instead of the old cached broken card image.
   html = html.replaceAll('src="woods-cover.jpg"', 'src="/woods-cover.jpg?v=5"');
   html = html.replaceAll("src='woods-cover.jpg'", "src='/woods-cover.jpg?v=5'");
@@ -63,6 +69,28 @@ body{position:relative!important;isolation:auto!important}
 (function(){var v=document.getElementById('heroVideo'),h=document.querySelector('.album-hero');if(v&&h){v.addEventListener('canplay',function(){h.classList.add('video-ready')});v.play().catch(function(){});}})();
 </script></body>`
       );
+    }
+  }
+
+  // Add Welcome to the Woods lines to the Wall archive if the source page is behind the new record.
+  if (path === "/wall.html" || path.endsWith("/wall.html")) {
+    if (!html.includes('The witness became the cook.')) {
+      const woodsWallLines = `,
+  {q:"The witness became the cook.",s:"Welcome to the Woods",r:"Welcome to the Woods"},
+  {q:"Some folks kneel. Some folks run. I just strike the spark.",s:"Welcome to the Woods",r:"Welcome to the Woods"},
+  {q:"Day four don't end — it just reloads.",s:"Trailer Park Barbie",r:"Welcome to the Woods"},
+  {q:"The wicked run when no man gives chase.",s:"Be Cool",r:"Welcome to the Woods"},
+  {q:"The wilderness don't punish a man. It shows him what he already worships.",s:"Shattered Glass Light",r:"Welcome to the Woods"},
+  {q:"They wear the boots for fashion. I wear the boots for snakes.",s:"I Come From That",r:"Welcome to the Woods"},
+  {q:"Mud ain't dirt. Mud is memory. Mud is consequence.",s:"You Don't Want This Mud",r:"Welcome to the Woods"},
+  {q:"No checkered flag, no trophy. Just smoke in your clothes, mud on your boots, and stories too crooked to tell straight later.",s:"Talladega Nights",r:"Welcome to the Woods"},
+  {q:"The veil is tearing, the garden is burning.",s:"Copper Wire Communion",r:"Welcome to the Woods"},
+  {q:"Some nights don't end. They just ride in the backseat.",s:"Out Past Deliverance",r:"Welcome to the Woods"},
+  {q:"The dirt don't let go.",s:"Back to the Dirt",r:"Welcome to the Woods"},
+  {q:"The circle stays flat.",s:"Bloodline Dirt",r:"Welcome to the Woods"},
+  {q:"The law passed by — the worst mercy.",s:"Fallen Angels in a Mason Jar",r:"Welcome to the Woods"},
+  {q:"They missed how tired a man gets carrying himself.",s:"Somebody I Used to Know",r:"Welcome to the Woods"}`;
+      html = html.replace("\n];\n\n(function(){", woodsWallLines + "\n];\n\n(function(){");
     }
   }
 
