@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +63,6 @@
   .rose-bg{
     position:fixed;inset:0;z-index:0;pointer-events:none;
     background:url("glass-rose-bg.jpg") center top / contain no-repeat,var(--void);
-    background-attachment:fixed;
     filter:blur(3px) brightness(.5) saturate(.92);
     transform:scale(1.04);
   }
@@ -126,7 +124,7 @@
   .card{
     position:relative;margin:0 auto 15px;max-width:520px;
     background:var(--glass);
-    backdrop-filter:blur(13px) saturate(135%);-webkit-backdrop-filter:blur(13px) saturate(135%);
+    backdrop-filter:blur(8px) saturate(135%);-webkit-backdrop-filter:blur(8px) saturate(135%);
     border:1px solid var(--glass-edge);border-radius:4px;
     box-shadow:0 14px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);
     overflow:hidden;transition:border-color .2s;
@@ -267,8 +265,9 @@
   const NAV_LINKS = [
     { file:"index.html",      label:"Home" },
     { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose", new:true },
-    { file:"fall.html",   label:"The Fall" },
+    { file:"glass-rose.html", label:"The Glass Rose" },
+    { file:"fall.html",       label:"The Fall" },
+    { file:"woods.html",      label:"Welcome to the Woods", new:true },
     { file:"wall.html",       label:"The Wall" },
     { file:"dirt-road.html",  label:"The Dirt Road" }
   ];
@@ -367,6 +366,9 @@ const TRACKS = [
   const audio = document.getElementById('audio');
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+  const ALBUM_NAME = "The Glass Rose Sessions";
+  const ALBUM_ART = "https://rydermccoy.com/glass-rose-cover.jpg";
+
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE = 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
   let current = -1;
@@ -383,10 +385,10 @@ const TRACKS = [
         '<button class="c-play" data-play="'+i+'" aria-label="Play '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="'+PLAY+'"/></svg></button>' +
         '<span class="c-num">'+t.n+'</span>' +
         '<span class="c-titlewrap" data-fn="'+i+'"><span class="c-title">'+t.title+'</span><span class="c-dur" id="dur'+i+'"></span></span>' +
-        '<span class="c-fn" data-fn="'+i+'">Notes <span class="chev">&#9662;</span></span>' +
+        '<button class="c-fn" data-fn="'+i+'" aria-expanded="false" aria-controls="note'+i+'">Notes <span class="chev">&#9662;</span></button>' +
       '</div>' +
       '<div class="c-prog"><div class="c-prog-fill" id="prog'+i+'"></div></div>' +
-      '<div class="c-note"><div class="c-note-inner">'+t.notes+
+      '<div class="c-note" id="note'+i+'"><div class="c-note-inner">'+t.notes+
         '<a class="c-save" href="'+t.file+'" download aria-label="Download '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="M7 1h2v6.6l1.8-1.8 1.4 1.4L8 11.4 3.8 7.2l1.4-1.4L7 7.6z"/><path d="M2 13h12v2H2z"/></svg> Save this track</a>' +
       '</div></div>';
     list.appendChild(card);
@@ -398,7 +400,9 @@ const TRACKS = [
     const fn = e.target.closest('[data-fn]');
     if(fn){
       const card = document.getElementById('card'+fn.dataset.fn);
-      card.classList.toggle('open');
+      const nowOpen = card.classList.toggle('open');
+      const btn = card.querySelector('.c-fn');
+      if(btn) btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
       return;
     }
     const pb = e.target.closest('[data-play]');
@@ -426,6 +430,29 @@ const TRACKS = [
     });
     if(deckIcon.querySelector('path')) deckIcon.querySelector('path').setAttribute('d', audio.paused?PLAY:PAUSE);
     deck.classList.toggle('playing', current>=0 && !audio.paused);
+    if('mediaSession' in navigator){
+      navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
+    }
+  }
+
+  function setMediaSession(){
+    try{
+      if(!('mediaSession' in navigator) || current < 0) return;
+      const t = TRACKS[current];
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: t.title,
+        artist: "The Ryder McCoy Band",
+        album: ALBUM_NAME,
+        artwork: [{ src: ALBUM_ART, sizes: "512x512", type: "image/jpeg" }]
+      });
+      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
+      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
+      navigator.mediaSession.setActionHandler('previoustrack', function(){
+        if(audio.currentTime > 3){ audio.currentTime = 0; return; }
+        load(current-1, true);
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', function(){ load(current+1, true); });
+    }catch(e){}
   }
 
   function load(i, play){
@@ -434,6 +461,7 @@ const TRACKS = [
     deckText.textContent = TRACKS[current].title;
     deckProg.innerHTML = 'PROG <b>'+(current+1)+'</b>/'+TRACKS.length;
     deck.classList.add('show');
+    setMediaSession();
     if(play) audio.play().catch(function(){});
     setIcons();
   }
@@ -457,6 +485,9 @@ const TRACKS = [
     if(current<0) return;
     const f = document.getElementById('prog'+current);
     if(f && audio.duration) f.style.width = pct+'%';
+    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && isFinite(audio.duration) && audio.duration > 0){
+      try{ navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime }); }catch(e){}
+    }
   });
 
   document.getElementById('deckPlay').addEventListener('click', function(){ if(current===-1){ load(0,true); return; } audio.paused?audio.play():audio.pause(); });

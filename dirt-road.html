@@ -156,8 +156,9 @@
   const NAV_LINKS = [
     { file:"index.html",      label:"Home" },
     { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose", new:true },
-    { file:"fall.html",   label:"The Fall" },
+    { file:"glass-rose.html", label:"The Glass Rose" },
+    { file:"fall.html",       label:"The Fall" },
+    { file:"woods.html",      label:"Welcome to the Woods", new:true },
     { file:"wall.html",       label:"The Wall" },
     { file:"dirt-road.html",  label:"The Dirt Road" }
   ];
@@ -234,7 +235,7 @@ const NOTES = [
     }
     if(t==='photo'){
       var imgblock = n.img
-        ? '<img class="ph" src="'+esc(n.img)+'" alt="'+esc(n.text||'')+'" loading="lazy" onerror="this.outerHTML=&quot;<div class=\&quot;ph ph-missing\&quot;>image not found:<br>'+esc(n.img)+'</div>&quot;">'
+        ? '<img class="ph" src="'+esc(n.img)+'" alt="'+esc(n.text||'')+'" loading="lazy">'
         : '<div class="ph ph-missing">no image set</div>';
       return '<article class="card c-photo" data-who="'+who.toLowerCase()+'">'
         +imgblock
@@ -255,6 +256,14 @@ const NOTES = [
     });
     if(!list.length){ grid.innerHTML='<div class="empty">Nothing tacked up here yet.</div>'; return; }
     grid.innerHTML = list.map(cardHTML).join('');
+    grid.querySelectorAll('img.ph').forEach(function(img){
+      img.addEventListener('error', function(){
+        var d = document.createElement('div');
+        d.className = 'ph ph-missing';
+        d.innerHTML = 'image not found:<br>' + esc(img.getAttribute('src')||'');
+        img.replaceWith(d);
+      });
+    });
   }
 
   var whos = ['All'];

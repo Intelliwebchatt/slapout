@@ -75,6 +75,7 @@
   .slap-nav a.lnk{flex:0 0 auto;text-decoration:none;color:#9a8f7e;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:16px 13px;white-space:nowrap;position:relative;transition:color .2s}
   .slap-nav a.lnk:hover,.slap-nav a.lnk.here{color:#ffc27a}
   .slap-nav a.lnk.here::after{content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7)}
+  .slap-nav a.lnk .new{display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -86,6 +87,7 @@
     { file:"warning.html",    label:"The Warning" },
     { file:"glass-rose.html", label:"The Glass Rose" },
     { file:"fall.html",       label:"The Fall" },
+    { file:"woods.html",      label:"Welcome to the Woods", new:true },
     { file:"wall.html",       label:"The Wall" },
     { file:"dirt-road.html",  label:"The Dirt Road" }
   ];
@@ -96,7 +98,7 @@
   var links = '<div class="slap-nav-links">';
   NAV_LINKS.forEach(function(l){
     var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+'</a>';
+    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
   });
   links += '</div>';
   nav.innerHTML = home + links;

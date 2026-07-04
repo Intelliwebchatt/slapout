@@ -43,14 +43,24 @@
   --accent:var(--neon);--accent-hot:var(--neon-hot);--accent-soft:rgba(255,138,42,.5);--accent-glow:rgba(255,138,42,.7)
 }
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--asphalt);color:var(--bone);font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}a{color:var(--neon-hot)}img{max-width:100%;height:auto;display:block}.display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.04em}.type{font-family:'Special Elite',monospace}.wrap{max-width:880px;margin:0 auto;padding:0 20px}:focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
+
+/* ===== PATROL LIGHTS — blue wash reflecting off the whole page ===== */
+.blue-lights{position:fixed;inset:0;z-index:2;pointer-events:none;mix-blend-mode:screen;overflow:hidden}
+.blue-lights::before,.blue-lights::after{content:"";position:absolute;inset:-25%}
+.blue-lights::before{background:radial-gradient(ellipse 70% 55% at 18% 28%,rgba(46,110,255,.34),transparent 62%);animation:copSweepL 3.4s ease-in-out infinite}
+.blue-lights::after{background:radial-gradient(ellipse 70% 55% at 82% 62%,rgba(80,160,255,.26),transparent 62%);animation:copSweepR 3.4s ease-in-out infinite;animation-delay:1.7s}
+@keyframes copSweepL{0%,100%{opacity:.12}12%{opacity:.85}24%{opacity:.2}36%{opacity:.65}50%{opacity:.1}}
+@keyframes copSweepR{0%,100%{opacity:.1}12%{opacity:.8}24%{opacity:.18}36%{opacity:.6}50%{opacity:.08}}
+@media(prefers-reduced-motion:reduce){.blue-lights::before,.blue-lights::after{animation:none;opacity:.18}}
+section,header.album-hero,.genre-strip,footer{position:relative;z-index:1}
 .slap-nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;background:rgba(8,7,9,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,138,42,.28);padding:0 8px;min-height:50px;overflow-x:auto;scrollbar-width:none;font-family:'Special Elite',monospace}.slap-nav::-webkit-scrollbar{display:none}.slap-nav-home{flex:0 0 auto;display:flex;align-items:center;gap:7px;text-decoration:none;color:#ffc27a;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:0 14px 0 8px;margin-right:4px;white-space:nowrap;border-right:1px solid rgba(255,138,42,.2)}.slap-nav-home .rose{font-size:.95rem;filter:drop-shadow(0 0 6px rgba(255,59,107,.5))}.slap-nav-links{flex:1 1 auto;display:flex;align-items:center;gap:2px;white-space:nowrap}.slap-nav a.lnk{flex:0 0 auto;text-decoration:none;color:#9a8f7e;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:16px 13px;white-space:nowrap;position:relative}.slap-nav a.lnk:hover,.slap-nav a.lnk.here{color:#ffc27a}.slap-nav a.lnk.here::after{content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7)}.slap-nav a.lnk .new{display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle}
 .album-hero{position:relative;min-height:52vh;display:block;overflow:hidden;background:var(--asphalt);isolation:isolate}.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:-3;background:#000}.album-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:url('woods-cover.jpg') center center/cover no-repeat;filter:brightness(.45) contrast(1.08);transform:scale(1.02)}.album-hero.video-ready::before{opacity:0}.album-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to bottom,rgba(11,10,8,.08),rgba(11,10,8,.20) 60%,var(--asphalt) 100%)}.cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}.btn{display:inline-block;padding:12px 22px;text-decoration:none;font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:.9rem;border:1px solid var(--neon);color:var(--neon-hot);background:rgba(11,10,8,.38);cursor:pointer}.btn:hover,.btn:focus-visible{background:var(--neon);color:#1a0e02;box-shadow:0 0 28px rgba(255,138,42,.5)}.btn.solid{background:var(--crimson);border-color:var(--crimson);color:var(--bone)}
 section{padding:70px 0;border-top:1px solid var(--line)}.sec-label{font-family:'Special Elite',monospace;color:var(--neon);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}.sec-title{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:18px;color:var(--bone)}.lede{color:var(--ash);max-width:62ch}.genre-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--smoke)}.genre-strip .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center;padding-top:18px;padding-bottom:18px}.genre-tag{font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);border:1px solid var(--line);padding:6px 12px;white-space:nowrap}.genre-tag.hot{color:var(--neon-hot);border-color:rgba(255,138,42,.4)}
 
 /* ===== TRACK CARDS (play-only; download in Field Notes drawer) ===== */
 .cards{margin-top:34px;display:flex;flex-direction:column;gap:14px}
-.card{position:relative;background:var(--smoke);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.card.playing{border-color:var(--accent);box-shadow:0 0 22px rgba(255,138,42,.2)}
+.card{position:relative;background:var(--smoke);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:0 0 28px rgba(56,120,255,.16),0 0 6px rgba(56,120,255,.1)}
+.card.playing{border-color:var(--accent);box-shadow:0 0 22px rgba(255,138,42,.28),0 0 30px rgba(56,120,255,.18)}
 .card.open{border-color:var(--accent-soft)}
 .card-head{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:10px;padding:15px 14px}
 .c-play{flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:rgba(255,138,42,.1);border:1px solid var(--accent-soft);color:var(--accent-hot);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,transform .1s}
@@ -109,7 +119,8 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 </style>
 </head>
 <body>
-<nav class="slap-nav" aria-label="Site"><a class="slap-nav-home" href="index.html"><span class="rose">&#129685;</span> Ryder McCoy Band</a><div class="slap-nav-links"><a class="lnk" data-page="index.html" href="index.html">Home</a><a class="lnk" data-page="warning.html" href="warning.html">The Warning</a><a class="lnk" data-page="glass-rose.html" href="glass-rose.html">The Glass Rose<span class="new">New</span></a><a class="lnk" data-page="fall.html" href="fall.html">The Fall</a><a class="lnk" data-page="woods.html" href="woods.html">Welcome to the Woods<span class="new">New</span></a><a class="lnk" data-page="wall.html" href="wall.html">The Wall</a><a class="lnk" data-page="dirt-road.html" href="dirt-road.html">The Dirt Road</a></div></nav>
+<div class="blue-lights" aria-hidden="true"></div>
+<nav class="slap-nav" aria-label="Site"><a class="slap-nav-home" href="index.html"><span class="rose">&#129685;</span> Ryder McCoy Band</a><div class="slap-nav-links"><a class="lnk" data-page="index.html" href="index.html">Home</a><a class="lnk" data-page="warning.html" href="warning.html">The Warning</a><a class="lnk" data-page="glass-rose.html" href="glass-rose.html">The Glass Rose</a><a class="lnk" data-page="fall.html" href="fall.html">The Fall</a><a class="lnk" data-page="woods.html" href="woods.html">Welcome to the Woods<span class="new">New</span></a><a class="lnk" data-page="wall.html" href="wall.html">The Wall</a><a class="lnk" data-page="dirt-road.html" href="dirt-road.html">The Dirt Road</a></div></nav>
 <script>(function(){var path=location.pathname.split('/').pop().toLowerCase();if(path==="")path="index.html";document.querySelectorAll('.slap-nav a[data-page]').forEach(function(a){if(a.getAttribute('data-page').toLowerCase()===path)a.classList.add('here')})})();</script>
 <header class="album-hero" id="top"><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="woods-cover.jpg" aria-hidden="true"><source src="woods-hero.mp4" type="video/mp4"></video></header>
 <div class="genre-strip"><div class="wrap"><span class="genre-tag hot">Southern Gothic</span><span class="genre-tag">Swamp Trap</span><span class="genre-tag">Outlaw Country</span><span class="genre-tag">Backroad Blues</span><span class="genre-tag">Elmore County</span></div></div>
@@ -131,7 +142,7 @@ const TRACKS = [
   { title: "Back to the Dirt", file: "10 - Back to the Dirt.mp3", notes: "<p class='fn-from'>Recovered from: the holler, 3 A.M., holding its breath. A dog chain rattling like a death warrant left. Windshield cracked in the shape of a cross.</p><p><span class='fn-k'>Subject history:</span> running since '09, trying to outrun his own blood. The mud on these tires is the same mud in my blood. Mama's Bible on the dash, torn thin. The mill shut down &mdash; the only bread here comes from the other side of town. Sold his last good boots for a sack.</p><p><span class='fn-k'>Attempted exit, logged:</span> a job in the city, lasted three months. Boss man said boy, you talk too much like that &mdash; like a man who'd seen the beast in the breakroom microwave. Put on nights, soul in hock under fluorescent. Took a hit in the bathroom, saw Revelation in the mirror. Back on the county line in two weeks. Welcome home, prodigal, we saved your spot.</p><p><span class='fn-k'>Testimony &mdash; Unc, logged:</span> some altars don't have crosses. Some churches got broken glass on the floor.</p><p><span class='fn-k'>The cost:</span> a daughter, two states away. I prayed she'd forget me. I prayed she'd stay in the light, in the grace, in the world without this.</p><p><span class='fn-k'>The only witness who don't judge:</span> the dog. Don't ask questions, don't measure the shame &mdash; just lifts his old head when he hears my name.</p><p class='fn-status'>Status: the dirt don't let go. No &mdash; the dirt don't let go.</p>" },
   { title: "Bloodline Dirt", file: "11 - Bloodline Dirt.mp3", notes: "<p class='fn-from'>Recovered from: the county line, lo-fi and tired, distant thunder. The good book says a righteous man leaves an inheritance to his children. Out here, we just leave our ghosts. Ain't no land or money getting passed down &mdash; just a rusted pipe and a restless itch.</p><p><span class='fn-k'>Chain of custody, logged:</span> Granddaddy &mdash; worked the mill until the belts gave out. Daddy &mdash; left with a bottle and a quiet kind of doubt; traded the liquor for a powder and a flame. Subject &mdash; passed it down to me exactly like a family name. The mark of Cain shining on a rusted chain.</p><p><span class='fn-k'>The next in line, logged:</span> a little boy sleeping in the other room &mdash; while I'm chasing shadow queens in the living room gloom. Subject observed striking the match with shaking hands, knowing I'm walking him into the exact same patch.</p><p><span class='fn-k'>Statement under strain:</span> Same blood. Same mud. He's going to wear my shoes. He's going to walk my road. Lord break the circle. Break the circle. Break the&mdash;</p><p><span class='fn-k'>Objects logged:</span> a rusted pipe, a rusted chain, a struck match, a cup tasting of rust.</p><p class='fn-status'>Status: The circle stays flat.</p>" },
   { title: "Fallen Angels in a Mason Jar", file: "12 - Fallen Angels in a Mason Jar.mp3", notes: "<p class='fn-from'>Recovered from: a single-wide off the Coosa River backwaters. 3 A.M., rain on tin, a box fan humming. The sky bruising purple.</p><p><span class='fn-k'>Subject:</span> Elias &mdash; on the porch like a shattered ghost, hollow-cheeked, hands shaking. Carried his granddaddy's Smith &amp; Wesson wrapped in a towel, offered it as a covenant for a hit of the clear.</p><p><span class='fn-k'>The dealer, logged against himself:</span> refused the gun &mdash; \"keep the iron, son\" &mdash; then walked to the backroom and pulled the clear anyway. The warden in his own corrugated cell, selling tickets to the transfiguration, straight to hell.</p><p><span class='fn-k'>The interruption:</span> blue lights through the blinds &mdash; Pharaoh's chariots. Halogen killed, Elias on the floor, gravel crunching, heart like an 808. The chariots rolled on, looking for some other blood.</p><p><span class='fn-k'>Objects logged:</span> a rusted Smith &amp; Wesson, a towel, a glass pipe, a flint, a mason jar of fallen angels.</p><p class='fn-status'>Status: the law passed by &mdash; the worst mercy. Elias struck the flint and melted the crystal anyway. River road revelations. Breathing in the clear.</p>" },
-  { title: "Somebody I Used to Know", file: "13 - Somebody I Used to Know.mp3", notes: "<p class='fn-from'>Recovered from: a room with fluorescent light, somewhere a door locks. Distant rain. Subject: older now. A young voice asking the questions.</p><p><span class='fn-k'>The opening, logged:</span> Are you Ryder McCoy? &mdash; Depends who's asking. &mdash; They said you used to be wild. &mdash; They say a lot. &mdash; Is it true? &mdash; Some of it. &mdash; What happened? &mdash; Time.</p><p><span class='fn-k'>Statement, logged:</span> had a name once, before it turned to smoke. A girl with a hand like grace, a little frame house he never made. A chance parked under a pine, engine running, a warning sign &mdash; but I was young, and the night looked wide. Seen boys disappear over fifty-dollar debts. There was a Sunday I could've gone clean, but I picked the dirt road and the in-between.</p><p><span class='fn-k'>On the record:</span> Do you miss it? &mdash; No. I miss who I was before I wanted it. &mdash; Were you scared? &mdash; Every night. Just not enough to stop.</p><p><span class='fn-k'>Testimony &mdash; Unc, logged from memory:</span> A man don't fall because the road is dark. He falls because the dark starts feeling like home. &mdash; Subject's response: That old man was right too late.</p><p><span class='fn-k'>Final statement:</span> Tell them the songs got the smoke right. The mud too. Maybe even the devil. But they missed how tired a man gets carrying himself.</p><p class='fn-status'>Status: Will I see you again? &mdash; Maybe. If this is where I still am.</p>" },
+  { title: "Somebody I Used to Know", file: "13 - Somebody I Used to Know.mp3", notes: "<p class='fn-from'>Recovered from: a room with fluorescent light, somewhere a door locks. Distant rain. Subject: older now. A young voice asking the questions.</p><p><span class='fn-k'>The opening, logged:</span> Are you Ryder McCoy? &mdash; Depends who's asking. &mdash; They said you used to be wild. &mdash; They say a lot. &mdash; Is it true? &mdash; Some of it. &mdash; What happened? &mdash; Time.</p><p><span class='fn-k'>Statement, logged:</span> had a name once, before it turned to smoke. A girl with a hand like grace, a little frame house he never made. A chance parked under a pine, engine running, a warning sign &mdash; but I was young, and the night looked wide. Seen boys disappear over fifty-dollar debts. There was a Sunday I could've gone clean, but I picked the dirt road and the in-between.</p><p><span class='fn-k'>On the record:</span> Do you miss it? &mdash; No. I miss who I was before I wanted it. &mdash; Were you scared? &mdash; Every night. Just not enough to stop.</p><p><span class='fn-k'>Testimony &mdash; Unc, logged from memory:</span> A man don't fall because the road is dark. He falls because the dark starts feeling like home. &mdash; Subject's response: That old man was right too late.</p><p><span class='fn-k'>Final statement:</span> Tell them the songs got the smoke right. The mud too. Maybe even the devil. But they missed how tired a man gets carrying himself.</p><p class='fn-status'>Status: Will I see you again? &mdash; Maybe. If this is where I still am.</p>" }
 ];
 const AUDIO_DIR = "";
 (function(){
@@ -145,6 +156,8 @@ const AUDIO_DIR = "";
   const deckTime = document.getElementById('deckTime');
   const deckIcon = document.getElementById('deckIcon');
   var tcEl = document.getElementById('trackCount'); if(tcEl) tcEl.textContent = TRACKS.length;
+  const ALBUM_NAME = "Welcome to the Woods";
+  const ALBUM_ART = "https://rydermccoy.com/woods-cover.jpg";
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
   function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
@@ -159,6 +172,28 @@ const AUDIO_DIR = "";
     });
     if(deckIcon.querySelector('path')) deckIcon.querySelector('path').setAttribute('d', audio.paused?PLAY:PAUSE);
     deck.classList.toggle('playing', current>=0 && !audio.paused);
+    if('mediaSession' in navigator){
+      navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
+    }
+  }
+  function setMediaSession(){
+    try{
+      if(!('mediaSession' in navigator) || current < 0) return;
+      var t = TRACKS[current];
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: t.title,
+        artist: "The Ryder McCoy Band",
+        album: ALBUM_NAME,
+        artwork: [{ src: ALBUM_ART, sizes: "512x512", type: "image/jpeg" }]
+      });
+      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
+      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
+      navigator.mediaSession.setActionHandler('previoustrack', function(){
+        if(audio.currentTime > 3){ audio.currentTime = 0; return; }
+        load(current-1, true);
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', function(){ load(current+1, true); });
+    }catch(e){}
   }
   function load(i, play){
     current = ((i % TRACKS.length)+TRACKS.length)%TRACKS.length;
@@ -166,6 +201,7 @@ const AUDIO_DIR = "";
     deckText.textContent = TRACKS[current].title;
     deckProg.innerHTML = 'PROG <b>'+(current+1)+'</b>/'+TRACKS.length;
     deck.classList.add('show');
+    setMediaSession();
     if(play) audio.play().catch(function(){});
     setStates();
   }
@@ -203,6 +239,9 @@ const AUDIO_DIR = "";
     deckFill.style.width=pct+'%'; deckBar.setAttribute('aria-valuenow',Math.round(pct));
     deckTime.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);
     if(current>=0){ var f=document.getElementById('prog'+current); if(f) f.style.width=pct+'%'; }
+    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && isFinite(audio.duration) && audio.duration > 0){
+      try{ navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime }); }catch(e){}
+    }
   });
   function seek(x){ var r=deckBar.getBoundingClientRect(); var pct=Math.min(1,Math.max(0,(x-r.left)/r.width)); if(audio.duration) audio.currentTime=pct*audio.duration; }
   deckBar.addEventListener('click', function(e){ seek(e.clientX); });

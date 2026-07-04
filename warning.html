@@ -83,15 +83,13 @@ section{padding:84px 0;border-top:1px solid var(--line)}
 footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-area-inset-bottom));text-align:center;color:var(--ash);font-size:.9rem}
 footer .label-mark{font-family:'Special Elite',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);margin-bottom:10px}
 footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;margin-right:auto}
-.album-hero{position:relative;min-height:72vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--asphalt)}
-.album-hero::before{content:"";position:absolute;inset:0;background:url('warning-cover.jpg') center center / cover no-repeat;filter:brightness(.55) contrast(1.08);transform:scale(1.02)}
-.album-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,10,8,.35),rgba(11,10,8,.76) 62%,var(--asphalt) 100%)}
-.album-hero .wrap{position:relative;z-index:2;padding-top:110px;padding-bottom:76px;text-align:center}
-.eyebrow{color:var(--ash);font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;margin-bottom:26px}
-.album-title{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(3rem,13vw,7rem);line-height:.9;letter-spacing:.03em;color:var(--neon-hot);text-shadow:0 0 8px rgba(255,170,90,.9),0 0 34px rgba(255,138,42,.55),0 0 90px rgba(255,138,42,.35)}
-.album-sub{max-width:48ch;margin:22px auto 0;color:var(--ash);font-style:italic}
-.album-cover-card{max-width:320px;margin:36px auto 0;border:1px solid var(--line);background:var(--smoke);box-shadow:0 20px 50px rgba(0,0,0,.55)}
-.album-cover-card img{width:100%;height:auto}
+.album-hero{position:relative;min-height:52vh;display:block;overflow:hidden;background:var(--asphalt);isolation:isolate}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;z-index:-3;background:#000}
+.album-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:url('warning-cover.jpg') center center / cover no-repeat;filter:brightness(.45) contrast(1.08);transform:scale(1.02)}
+.album-hero.video-ready::before{opacity:0}
+.album-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to bottom,rgba(11,10,8,.08),rgba(11,10,8,.20) 60%,var(--asphalt) 100%)}
+@media(max-width:560px){.album-hero{min-height:auto;aspect-ratio:16/9}.hero-video{object-fit:contain;object-position:center center;background:var(--asphalt)}.album-hero::before{background-size:contain;background-position:center center}}
+@media(prefers-reduced-motion:reduce){.hero-video{display:none}}
 
 /* ===== TRACK CARDS (play-only; download lives in Field Notes drawer) ===== */
 .stem-sub{font-style:italic;color:var(--ash);font-size:.95rem;margin-top:8px}
@@ -112,7 +110,7 @@ footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;ma
 .c-fn:hover,.c-fn:focus-visible{background:rgba(255,138,42,.18);border-color:var(--accent);color:var(--accent-hot)}
 .card.open .c-fn{background:rgba(255,138,42,.18);border-color:var(--accent);color:var(--accent-hot)}
 .c-fn .chev{transition:transform .3s;display:inline-block}
-.card.open .card.open .c-fn .chev{transform:rotate(180deg)}
+.card.open .c-fn .chev{transform:rotate(180deg)}
 .c-prog{height:3px;background:rgba(255,255,255,.07);position:relative;display:none}
 .card.playing .c-prog{display:block}
 .c-prog-fill{height:100%;width:0%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow)}
@@ -158,8 +156,9 @@ footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;ma
   <div class="slap-nav-links">
     <a class="lnk" data-page="index.html" href="index.html">Home</a>
     <a class="lnk" data-page="warning.html" href="warning.html">The Warning</a>
-    <a class="lnk" data-page="glass-rose.html" href="glass-rose.html">The Glass Rose<span class="new">New</span></a>
+    <a class="lnk" data-page="glass-rose.html" href="glass-rose.html">The Glass Rose</a>
     <a class="lnk" data-page="fall.html" href="fall.html">The Fall</a>
+    <a class="lnk" data-page="woods.html" href="woods.html">Welcome to the Woods</a>
     <a class="lnk" data-page="wall.html" href="wall.html">The Wall</a>
     <a class="lnk" data-page="dirt-road.html" href="dirt-road.html">The Dirt Road</a>
   </div>
@@ -174,19 +173,11 @@ footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;ma
 })();
 </script>
 
-<header class="album-hero">
-  <div class="wrap">
-    <p class="eyebrow type">Record One &middot; Biloxi Blues Records</p>
-    <h1 class="album-title">The Warning</h1>
-    <p class="album-sub">A free record from the backroads. Stream it, save it, pass it around. No gate. No signup. No clean ending.</p>
-    <div class="cta-row"><a class="btn solid" href="#listen">Play The Album</a><a class="btn" href="index.html">Back Home</a></div>
-    <div class="album-cover-card"><img src="warning-cover.jpg" alt="The Warning album cover" width="1400" height="788"></div>
-  </div>
-</header>
+<header class="album-hero" id="top"><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="warning-cover.jpg" aria-hidden="true"><source src="warning-sign.mp4" type="video/mp4"></video></header>
 
 <section id="listen">
   <div class="wrap">
-    <p class="sec-label">The Album</p>
+    <p class="sec-label">Record One &middot; Biloxi Blues Records</p>
     <h2 class="sec-title display">The Warning</h2>
     <p class="lede"><span id="trackCount">14</span> tracks. Tap a song to play it. Open <strong style="color:var(--bone)">Field Notes</strong> for the case file &mdash; and to keep the track.</p>
     <div class="cards" id="trackList"></div>
@@ -259,6 +250,8 @@ const AUDIO_DIR = "";
   const deckTime = document.getElementById('deckTime');
   const deckIcon = document.getElementById('deckIcon');
   var tcEl = document.getElementById('trackCount'); if(tcEl) tcEl.textContent = TRACKS.length;
+  const ALBUM_NAME = "The Warning";
+  const ALBUM_ART = "https://rydermccoy.com/warning-cover.jpg";
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
   function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
@@ -273,6 +266,28 @@ const AUDIO_DIR = "";
     });
     if(deckIcon.querySelector('path')) deckIcon.querySelector('path').setAttribute('d', audio.paused?PLAY:PAUSE);
     deck.classList.toggle('playing', current>=0 && !audio.paused);
+    if('mediaSession' in navigator){
+      navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
+    }
+  }
+  function setMediaSession(){
+    try{
+      if(!('mediaSession' in navigator) || current < 0) return;
+      var t = TRACKS[current];
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: t.title,
+        artist: "The Ryder McCoy Band",
+        album: ALBUM_NAME,
+        artwork: [{ src: ALBUM_ART, sizes: "512x512", type: "image/jpeg" }]
+      });
+      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
+      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
+      navigator.mediaSession.setActionHandler('previoustrack', function(){
+        if(audio.currentTime > 3){ audio.currentTime = 0; return; }
+        load(current-1, true);
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', function(){ load(current+1, true); });
+    }catch(e){}
   }
   function load(i, play){
     current = ((i % TRACKS.length)+TRACKS.length)%TRACKS.length;
@@ -280,6 +295,7 @@ const AUDIO_DIR = "";
     deckText.textContent = TRACKS[current].title;
     deckProg.innerHTML = 'PROG <b>'+(current+1)+'</b>/'+TRACKS.length;
     deck.classList.add('show');
+    setMediaSession();
     if(play) audio.play().catch(function(){});
     setStates();
   }
@@ -317,10 +333,14 @@ const AUDIO_DIR = "";
     deckFill.style.width=pct+'%'; deckBar.setAttribute('aria-valuenow',Math.round(pct));
     deckTime.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);
     if(current>=0){ var f=document.getElementById('prog'+current); if(f) f.style.width=pct+'%'; }
+    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && isFinite(audio.duration) && audio.duration > 0){
+      try{ navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime }); }catch(e){}
+    }
   });
   function seek(x){ var r=deckBar.getBoundingClientRect(); var pct=Math.min(1,Math.max(0,(x-r.left)/r.width)); if(audio.duration) audio.currentTime=pct*audio.duration; }
   deckBar.addEventListener('click', function(e){ seek(e.clientX); });
   deckBar.addEventListener('keydown', function(e){ if(!audio.duration) return; if(e.key==='ArrowRight') audio.currentTime=Math.min(audio.duration,audio.currentTime+5); if(e.key==='ArrowLeft') audio.currentTime=Math.max(0,audio.currentTime-5); });
+  const heroVid=document.getElementById('heroVideo'); const heroEl=document.querySelector('.album-hero'); if(heroVid){ heroVid.addEventListener('canplay',function(){heroEl.classList.add('video-ready')}); heroVid.play().catch(function(){}); }
 })();
 </script>
 </body>
