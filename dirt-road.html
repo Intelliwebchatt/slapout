@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes from the Dirt Road — The Ryder McCoy Band</title>
+<meta name="description" content="Notes from the Dirt Road — scraps, photos, and warnings tacked up by The Ryder McCoy Band. Out of Slapout, Alabama.">
+<link rel="canonical" href="https://rydermccoy.com/dirt-road.html">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0a08">
+<meta property="og:site_name" content="The Ryder McCoy Band">
+<meta property="og:title" content="Notes from the Dirt Road — The Ryder McCoy Band">
+<meta property="og:description" content="Tacked up as it comes in. Slapout, Alabama.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rydermccoy.com/dirt-road.html">
+<meta property="og:image" content="https://rydermccoy.com/welcome-to-slapout-1.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Notes from the Dirt Road — The Ryder McCoy Band">
+<meta name="twitter:description" content="Tacked up as it comes in. Slapout, Alabama.">
+<meta name="twitter:image" content="https://rydermccoy.com/welcome-to-slapout-1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#0b0a08;--smoke:#171310;--panel:#1d1813;
+    --neon:#ff8a2a;--neon-hot:#ffc27a;--crimson:#a31f1f;
+    --bone:#e9e0cf;--ash:#9a8f7e;--line:#2c241c;
+    --paper:#e8e0cd;--paper-2:#ded3b8;--paper-ink:#241d14;--paper-sub:#5c4f3c;
+    --photo-frame:#f2ecdd;--tape:rgba(220,205,160,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(circle at 20% 10%, rgba(40,30,18,.55), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(30,22,14,.6), transparent 45%),
+      var(--asphalt);
+    color:var(--bone);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+  ::selection{background:var(--crimson);color:var(--bone)}
+  a{color:var(--neon-hot)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+  .head{text-align:center;padding:64px 18px 26px}
+  .head .eyebrow{color:var(--neon);font-family:'Special Elite',monospace;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:16px}
+  .head h1{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(2.3rem,8.5vw,4.4rem);line-height:.92;letter-spacing:.02em;color:var(--bone);text-shadow:0 1px 0 #000,0 0 30px rgba(255,138,42,.18)}
+  .head p{color:var(--ash);max-width:42ch;margin:18px auto 0;font-style:italic;font-size:1.02rem}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:24px 18px 8px}
+  .chip{font-family:'Special Elite',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);border:1px solid var(--line);background:var(--smoke);padding:8px 14px;cursor:pointer;transition:.15s;border-radius:2px}
+  .chip:hover{color:var(--neon-hot);border-color:var(--neon)}
+  .chip.on{color:#1a0e02;background:var(--neon);border-color:var(--neon)}
+
+  .board{padding:30px 0 100px}
+  .grid{column-count:3;column-gap:26px}
+  @media(max-width:920px){.grid{column-count:2;column-gap:20px}}
+  @media(max-width:600px){.grid{column-count:1}}
+
+  .card{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 30px;position:relative;color:var(--paper-ink);box-shadow:0 10px 22px rgba(0,0,0,.55),0 2px 5px rgba(0,0,0,.4);transition:transform .18s ease, box-shadow .18s ease}
+  .card:hover{transform:rotate(0deg) translateY(-3px) scale(1.012);box-shadow:0 16px 30px rgba(0,0,0,.6);z-index:5}
+  .card::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #ff6a4d, #a31f1f 70%);box-shadow:0 2px 4px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,.4);z-index:3}
+
+  @media(min-width:601px){
+    .card:nth-child(4n+1){transform:rotate(-1.6deg)}
+    .card:nth-child(4n+2){transform:rotate(1.3deg)}
+    .card:nth-child(4n+3){transform:rotate(.7deg)}
+    .card:nth-child(4n+4){transform:rotate(-.9deg)}
+  }
+
+  .c-note{background:linear-gradient(160deg,var(--paper),var(--paper-2));padding:24px 22px 20px}
+  .c-note .who{font-family:'Special Elite',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-sub);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .c-note .who .date{color:#7a6a4f}
+  .c-note .body{font-family:'Caveat',cursive;font-size:1.5rem;line-height:1.3;color:var(--paper-ink)}
+
+  .c-quote{background:linear-gradient(160deg,#211a12,#15100a);padding:30px 24px;border:1px solid #3a2e1f}
+  .c-quote::after{content:"\201C";position:absolute;top:2px;left:12px;font-family:Georgia,serif;font-size:4rem;color:rgba(255,138,42,.25);line-height:1}
+  .c-quote .body{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:1.5rem;line-height:1.12;letter-spacing:.01em;color:var(--neon-hot);position:relative;z-index:1}
+  .c-quote .who{font-family:'Special Elite',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-top:14px}
+
+  .c-lyric{background:linear-gradient(175deg,#efe7d4,#e2d7bd);padding:26px 22px 22px;position:relative}
+  .c-lyric::after{content:"";position:absolute;left:0;right:0;bottom:0;height:14px;background:linear-gradient(135deg,transparent 33%,var(--paper-2) 34%) 0 0/10px 14px repeat-x;filter:brightness(.96)}
+  .c-lyric .stamp{font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6a3a;border:1px solid #b89a66;display:inline-block;padding:2px 7px;margin-bottom:14px;transform:rotate(-2deg)}
+  .c-lyric .body{font-family:'Special Elite',monospace;font-size:.98rem;line-height:1.7;color:var(--paper-ink);white-space:pre-line}
+  .c-lyric .who{font-family:'Caveat',cursive;font-size:1.25rem;color:var(--paper-sub);margin-top:14px;text-align:right}
+
+  .c-photo{background:var(--photo-frame);padding:12px 12px 0}
+  .c-photo .ph{width:100%;display:block;background:#0c0a08;aspect-ratio:4/3;object-fit:cover;filter:saturate(.92) contrast(1.03)}
+  .c-photo .cap{font-family:'Caveat',cursive;font-size:1.4rem;line-height:1.15;color:#2a2117;padding:12px 6px 16px;text-align:center}
+  .c-photo .who{font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#7a6a4f;padding:0 6px 12px;text-align:center}
+  .c-photo .ph-missing{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#1a150f,#1a150f 10px,#221b12 10px,#221b12 20px);color:#6a5c46;font-family:'Special Elite',monospace;font-size:.7rem;letter-spacing:.1em;text-align:center;padding:14px}
+
+  .card[data-who="ryder"] .who{color:#a8521f}
+  .card[data-who="jessie"] .who{color:#9a3f5f}
+  .card[data-who="unc"] .who{color:#6a5a1f}
+
+  .empty{grid-column:1/-1;text-align:center;color:var(--ash);font-style:italic;padding:60px 20px;font-family:'Special Elite',monospace;letter-spacing:.06em}
+
+  footer{border-top:1px solid var(--line);padding:46px 18px 80px;text-align:center;color:var(--ash);font-size:.9rem}
+  footer .label-mark{font-family:'Special Elite',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);margin-bottom:10px}
+  footer .fine{font-size:.78rem;margin-top:14px}
+  footer a{text-decoration:none}
+  :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SLAPOUT TOP NAV BAR — paste this SAME block into every page,
+     right after the opening <body> tag.
+     It builds itself and highlights whatever page you're on.
+     To add a future record/page, add one line to NAV_LINKS below.
+============================================================ -->
+<style>
+  .slap-nav{
+    position:sticky;top:0;z-index:200;
+    display:flex;align-items:center;gap:0;
+    background:rgba(8,7,9,.92);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,138,42,.28);
+    padding:0 8px;min-height:50px;overflow-x:auto;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    font-family:'Special Elite',monospace;
+  }
+  .slap-nav::-webkit-scrollbar{display:none}
+  .slap-nav-home{
+    flex:0 0 auto;display:flex;align-items:center;gap:7px;
+    text-decoration:none;color:#ffc27a;
+    font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:0 14px 0 8px;margin-right:4px;white-space:nowrap;
+    border-right:1px solid rgba(255,138,42,.2);
+  }
+  .slap-nav-home .rose{font-size:.95rem;line-height:1;filter:drop-shadow(0 0 6px rgba(255,59,107,.5))}
+  .slap-nav-links{flex:1 1 auto;display:flex;align-items:center;gap:2px;white-space:nowrap}
+  .slap-nav a.lnk{
+    flex:0 0 auto;text-decoration:none;color:#9a8f7e;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:16px 13px;white-space:nowrap;position:relative;
+    transition:color .2s;
+  }
+  .slap-nav a.lnk:hover{color:#ffc27a}
+  .slap-nav a.lnk.here{color:#ffc27a}
+  .slap-nav a.lnk.here::after{
+    content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;
+    background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7);
+  }
+  .slap-nav a.lnk .new{
+    display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;
+    color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle;
+  }
+</style>
+<nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
+<script>
+(function(){
+  // EDIT THIS LIST to add records/pages. Order = left-to-right.
+  // file: the page filename. label: what shows. new:true adds a NEW tag.
+  const NAV_LINKS = [
+    { file:"index.html",      label:"Home" },
+    { file:"warning.html",    label:"The Warning" },
+    { file:"glass-rose.html", label:"The Glass Rose" },
+    { file:"fall.html",       label:"The Fall" },
+    { file:"woods.html",      label:"Welcome to the Woods", new:true },
+    { file:"wall.html",       label:"The Wall" },
+    { file:"dirt-road.html",  label:"The Dirt Road" }
+  ];
+  // which file are we on?
+  var path = location.pathname.split('/').pop().toLowerCase();
+  if(path === "" || path === "/") path = "index.html";
+  var nav = document.getElementById('slapNav');
+  var home = '<a class="slap-nav-home" href="index.html"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
+  var links = '<div class="slap-nav-links">';
+  NAV_LINKS.forEach(function(l){
+    var here = (l.file.toLowerCase() === path) ? ' here' : '';
+    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
+  });
+  links += '</div>';
+  nav.innerHTML = home + links;
+})();
+</script>
+<!-- ============ END SLAPOUT TOP NAV BAR ============ -->
+
+
+<header class="head">
+  <p class="eyebrow">Slapout, Alabama &middot; Biloxi Blues Records</p>
+  <h1>Notes from<br>the Dirt Road</h1>
+  <p>Scraps, photos, warnings, and half-songs. Tacked up as it comes in.</p>
+</header>
+
+<div class="filters" id="filters"></div>
+
+<section class="board">
+  <div class="wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<footer>
+  <p class="label-mark">Biloxi Blues Records</p>
+  <p><a href="index.html">The Ryder McCoy Band</a> &middot; Slapout, Alabama</p>
+  <p class="fine">No fake saints. No clean endings. Backroads know.</p>
+</footer>
+
+<script>
+const NOTES = [
+
+  { type:"photo", who:"Ryder", date:"Jun 2026", img:"welcome-to-slapout-1.jpg",
+    text:"We didn't start this to be popular. We started it because we had things to say about these backroads that didn't fit anywhere else. If you recognize the view, you're in the right place. Welcome to Slapout." }
+
+];
+
+(function(){
+  var grid = document.getElementById('grid');
+  var filterWrap = document.getElementById('filters');
+  var activeWho = 'All';
+
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function nl(s){ return esc(s).replace(/\n/g,'<br>'); }
+
+  function cardHTML(n){
+    var who = n.who ? esc(n.who) : '';
+    var date = n.date ? '<span class="date">'+esc(n.date)+'</span>' : '';
+    var t = (n.type||'note').toLowerCase();
+
+    if(t==='quote'){
+      return '<article class="card c-quote" data-who="'+who.toLowerCase()+'">'
+        +'<div class="body">'+esc(n.text)+'</div>'
+        +(who?'<div class="who">&mdash; '+who+'</div>':'')
+        +'</article>';
+    }
+    if(t==='lyric'){
+      return '<article class="card c-lyric" data-who="'+who.toLowerCase()+'">'
+        +'<span class="stamp">Work Tape</span>'
+        +'<div class="body">'+nl(n.lyric||n.text)+'</div>'
+        +(who?'<div class="who">'+who+'</div>':'')
+        +'</article>';
+    }
+    if(t==='photo'){
+      var imgblock = n.img
+        ? '<img class="ph" src="'+esc(n.img)+'" alt="'+esc(n.text||'')+'" loading="lazy">'
+        : '<div class="ph ph-missing">no image set</div>';
+      return '<article class="card c-photo" data-who="'+who.toLowerCase()+'">'
+        +imgblock
+        +(n.text?'<div class="cap">'+esc(n.text)+'</div>':'')
+        +(who?'<div class="who">'+who+'</div>':'')
+        +'</article>';
+    }
+    return '<article class="card c-note" data-who="'+who.toLowerCase()+'">'
+      +'<div class="who">'+who+date+'</div>'
+      +'<div class="body">'+esc(n.text)+'</div>'
+      +'</article>';
+  }
+
+  function render(){
+    var list = NOTES.filter(function(n){
+      if(activeWho==='All') return true;
+      return (n.who||'').toLowerCase()===activeWho.toLowerCase();
+    });
+    if(!list.length){ grid.innerHTML='<div class="empty">Nothing tacked up here yet.</div>'; return; }
+    grid.innerHTML = list.map(cardHTML).join('');
+    grid.querySelectorAll('img.ph').forEach(function(img){
+      img.addEventListener('error', function(){
+        var d = document.createElement('div');
+        d.className = 'ph ph-missing';
+        d.innerHTML = 'image not found:<br>' + esc(img.getAttribute('src')||'');
+        img.replaceWith(d);
+      });
+    });
+  }
+
+  var whos = ['All'];
+  NOTES.forEach(function(n){ if(n.who && whos.indexOf(n.who)<0) whos.push(n.who); });
+  whos.forEach(function(w){
+    var c=document.createElement('button');
+    c.className='chip'+(w==='All'?' on':'');
+    c.textContent=w;
+    c.addEventListener('click', function(){
+      activeWho=w;
+      Array.prototype.forEach.call(filterWrap.children,function(ch){ch.classList.toggle('on',ch.textContent===w);});
+      render();
+    });
+    filterWrap.appendChild(c);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
