@@ -1,2 +1,7 @@
 # Static deploy only.
 # Edge runtime cleanup disabled; source files are now direct Fable exports.
+
+[[redirects]]
+from = "/warning-sign.mp4"
+to = "/warning-hero.mp4"
+status = 200
