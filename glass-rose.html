@@ -218,6 +218,10 @@
   footer .fine{font-family:'Special Elite',monospace;font-size:.68rem;letter-spacing:.04em;margin-top:8px}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
+<script src="/js/player-state.js" defer></script>
+<script src="/js/site-nav.js" defer></script>
+<script src="/data/albums/glass-rose.js" defer></script>
+<script src="/js/glass-player.js" defer></script>
 </head>
 <body>
 
@@ -260,32 +264,8 @@
     color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle;
   }
 </style>
-<nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
-<script>
-(function(){
-  const NAV_LINKS = [
-    { file: "index.html",      label:"Home" },
-    { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose" },
-    { file:"fall.html",       label:"The Fall" },
-    { file:"woods.html",      label:"Welcome to the Woods", new:true },
-    { file:"wall.html",       label:"The Wall" },
-    { file:"dirt-road.html",  label:"The Dirt Road" }
-  ];
-  var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
-  if(path && !path.endsWith('.html')) path += '.html';
-  if(!path) path='index.html';
-  var nav = document.getElementById('slapNav');
-  var home = '<a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
-  var links = '<div class="slap-nav-links">';
-  NAV_LINKS.forEach(function(l){
-    var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+(l.file==='index.html'?'/':'/'+l.file.replace(/\.html$/,'')+'/')+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
-  });
-  links += '</div>';
-  nav.innerHTML = home + links;
-})();
-</script>
+<nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
+
 <!-- ============ END SLAPOUT TOP NAV BAR ============ -->
 
 
@@ -336,170 +316,8 @@
 <div class="deck" id="deck" aria-label="Player"><div class="deck-inner"><div class="deck-readout"><span class="deck-led"></span><span class="deck-text" id="deckText">Tap a track to load the deck</span><span class="deck-prog" id="deckProg">PROG <b>&mdash;</b></span></div><div class="deck-bar" id="deckBar" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="deck-fill" id="deckFill"></div></div><div class="deck-controls"><button class="deck-btn skip" id="deckPrev" aria-label="Rewind to previous track"><svg viewBox="0 0 20 16"><path d="M2 2h2.2v12H2zM11 8l8-6v12zM4.5 8l8-6v12z"/></svg></button><button class="deck-btn play" id="deckPlay" aria-label="Play or pause"><svg id="deckIcon" viewBox="0 0 16 16"><path d="M3 2l11 6-11 6z"/></svg></button><button class="deck-btn skip" id="deckNext" aria-label="Forward to next track"><svg viewBox="0 0 20 16"><path d="M15 2h2.2v12H15zM5 2l9 6-9 6z"/></svg></button></div><div class="deck-time" id="deckTime">0:00 / 0:00</div></div></div>
 <audio id="audio" preload="none"></audio>
 
-<script>
-/* ============================================================
-   THE GLASS ROSE SESSIONS — Record Two
-   Tracks in arc order. file = exact mp3 name in repo root.
-   Live cuts use n like "02b" and are alternate takes of the
-   same song — the song COUNT stays at 14.
-============================================================ */
-const TRACKS = [
-  { n:"01", title:"Sinner's Secrets", file:"/01 - Sinner's Secrets.mp3", notes:"<p class='c-from'>Recovered from: The Glass Rose, Slap Out. A bottle on the porch floor, still rolling; the stage mic left hot.</p><p><span class='c-k'>Subject:</span> the narrator mid-confession &mdash; been thinking, been drinking, same problems riding \"all the way into the ground.\"</p><p><span class='c-k'>Objects logged:</span> a loaded bowl, a butane torch (clicked once at the end), a secret buried in the yard next to the car &mdash; roots grew up and found the bar.</p><p><span class='c-k'>On the record:</span> \"The secret is the glue. The secret is the rot. The only thing you have that the Law ain't got.\"</p><p class='c-status'>Status: asked Unc how deep they had to dig. Unc said deep enough to hit the Glitch. Narrator said he was already there.</p>" },
-  { n:"02", title:"Crank", file: "/02 - Crank.mp3", notes:"<p class='c-from'>Recovered from: the chicken pit, a Friday night. A glass pipe rolling across a table; red lips walking the line at the end, smiling like everything was fine.</p><p><span class='c-k'>Subject:</span> a woman called Crank. Trouble dressed up right. Said she used to be an angel before the fall, now likes watching good men crawl. (See also: Out of That Life &mdash; same name, found wrecked.)</p><p><span class='c-k'>On the record:</span> \"She makes the worst decisions feel like fate, and I keep saying yes anyway.\" \"Some girls are poison, some girls are gasoline.\"</p><p class='c-status'>Status: ignored Unc's warning &mdash; \"some girls don't want saving, they just want company while they're self-destructing.\" Still wanted to ride.</p>" },
-  { n:"02b", title:"Crank (Live)", file: "/02b - Crank (Live).mp3", notes:"<p class='c-from'>Recovered from: The Glass Rose, same night, mic hot. The studio cut, played back to the room &mdash; Ryder working the crowd before the first line.</p><p><span class='c-k'>The room address:</span> \"How many of y'all know this chick? She's been around. I bet there's a few of y'all tonight riding. We're the Ryder McCoy Band &mdash; reporting from the brink. We ride with y'all.\"</p><p><span class='c-k'>What changes live:</span> Jessie takes the chorus to a cracked gospel belt; Unc's warning lands harder with the crowd in it. Same song, further gone.</p><p class='c-status'>Status: the alternate take. The studio version is the confession; this one's the altar call &mdash; everybody in the room already riding.</p>" },
-  { n:"03", title:"The Room Still Knows", file: "/03 - The Room Still Knows.mp3", notes:"<p class='c-from'>Recovered from: a single-wide under a blood moon, rain on tin. A rain-soaked toy soldier in the muck; a wall clock stuck on the night.</p><p><span class='c-k'>Subject:</span> a child in the corner, too awake to dream, cataloguing the room because nobody was watching the kid.</p><p><span class='c-k'>Objects logged:</span> needles in a coffee can wrapped in a sack; a couch burning slow; a rotten jack-o-lantern under kerosene light. Thieves and junkies, liars and kin, all laughing while the dark walked in.</p><p><span class='c-k'>On the record:</span> \"Some houses don't stay behind you. Some ride in the blood.\" \"You run from the devil till you run out of breath, then turn around and realize he was holding up a mirror.\"</p><p class='c-status'>Status: the child grew up wearing the room &mdash; one patch Outlaw, one patch Hurt. \"I don't need no ghost now.\"</p>" },
-  { n:"04", title:"Blue Label Gods", file: "/04 - Blue Label Gods.mp3", notes:"<p class='c-from'>Recovered from: off Ann Street, a pump that barely worked. A Buick with the bumper held by wire, steaming by the tracks at sunrise.</p><p><span class='c-k'>Subject:</span> an all-night run for a sack that kept being one county east. \"Tonight we find the sack or we don't come back.\"</p><p><span class='c-k'>Logged along the route:</span> a pit bull named Apostle Paulie; Cricket selling dreams from a tackle box; a lead to \"a man named Moses &mdash; not that Moses, the one from Prattville. Drives a primer-gray Camaro with no reverse gear.\"</p><p><span class='c-k'>Also present:</span> Wanda, scratch-off crown, laid three cards &mdash; one jail, one rain, one a little white bag with a hole burned through it. \"Pick one, queen. They all end the same.\"</p><p class='c-status'>Status: walked east at sunrise &mdash; one boot on, one boot gone, Blue Label empty &mdash; saying \"I know it's close.\"</p>" },
-  { n:"05", title:"The Burnt Out Preacher", file: "/05 - The Burnt Out Preacher.mp3", notes:"<p class='c-from'>Recovered from: past Montgomery, where the dead roads are. At sunrise: a wet choir robe on a fence wire, a duct-taped Bible under the light, Blue Label glass in a gravel fire.</p><p><span class='c-k'>Subject:</span> a burnt out preacher in gas-station shades and a torn choir robe; said he'd show the way to the flood; gone by sunrise.</p><p><span class='c-k'>Logged along the route:</span> a woman with baby teeth in a pill bottle and a motel key from room thirteen; a man named Mercy asleep under the bridge; a girl in white boots &mdash; \"I keep leaving but I ain't left yet.\"</p><p><span class='c-k'>On the record:</span> \"You're just a witness, counting ghosts that still got names.\" \"The flood don't come with trumpets loud. Sometimes it comes as a county road, washed out.\"</p><p class='c-status'>Status: the floodlight kept blinking &mdash; on, off, on, off &mdash; like heaven had trouble making up its mind.</p>" },
-  { n:"06", title:"Waste Some Time", file: "/06 - Waste Some Time.mp3", notes:"<p class='c-from'>Recovered from: a porch, a rocking chair creaking. A flatbed Ford looking at Copperhead Dam; a jar getting passed.</p><p><span class='c-k'>Subject:</span> told to focus, build a career; said his career was surviving the next ten minutes; chose the porch.</p><p><span class='c-k'>Anomalies, reported without alarm:</span> the sun is just a lightbulb; the woods are made of glass; the world going white. Also present: the Hat Man &mdash; no longer at the threshold, just on the porch, wasting time alongside.</p><p><span class='c-k'>On the record:</span> \"Living right is heavy. Living wrong is fine.\"</p><p class='c-status'>Status: clock's broken anyway. Unc lost his watch in 2010. Nobody's keeping time out here.</p>" },
-  { n:"07", title:"Through That Cut", file: "/07 - Through That Cut.mp3", notes:"<p class='c-from'>Recovered from: an extended stay past the interstate; a trail through the weeds and broken brick to the lot. The air felt wrong before anything happened.</p><p><span class='c-k'>Subject:</span> a couple zips of clear, getting late; a room humming like a live-wire bed, weight open on the table.</p><p><span class='c-k'>Also logged:</span> they stopped Cornbread, searched him down, boxed the lot &mdash; he threw it before they got him. Still in jail.</p><p><span class='c-k'>On the record:</span> \"Ain't even the room. It's that walk back. Through that cut. Knowing if something moves wrong, you wearing all of it.\"</p><p class='c-status'>Status: same little trail, different night. That walk back got a hell of a lot longer.</p>" },
-  { n:"08", title:"Slap Out Rules", file: "/08 - Slap Out Rules.mp3", notes:"<p class='c-from'>Recovered from: a backroad past the county line. An old Chevy coughing, milk going warm in the backseat, a church sign half gone reading THE FLOOD IS COMING with the letters leaning wrong.</p><p><span class='c-k'>Subject:</span> slap out &mdash; of gas, cash, sleep, mercy.</p><p><span class='c-k'>Also logged:</span> a man named Deacon in a Dale Earnhardt shirt, torch in the cupholder &mdash; said he wasn't a dealer, he was \"a blessing with legs,\" then shorted the sack and quoted Leviticus wrong.</p><p><span class='c-k'>On the record:</span> \"When you slap out, you start naming crumbs miracles. A half bag becomes manna. Every liar with supply sounds like Moses for a minute.\" \"The store became wilderness, the plug became law.\"</p><p class='c-status'>Status: pulled in quiet with the day gone gray. You find out quick what god you serve when the last crumb falls.</p>" },
-  { n:"09", title:"The Map's a Circle", file: "/09 - The Map's a Circle.mp3", notes:"<p class='c-from'>Recovered from: behind the Dollar General, a head full of thunder; the air felt bent, like a bad streetlight.</p><p><span class='c-k'>Subject:</span> woke up already wrong, kept moving, walked the river-walk road deeper than he meant to.</p><p><span class='c-k'>Logged along the route:</span> a Texaco man with three gold teeth selling a meeting with God; a church bus behind the Waffle House, NO BRAKES on the side, twelve little men in tuxedos singing Amazing Grace backwards. Arrived at: the Flesh Carnival &mdash; neon crucifixes, a sad animatronic raccoon nodding like it knew every bad decision in every room.</p><p><span class='c-k'>Also present:</span> Wanda, dancing slow on cardboard, waiting through every bad year he named.</p><p class='c-status'>Status: \"The map's a circle, baby. It always brings you back.\" The choice got made a long time before him &mdash; written in cigarette ash, motor oil, and shame.</p>" },
-  { n:"10", title:"Neon Judgment", file: "/10 - Neon Judgment.mp3", notes:"<p class='c-from'>Recovered from: a motel strip, wet asphalt, poisoned night air. The crickets had quit; the sky was bleeding color.</p><p><span class='c-k'>Subject:</span> walked where the ash met the asphalt, reading the end in the signs; the sky a screen, the signal crossed.</p><p><span class='c-k'>Logged along the strip:</span> a motel priest preaching dice-roll sermons; a kid with a sack and a torch in the rain; a corner boy selling \"apocalypse in a baggie of blue\"; a girl named Grace selling pills and fate; a man with a crow on each shoulder; the Horsemen, riding where the debt gets rolled.</p><p><span class='c-k'>On the record:</span> \"The Dragon wrote scripture through a glass pipe song.\" \"The prophets wear hoodies and the lost read lines.\"</p><p class='c-status'>Status: the roof came gone. Riding the lightning till dawn. Horsemen in the rearview now. \"Let them come.\"</p>" },
-  { n:"11", title:"Gravel and Grace", file: "/11 - Gravel and Grace.mp3", notes:"<p class='c-from'>Recovered from: deep where the road turns clay, pines leaning like they know the name. Rain on a Chevrolet roof; a bowl gone cold as shame.</p><p><span class='c-k'>Subject (the seat):</span> ten years burned for a dirty high; a child somewhere with the same eyes; a woman who quit waiting when the headlights kept turning south.</p><p><span class='c-k'>Logged at the edge:</span> pulled off deep, thought about letting the ditch keep what was left. No angel came. No reveal. Just one more breath, unasked for.</p><p><span class='c-k'>On the record:</span> \"The devil don't need to kill you if he can make you agree with him.\" \"Pain ain't proof that you're beyond grace.\" \"Forgiven ain't a feeling, son. Drive.\"</p><p class='c-status'>Status: drove on. Not clean, not free. The engine turned over rough.</p>" },
-  { n:"12", title:"The Last Bowl", file: "/12 - The Last Bowl.mp3", notes:"<p class='c-from'>Recovered from: a single-wide, rain since Tuesday.</p><p><span class='c-k'>Subject (the seat):</span> three generations collapsing to one point &mdash; granddaddy's ring in a Montgomery pawn shop, the daughter who don't know his name, mama's ghost in the corner, daddy's in the mirror.</p><p><span class='c-k'>Anomalies:</span> the dead present in the room; the devil wearing kin's face; rain turning to blood.</p><p><span class='c-k'>On the record:</span> \"The fall ain't a moment &mdash; it's a lifetime of fallin'.\" \"The devil don't need your soul. He just needs you to keep believin' you can outrun the hole.\" \"The Glitch is open.\"</p><p class='c-status'>Status: one more click of the torch. Event horizon. The bowl goes out for good.</p>" },
-  { n:"13", title:"The Last Trailer on the Right", file: "/13 - The Last Trailer on the Right.mp3", notes:"<p class='c-from'>Recovered from: the last trailer on the right, end of the line &mdash; only the swamp past here, and the secrets it keeps. A ceiling fan squeaking; a porch light flickering, gasping for air.</p><p><span class='c-k'>Subject (the seat):</span> back against the wall in the master bedroom, keeping the vigil alone in a house made of tin built on a foundation of bone. Introducing himself to the ghosts under the chair. (Unc: \"Don't shake hands with 'em, boy. They don't let go.\")</p><p><span class='c-k'>Objects logged:</span> the pipe in the drawer, calling out his name &mdash; a silver-tongue devil promising to numb the shame. A door locked from the inside.</p><p><span class='c-k'>On the record:</span> \"2Fang said the truth is a jagged piece of glass &mdash; you can hold it if you want, but the bleeding's gonna last.\" \"The mountain's made of every 'no' I ever said, the bricks I laid inside my own head.\" \"A life sentence served &mdash; one minute at a time.\"</p><p class='c-status'>Status: (Ryder: \"I think it's growing.\") The mountain won't move. Just waiting on a sunrise that may never find its way. Fades to wind through the screen door.</p>" },
-  { n:"14", title:"How to Keep What Won't Leave", file: "/14 - How to Keep What Won't Leave.mp3", notes:"<p class='c-from'>Recovered from: the dirt road west, looking for something clean. Sun dropping, dust hanging gold; past the bait shop, the church with no sign, the field where the hay rolled black.</p><p><span class='c-k'>Subject:</span> chasing an answer down a dead-end sky; every voice gave a fragment, every mile took a piece.</p><p><span class='c-k'>Logged along the road:</span> a man on an ice chest, pill bottle and Bible &mdash; \"the trick ain't seeing deeper, it's knowing which lie you can survive\"; a barefoot woman by a soybean ditch &mdash; \"what if all it owes is a seat in the fire.\" At the river: Unc at a burn barrel &mdash; \"water don't get free, it just accepts the bank and keeps moving anyway.\"</p><p><span class='c-k'>On the record:</span> \"Acceptance ain't surrender &mdash; it's the end of arguing with what is.\" \"You are not above the dirt. You are not outside the hurt. You are in it. Like the rest. Take your place.\"</p><p class='c-status'>Status: drove back slow. Didn't feel saved. Just quieter. \"Maybe the whole point was never getting out &mdash; just learning how to stay without lying to myself.\"</p>" }
-];
-</script>
 
-<script>
-(function(){
-  const list = document.getElementById('trackList');
-  const audio = document.getElementById('audio');
-  document.getElementById('yr').textContent = new Date().getFullYear();
 
-  const ALBUM_NAME = "The Glass Rose Sessions";
-  const ALBUM_ART = "/glass-rose-cover.jpg";
 
-  const PLAY = 'M3 2l11 6-11 6z';
-  const PAUSE = 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
-  let current = -1;
-
-  function fmt(s){ if(!isFinite(s))return '--:--'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-  function esc(s){ return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
-
-  TRACKS.forEach(function(t,i){
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.id = 'card'+i;
-    card.innerHTML =
-      '<div class="card-head">' +
-        '<button class="c-play" data-play="'+i+'" aria-label="Play '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="'+PLAY+'"/></svg></button>' +
-        '<span class="c-num">'+t.n+'</span>' +
-        '<span class="c-titlewrap" data-fn="'+i+'"><span class="c-title">'+t.title+'</span><span class="c-dur" id="dur'+i+'"></span></span>' +
-        '<button class="c-fn" data-fn="'+i+'" aria-expanded="false" aria-controls="note'+i+'">Notes <span class="chev">&#9662;</span></button>' +
-      '</div>' +
-      '<div class="c-prog"><div class="c-prog-fill" id="prog'+i+'"></div></div>' +
-      '<div class="c-note" id="note'+i+'"><div class="c-note-inner">'+t.notes+
-        '<a class="c-save" href="'+t.file+'" download aria-label="Download '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="M7 1h2v6.6l1.8-1.8 1.4 1.4L8 11.4 3.8 7.2l1.4-1.4L7 7.6z"/><path d="M2 13h12v2H2z"/></svg> Save this track</a>' +
-      '</div></div>';
-    list.appendChild(card);
-    // NOTE: durations load lazily when a track is played (see 'loadedmetadata'
-    // below) — we do NOT pre-download every file, which keeps the page fast.
-  });
-
-  list.addEventListener('click', function(e){
-    const fn = e.target.closest('[data-fn]');
-    if(fn){
-      const card = document.getElementById('card'+fn.dataset.fn);
-      const nowOpen = card.classList.toggle('open');
-      const btn = card.querySelector('.c-fn');
-      if(btn) btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
-      return;
-    }
-    const pb = e.target.closest('[data-play]');
-    if(pb){
-      const i = parseInt(pb.dataset.play,10);
-      if(i === current){ audio.paused ? audio.play() : audio.pause(); }
-      else { load(i, true); }
-    }
-  });
-
-  const deck = document.getElementById('deck');
-  const deckText = document.getElementById('deckText');
-  const deckProg = document.getElementById('deckProg');
-  const deckFill = document.getElementById('deckFill');
-  const deckBar  = document.getElementById('deckBar');
-  const deckTime = document.getElementById('deckTime');
-  const deckIcon = document.getElementById('deckIcon');
-
-  function setIcons(){
-    document.querySelectorAll('.card').forEach(function(c,i){
-      const path = c.querySelector('.c-play svg path');
-      const isCur = (i === current);
-      path.setAttribute('d', (isCur && !audio.paused) ? PAUSE : PLAY);
-      c.classList.toggle('playing', isCur && !audio.paused);
-    });
-    if(deckIcon.querySelector('path')) deckIcon.querySelector('path').setAttribute('d', audio.paused?PLAY:PAUSE);
-    deck.classList.toggle('playing', current>=0 && !audio.paused);
-    if('mediaSession' in navigator){
-      navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
-    }
-  }
-
-  function setMediaSession(){
-    try{
-      if(!('mediaSession' in navigator) || current < 0) return;
-      const t = TRACKS[current];
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: t.title,
-        artist: "The Ryder McCoy Band",
-        album: ALBUM_NAME,
-        artwork: [{ src: t.art || ALBUM_ART }]
-      });
-      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
-      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
-      navigator.mediaSession.setActionHandler('previoustrack', function(){
-        if(audio.currentTime > 3){ audio.currentTime = 0; return; }
-        load(current-1, true);
-      });
-      navigator.mediaSession.setActionHandler('nexttrack', function(){ load(current+1, true); });
-    }catch(e){}
-  }
-
-  function load(i, play){
-    current = ((i % TRACKS.length)+TRACKS.length)%TRACKS.length;
-    audio.src = TRACKS[current].file;
-    deckText.textContent = TRACKS[current].title;
-    deckProg.innerHTML = 'PROG <b>'+(current+1)+'</b>/'+TRACKS.length;
-    deck.classList.add('show');
-    setMediaSession();
-    if(play) audio.play().catch(function(){});
-    setIcons();
-  }
-
-  audio.addEventListener('play', setIcons);
-  audio.addEventListener('pause', setIcons);
-  audio.addEventListener('loadedmetadata', function(){
-    if(current>=0){
-      var cell = document.getElementById('dur'+current);
-      if(cell && isFinite(audio.duration)) cell.textContent = fmt(audio.duration);
-    }
-  });
-  audio.addEventListener('ended', function(){
-    if(current < TRACKS.length-1){ load(current+1, true); }
-    else { audio.pause(); setIcons(); }
-  });
-  audio.addEventListener('timeupdate', function(){
-    var pct = audio.duration ? (audio.currentTime/audio.duration*100):0;
-    deckFill.style.width=pct+'%'; deckBar.setAttribute('aria-valuenow',Math.round(pct));
-    deckTime.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);
-    if(current<0) return;
-    const f = document.getElementById('prog'+current);
-    if(f && audio.duration) f.style.width = pct+'%';
-    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && isFinite(audio.duration) && audio.duration > 0){
-      try{ navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime }); }catch(e){}
-    }
-  });
-
-  document.getElementById('deckPlay').addEventListener('click', function(){ if(current===-1){ load(0,true); return; } audio.paused?audio.play():audio.pause(); });
-  document.getElementById('deckNext').addEventListener('click', function(){ load(current+1,true); });
-  document.getElementById('deckPrev').addEventListener('click', function(){ if(audio.currentTime>3){ audio.currentTime=0; return; } load(current-1,true); });
-  function deckSeek(x){ var r=deckBar.getBoundingClientRect(); var pct=Math.min(1,Math.max(0,(x-r.left)/r.width)); if(audio.duration) audio.currentTime=pct*audio.duration; }
-  deckBar.addEventListener('click', function(e){ deckSeek(e.clientX); });
-  deckBar.addEventListener('keydown', function(e){ if(!audio.duration) return; if(e.key==='ArrowRight') audio.currentTime=Math.min(audio.duration,audio.currentTime+5); if(e.key==='ArrowLeft') audio.currentTime=Math.max(0,audio.currentTime-5); });
-
-})();
-</script>
 </body>
 </html>

@@ -110,138 +110,20 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
+<script src="/js/player-state.js" defer></script>
+<script src="/js/site-nav.js" defer></script>
+<script src="/data/albums/fall.js" defer></script>
+<script src="/js/casefile-player.js" defer></script>
 </head>
 <body>
-<nav class="slap-nav" aria-label="Site"><a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a><div class="slap-nav-links"><a class="lnk" data-page="index.html" href="/">Home</a><a class="lnk" data-page="warning.html" href="/warning/">The Warning</a><a class="lnk" data-page="glass-rose.html" href="/glass-rose/">The Glass Rose</a><a class="lnk" data-page="fall.html" href="/fall/">The Fall</a><a class="lnk" data-page="woods.html" href="/woods/">Welcome to the Woods<span class="new">New</span></a><a class="lnk" data-page="wall.html" href="/wall/">The Wall</a><a class="lnk" data-page="dirt-road.html" href="/dirt-road/">The Dirt Road</a></div></nav>
-<script>(function(){var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
-  if(path && !path.endsWith('.html')) path += '.html';
-  if(!path) path='index.html';document.querySelectorAll('.slap-nav a[data-page]').forEach(function(a){if(a.getAttribute('data-page').toLowerCase()===path)a.classList.add('here')})})();</script>
+<nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
+
 <header class="album-hero" id="top"><h1 class="sr-only">The Fall</h1><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="/fall-cover.jpg" aria-hidden="true"><source src="/fall-hero.mp4" type="video/mp4"></video></header>
 <div class="genre-strip"><div class="wrap"><span class="genre-tag hot">Southern Gothic</span><span class="genre-tag">Dark Country</span><span class="genre-tag">Swamp Blues</span><span class="genre-tag">Slow Trap Drums</span><span class="genre-tag">Backroad Alabama</span></div></div>
 <section id="listen"><div class="wrap"><p class="sec-label">Record Three &middot; Biloxi Blues Records</p><h2 class="sec-title display">The Fall</h2><p class="lede"><span id="trackCount">13</span> tracks. The warning is over &mdash; welcome to the fall. Tap a song to play it. Open <strong style="color:var(--bone)">Field Notes</strong> for the case file &mdash; and to keep the track.</p><div class="cards" id="trackList"></div><p class="dl-note">Tap a card to play &middot; open Field Notes to download &middot; free &middot; no email &middot; no catch</p></div></section>
 <section id="story" class="bg-photo"><div class="wrap"><p class="sec-label">Field Notes</p><h2 class="sec-title display">What This Record Is</h2><p class="lede"><em>The Fall</em> is Record Three &mdash; one life's descent down the backroads past the church and the water tower. Every exit gets tried and proven false. It does not end on escape or rescue. It ends on the curse handed down.</p><p class="lede" style="margin-top:16px">We don't write songs. We report from the brink.</p></div></section>
-<footer><p class="label-mark">Biloxi Blues Records</p><p>The Ryder McCoy Band &middot; Slapout, Alabama</p><p class="fine">&copy; <span id="yr"></span> Biloxi Blues Records. Free to download. Free to share for personal listening.</p><p class="fine" style="margin-top:10px;color:var(--bone);letter-spacing:.04em">No fake saints. No clean endings. Backroads know.</p></footer><script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<footer><p class="label-mark">Biloxi Blues Records</p><p>The Ryder McCoy Band &middot; Slapout, Alabama</p><p class="fine">&copy; <span id="yr"></span> Biloxi Blues Records. Free to download. Free to share for personal listening.</p><p class="fine" style="margin-top:10px;color:var(--bone);letter-spacing:.04em">No fake saints. No clean endings. Backroads know.</p></footer>
 <div class="deck" id="deck" aria-label="Player"><div class="deck-inner"><div class="deck-readout"><img class="deck-art" src="/fall-cover.jpg" alt="The Fall album cover" width="44" height="44" loading="lazy"><span class="deck-led"></span><span class="deck-text" id="deckText">Tap a track to load the deck</span><span class="deck-prog" id="deckProg">PROG <b>&mdash;</b></span></div><div class="deck-bar" id="deckBar" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="deck-fill" id="deckFill"></div></div><div class="deck-controls"><button class="deck-btn skip" id="deckPrev" aria-label="Rewind to previous track"><svg viewBox="0 0 20 16"><path d="M2 2h2.2v12H2zM11 8l8-6v12zM4.5 8l8-6v12z"/></svg></button><button class="deck-btn play" id="deckPlay" aria-label="Play or pause"><svg id="deckIcon" viewBox="0 0 16 16"><path d="M3 2l11 6-11 6z"/></svg></button><button class="deck-btn skip" id="deckNext" aria-label="Forward to next track"><svg viewBox="0 0 20 16"><path d="M15 2h2.2v12H15zM5 2l9 6-9 6z"/></svg></button></div><div class="deck-time" id="deckTime">0:00 / 0:00</div></div></div><audio id="audio" preload="none"></audio>
-<script>
-const TRACKS = [
-  { title: "The Fall", file: "/01 - The Fall.mp3", notes: "<p class='fn-from'>Recovered from: a muddy stretch of road past the chapel and the water tower &mdash; the exact ground Record One warned about. Long shadows. Thunder already come and gone.</p><p><span class='fn-k'>Subject:</span> a country boy under a heavy load, walking away from a holy kind of grace. Saw the dust kicking up behind him. Did not turn around.</p><p><span class='fn-k'>Objects logged:</span> an apple with the caved-in side, held out by the serpent; a garden traded for a pocket of mud; venom settling, roots going deep; a toll the congregation already collected.</p><p><span class='fn-k'>The beast's testimony:</span> didn't hunt &mdash; waited in the clay, knowing the route. The rattle was a courtesy, not a threat. Keep walking past it and it stops being an accident.</p><p class='fn-status'>Status: the warning was the thunder; the bite is the flood. Record One is closed. Welcome to the fall.</p>" },
-  { title: "Back Road Life Can Leave You Falling", file: "/02 - Back Road Life Can Leave You Falling.mp3", notes: "<p class='fn-from'>Recovered from: a gas station lot on the red dirt roads, broken light overhead. Heavy rain on tin, a slow 808 heartbeat underneath it all.</p><p><span class='fn-k'>Subject:</span> a girl with tired eyes and a shaking smile &mdash; met on the hood of a car, killing time, hands trembling when she reached for the dash. Said the nights out here have a way of pulling you in fast. Everything felt normal till the quiet got loud.</p><p><span class='fn-k'>Her testimony, logged low-fi:</span> some doors you open looking for a little relief. Once you step through, the harvest comes for you. Better learn to sit still before the still learns you. The road takes blood, and the dark takes names.</p><p><span class='fn-k'>Second location:</span> past the pines where the trailers sit dark, smoke curling slow while the rain beat steady on the roof. Ditches hiding wrecks, cops rolling thin, the woods turning mean when the wind cut in.</p><p><span class='fn-k'>Unc's testimony, raspy and manic:</span> they everywhere &mdash; in the smoke, in the flame, slipping in quiet when you're riding that chemical wave. Needles in the ash, trouble in the frame. Hear your name in the radio hiss, turn around quick, don't trust none of it.</p><p class='fn-status'>Status: drove home slow through the flooded clay, still hearing her words in the thunder. Be careful now. They everywhere.</p>" },
-  { title: "Montgomery Mercy", file: "/03 - Montgomery Mercy.mp3", notes: "<p class='fn-from'>Recovered from: a motel off Ann Street, Montgomery. Rain on a busted AC unit, room twelve coughing through a broken vent. Red clay still on the boots.</p><p><span class='fn-k'>Subject:</span> a woman called Mercy once &mdash; black mascara down her face, prayers she couldn't finish, wristbands she never cut off, checking an empty pocket like her life should've been in it. Said the dope keeps the demons low.</p><p><span class='fn-k'>Also logged:</span> Worm by the stairwell reading Revelation off a Bible split like a broken-winged bird; June crying at the sink; Tate pacing with a tire iron. Hot copper, bleach, and thunder in the air.</p><p><span class='fn-k'>Unc's testimony:</span> this ain't freedom, it's infection. This ain't pleasure, it's possession. Every torch click another nail. The Devil calls it inventory.</p><p><span class='fn-k'>The exit:</span> she asked to be let out by the ditch and the power line &mdash; \"if I keep riding with you, I might mistake your road for mine.\"</p><p class='fn-status'>Status: Montgomery faded in the rearview. Some folks leave. Some don't make it back. She left. The last word was a warning not to answer if she calls collect.</p>" },
-  { title: "If That Ain't Slapout", file: "/04 - If That Ain't Slapout.mp3", notes: "<p class='fn-from'>Recovered from: a trailer in the park, power bill taped to the fridge, window AC rattling, an old car ticking as it cools. Cicadas.</p><p><span class='fn-k'>Subjects:</span> a father &mdash; jail tattoos and parking-lot scars, hands full of grease, fixing the neighbors' brakes with a pill-bottle rattle and a jaw full of pain. A mother &mdash; receipts in a Walmart sack, counting every dollar twice, swearing off every Sunday at two, back on it by hungry Monday. A CPS card on the counter by the sink.</p><p><span class='fn-k'>The witnesses:</span> the kids. A baby asleep by the laundry pile. An oldest with grown-up eyes who knew which car meant trouble and which quiet meant Mama had cried. A little girl smiling with a backpack full of holes. A child learning the sound of a drawer opening.</p><p><span class='fn-k'>Unc's testimony:</span> don't call it simple when the curse has roots; don't call them evil when they're wearing worn boots. Babylon is late rent and an unpaid fine.</p><p class='fn-status'>Status: morning came gray. Kids caught the bus in the dark. Daddy still on the floor &mdash; not dead, not saved, not gone, just tired. There was love in that house. Love don't always keep the wolves away.</p>" },
-  { title: "Drip Dripping", file: "/05 - Drip Dripping.mp3", notes: "<p class='fn-from'>Recovered from: a cheap motel room under a buzzing red sign, off the interstate. A sink dripping all night. Ice machine coughing down the hall.</p><p><span class='fn-k'>Subjects:</span> two people waiting on a plug who's never late \"unless something went bad.\" She kept checking a cracked screen &mdash; bare feet on the carpet stains, a torch on the table cold beside two twenties and a gas-station pill.</p><p><span class='fn-k'>The dread:</span> a truck rolled by slow, headlights under the door &mdash; \"that ain't no random man.\" She said the drip was time, God counting. Then a single light knock, and the whole room went still.</p><p><span class='fn-k'>Unc's testimony:</span> don't call every knock deliverance. Don't call every bag a promised land. Judgment don't always ride with sirens &mdash; sometimes it waits in an empty hand.</p><p class='fn-status'>Status: by sunrise the plug never showed. No sirens, no angels &mdash; just wet blacktop and a pale room. She sat holding the torch like a prayer gone red. Drip, dripping.</p>" },
-  { title: "Walk Through the Glitter", file: "/06 - Walk Through the Glitter.mp3", notes: "<p class='fn-from'>Recovered from: County 11, where the pines get thick. The old gas station, lights nearly gone, oil stains on the cement.</p><p><span class='fn-k'>Subject:</span> Wanda &mdash; barefoot on the gravel, red sequins catching the last light, reading futures in the oil and in a Marathon sign. Carried a bag in her purse like a little gospel truth. Clicked the torch three times like a slow amen. Asked her name, she handed over four &mdash; keeps the spares for the ones who want more.</p><p><span class='fn-k'>The gospel she preaches:</span> deliverance comes in a plastic booth. The only way out is the only way through. The glitter on the floor is the last of you.</p><p><span class='fn-k'>Unc's counter-testimony:</span> don't call every sparkle holy. Some glitter's just broken glass reflecting what you left behind. She ain't selling you a heaven &mdash; she's renting you a door, and the rent comes due each sunrise, always a little more.</p><p class='fn-status'>Status: last seen walking down the line, red sequins flashing like they already knew. Didn't say goodbye &mdash; just turned, smiled, and said: walk through the glitter, child.</p>" },
-  { title: "Get Me Gone", file: "/07 - Get Me Gone.mp3", notes: "<p class='fn-from'>Recovered from: a room going loud past midnight. Thunder, an 808 heartbeat, a torch clicking. Slapout.</p><p><span class='fn-k'>Subjects:</span> Crank &mdash; \"one more night\" with that crooked grin, lit the pipe, danced on the table singing \"we all die pretty in the Slapout land.\" Worm &mdash; seeing angels in the power lines, talking to the ceiling fan, swearing the government watched through the walls.</p><p><span class='fn-k'>The narrator, against himself:</span> told himself he'd leave before the sun. Felt the pull like a rusted chain. Kept checking the door &mdash; it seemed to move. The night always won.</p><p><span class='fn-k'>Unc's testimony:</span> don't call it a party when the walls start to breathe; don't call it a night when the morning won't leave. This door's been open since you fell asleep.</p><p><span class='fn-k'>Cross-reference:</span> see Out of That Life (Record One) &mdash; same Crank, same Worm, one record earlier. \"Get me gone\" is the prayer that \"out of that life\" never answered.</p><p class='fn-status'>Status: sky turned gray. Crank passed out, Worm walked away. The narrator still sitting there, pipe in hand, trying to remember how the night began. Some nights you leave. Some nights you stay.</p>" },
-  { title: "Jenny in the Porch Light", file: "/08 - Jenny in the Porch Light.mp3", notes: "<p class='fn-from'>Recovered from: behind a busted single-wide out by Slapout, blue TV light in the window. Gravel lot muddy from a dusk storm, beer cans by the steps, a bug zapper popping by the porch rail.</p><p><span class='fn-k'>Subject:</span> a girl named Jenny &mdash; leaned back in a lawn chair, gold lighter in chipped red nails, laughing at something that wasn't there. Said \"don't say my name.\" Had a voice that sounded near crying even when she smiled.</p><p><span class='fn-k'>Objects logged:</span> a glass bowl making rounds like a small blue moon; burned foil and a half-warm Dr Pepper; a motel key card under the ashtray; a cracked phone; powder in the crease of a bill fold. A boy from Millbrook getting too close.</p><p><span class='fn-k'>The fracture:</span> later, her silver chain caught on the tailgate latch. \"I remember her laughing. I remember her saying take me out of here. Same mouth, same night, and one of them's true &mdash; but I can't say which.\" Front door hanging wide, a girl crying in the kitchen. Not much blood on somebody's blinds. Just enough to stay.</p><p class='fn-status'>Status: by gray morning Jenny was gone &mdash; just her lighter on the seat. Kept her chain a month, then found it one night in the door pocket. Some nights I remember her laughing. Some nights I remember fear. Some nights I think those are the same thing.</p>" },
-  { title: "Gasoline Baptism", file: "/09 - Gasoline Baptism.mp3", notes: "<p class='fn-from'>Recovered from: the river where the chemical plants bleed, black water catching dead motel-sign color. A far freight train, a slow stomp on the muddy bank.</p><p><span class='fn-k'>Subject:</span> a man come looking for a preacher to bury what was left of him. Brother Holloway &mdash; shiny gray suit, stale tobacco, a silver cross on a rusted dog chain. Told him to leave his name on the bank: \"we're saving just the bone &mdash; that's the only part the river knows.\"</p><p><span class='fn-k'>What surfaced:</span> a child's red shoe stuck in the clay, a motel key, a shotgun shell, a pill bottle with no pills, a burned photo of a woman and a boy with the faces rubbed gone. And the others &mdash; pale hands reaching, people who came looking for a cleaner and stayed.</p><p><span class='fn-k'>Holloway's testimony:</span> it ain't water, it's a ledger. It ain't mercy, it's a mouth. You can't wash it off if it's under the skin &mdash; you can only push it farther down. Every man wants clean till clean gets deep.</p><p class='fn-status'>Status: crawled to the bank with mud in his mouth, breath come back wrong. Holloway gone &mdash; just wet footprints, his Bible floating open then folding away. The river don't forgive. It just swallows the sin. Still calling him down. Amen.</p>" },
-  { title: "Carpet Testament", file: "/10 - Carpet Testament.mp3", notes: "<p class='fn-from'>Recovered from: a single-wide at dawn &mdash; stained, burn-scarred carpet, cat hair, ambient static, a slow organ hum. [Spoken testimony, not sung.]</p><p><span class='fn-k'>Subject:</span> a man on his knees, crawling the carpet like a prophet through purgatory, hunting glitter only he could see. Saw cities in the fibers &mdash; trailer parks of the soul, glass angels weeping amphetamine halos. Believed the right speck could rewind time and undo the vein-blast that split his sky.</p><p><span class='fn-k'>The hallucinated war:</span> said the carpet was fighting back. The fridge a prison, the outlet a praying mouth. Slapped a roach that told him: \"this is holy ground &mdash; you just forgot the commandments.\"</p><p><span class='fn-k'>The Sainted Sister:</span> came at dawn, smoke-ring halo, laid hands on his scalp and slapped him once. The demons scurried like roaches. He called her \"the bottle's bride.\" She wasn't healing him. She was baptizing the madness.</p><p><span class='fn-k'>The prophecy:</span> \"I was searchin' for what I dropped, but I found what I never wanted.\" \"Every carpet hides a kingdom, and every kingdom's ruled by ghosts. The only way out is through the glitter.\"</p><p class='fn-status'>Status: the narrator believed him. Still does.</p>" },
-  { title: "Out Here", file: "/11 - Out Here.mp3", notes: "<p class='fn-from'>Recovered from: a truck stop off I-65 under yellow gas-station light. Semis idling, a far train horn, a slow 808 heartbeat. The blacktop sweating.</p><p><span class='fn-k'>Subject:</span> a woman by the ice machine, bare feet on wet concrete, a taped-up Bible her mama gave her before she drove away. Glass pipe in one hand, lighter in the rain. \"I ain't lost. I'm just too far back.\"</p><p><span class='fn-k'>Also logged:</span> an old man in booth three &mdash; silver cross, pill bottle in a coffee-stained vest, used to preach in the Deatsville woods till the offering plate quit. Now sells losing lottery tickets and calls each one a prophecy. \"Babylon don't fall, boy. It leaks.\" Then a torch clicked in a bathroom stall, and nobody turned when they heard her fall.</p><p><span class='fn-k'>The prophet's bridge:</span> the harvest don't ask what you meant to grow. The serpent waits by the door with a match and a thumb. Deliverance comes in scars, court dates, burned-out cars &mdash; and you finally see you've been worshippin' sand.</p><p class='fn-status'>Status: by sunrise the lot was empty. One Bible on the curb, one ticket in the drain. Out here the angels get tired &mdash; they trade their wings for a little more fire. Behind room twelve, that torch clicked again.</p>" },
-  { title: "Mary", file: "/12 - Mary.mp3", notes: "<p class='fn-from'>Recovered from: a six-month stretch in the ward &mdash; thirty beds in a white hallway, bitter tea, swept floors &mdash; and then a window left wide open, a footprint near the track.</p><p><span class='fn-k'>Subject:</span> Mary. Checked herself in before her anchor slipped. Folks said she was different now, said the fever finally broke. Building a brand new lock without a heavy key.</p><p><span class='fn-k'>The relapse:</span> snuck off with a needle and a crown &mdash; thorns wrapped around her arm as the poison took her down. Painting promises in her blood. Walked out past the treeline where the streetlights don't glow, back to the only sanctuary she'd ever know. The mud has got a memory, and it knows your exact face.</p><p><span class='fn-k'>The knock:</span> she put the mark on the wood, paid the tithe, prayed for the angel to pass by. But angels follow the rules. Demons knock harder &mdash; they knock until the deadbolt breaks, and then they walk right in.</p><p class='fn-status'>Status: she ended up a chalk line washing out in the rain. No brakes. Just a brick wall at the end of the road.</p>" },
-  { title: "Ten Year Old Eyes", file: "/13 - Ten Year Old Eyes.mp3", notes: "<p class='fn-from'>Recovered from: a single-wide, rain on tin like bullets from God's own chrome. The night the devil cashed his check.</p><p><span class='fn-k'>Subject, then:</span> a ten-year-old hiding under piss-stained foam &mdash; Mama's bare feet dragging, Daddy's fist on the wall, the sweet-burning pipe glowing like the gates of the pit. Mama singing \"Jesus loves me\" while the devil sat in her chair. The night he learned the Flood don't ask &mdash; it just switches.</p><p><span class='fn-k'>Subject, now:</span> grown, same trailer, same rain, same blue flame wearing his skin. Sparks it up and that ten-year-old boy starts screaming \"run, you coward.\" Became the fist, became the pipe, became the hole. Daddy's laugh in his throat, Mama's tears in his eyes.</p><p><span class='fn-k'>The devil's testimony:</span> \"You thought the road would save you? The road just led you right back to the same single-wide grave. That boy never left &mdash; he's just wearin' your boots now.\"</p><p><span class='fn-k'>The trinity:</span> Mud, Blood, Flood &mdash; the same three that drowned that kid, still owning him now.</p><p class='fn-status'>Status: the curse don't end with him. He's the devil on the roadside now, grinning at the next kid hiding under the bed. The fall isn't one life. It's inherited. [The record ends here &mdash; the bloodline begins.]</p>" }
-];
-const AUDIO_DIR = "";
-(function(){
-  const audio = document.getElementById('audio');
-  const list  = document.getElementById('trackList');
-  const deck  = document.getElementById('deck');
-  const deckText = document.getElementById('deckText');
-  const deckProg = document.getElementById('deckProg');
-  const deckFill = document.getElementById('deckFill');
-  const deckBar  = document.getElementById('deckBar');
-  const deckTime = document.getElementById('deckTime');
-  const deckIcon = document.getElementById('deckIcon');
-  var tcEl = document.getElementById('trackCount'); if(tcEl) tcEl.textContent = TRACKS.length;
-  const ALBUM_NAME = "The Fall";
-  const ALBUM_ART = "/fall-cover.jpg";
-  const PLAY = 'M3 2l11 6-11 6z';
-  const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
-  function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  let current = -1;
-  function setStates(){
-    document.querySelectorAll('.card').forEach(function(c,i){
-      var on = (i===current);
-      c.classList.toggle('playing', on && !audio.paused);
-      var p = c.querySelector('.c-play svg path');
-      if(p) p.setAttribute('d', (on && !audio.paused)?PAUSE:PLAY);
-    });
-    if(deckIcon.querySelector('path')) deckIcon.querySelector('path').setAttribute('d', audio.paused?PLAY:PAUSE);
-    deck.classList.toggle('playing', current>=0 && !audio.paused);
-    if('mediaSession' in navigator){
-      navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing';
-    }
-  }
-  function setMediaSession(){
-    try{
-      if(!('mediaSession' in navigator) || current < 0) return;
-      var t = TRACKS[current];
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: t.title,
-        artist: "The Ryder McCoy Band",
-        album: ALBUM_NAME,
-        artwork: [{ src: t.art || ALBUM_ART }]
-      });
-      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
-      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
-      navigator.mediaSession.setActionHandler('previoustrack', function(){
-        if(audio.currentTime > 3){ audio.currentTime = 0; return; }
-        load(current-1, true);
-      });
-      navigator.mediaSession.setActionHandler('nexttrack', function(){ load(current+1, true); });
-    }catch(e){}
-  }
-  function load(i, play){
-    current = ((i % TRACKS.length)+TRACKS.length)%TRACKS.length;
-    audio.src = AUDIO_DIR + TRACKS[current].file;
-    deckText.textContent = TRACKS[current].title;
-    deckProg.innerHTML = 'PROG <b>'+(current+1)+'</b>/'+TRACKS.length;
-    deck.classList.add('show');
-    setMediaSession();
-    if(play) audio.play().catch(function(){});
-    setStates();
-  }
-  TRACKS.forEach(function(t,i){
-    const card = document.createElement('article');
-    card.className = 'card'; card.id = 'card'+i;
-    card.innerHTML =
-      '<div class="card-head">' +
-        '<button class="c-play" data-play="'+i+'" aria-label="Play '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="'+PLAY+'"/></svg></button>' +
-        '<span class="c-num">'+String(i+1).padStart(2,'0')+'</span>' +
-        '<span class="c-titlewrap"><span class="c-title">'+esc(t.title)+'</span><span class="c-dur" id="dur'+i+'"></span></span>' +
-        '<button class="c-fn" data-fn="'+i+'" aria-expanded="false">Notes <span class="chev">&#9662;</span></button>' +
-      '</div>' +
-      '<div class="c-prog"><div class="c-prog-fill" id="prog'+i+'"></div></div>' +
-      '<div class="c-note"><div class="c-note-inner">'+t.notes+
-        '<a class="c-save" href="'+AUDIO_DIR+t.file+'" download aria-label="Download '+esc(t.title)+'"><svg viewBox="0 0 16 16"><path d="M7 1h2v6.6l1.8-1.8 1.4 1.4L8 11.4 3.8 7.2l1.4-1.4L7 7.6z"/><path d="M2 13h12v2H2z"/></svg> Save this track</a>' +
-      '</div></div>';
-    list.appendChild(card);
-  });
-  list.addEventListener('click', function(e){
-    const fn = e.target.closest('[data-fn]');
-    if(fn){ var c=document.getElementById('card'+fn.dataset.fn); var o=c.classList.toggle('open'); fn.setAttribute('aria-expanded',o?'true':'false'); return; }
-    const pb = e.target.closest('[data-play]');
-    if(pb){ var i=parseInt(pb.dataset.play,10); if(i===current){ audio.paused?audio.play():audio.pause(); } else { load(i,true); } }
-  });
-  document.getElementById('deckPlay').addEventListener('click', function(){ if(current===-1){ load(0,true); return; } audio.paused?audio.play():audio.pause(); });
-  document.getElementById('deckNext').addEventListener('click', function(){ load(current+1,true); });
-  document.getElementById('deckPrev').addEventListener('click', function(){ if(audio.currentTime>3){ audio.currentTime=0; return; } load(current-1,true); });
-  audio.addEventListener('play', setStates);
-  audio.addEventListener('pause', setStates);
-  audio.addEventListener('loadedmetadata', function(){ if(current>=0){ var cell=document.getElementById('dur'+current); if(cell && isFinite(audio.duration)) cell.textContent=fmt(audio.duration); } });
-  audio.addEventListener('ended', function(){ if(current<TRACKS.length-1) load(current+1,true); else { audio.pause(); setStates(); } });
-  audio.addEventListener('timeupdate', function(){
-    var pct = audio.duration ? (audio.currentTime/audio.duration*100):0;
-    deckFill.style.width=pct+'%'; deckBar.setAttribute('aria-valuenow',Math.round(pct));
-    deckTime.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);
-    if(current>=0){ var f=document.getElementById('prog'+current); if(f) f.style.width=pct+'%'; }
-    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && isFinite(audio.duration) && audio.duration > 0){
-      try{ navigator.mediaSession.setPositionState({ duration: audio.duration, playbackRate: audio.playbackRate, position: audio.currentTime }); }catch(e){}
-    }
-  });
-  function seek(x){ var r=deckBar.getBoundingClientRect(); var pct=Math.min(1,Math.max(0,(x-r.left)/r.width)); if(audio.duration) audio.currentTime=pct*audio.duration; }
-  deckBar.addEventListener('click', function(e){ seek(e.clientX); });
-  deckBar.addEventListener('keydown', function(e){ if(!audio.duration) return; if(e.key==='ArrowRight') audio.currentTime=Math.min(audio.duration,audio.currentTime+5); if(e.key==='ArrowLeft') audio.currentTime=Math.max(0,audio.currentTime-5); });
-  const heroVid=document.getElementById('heroVideo'); const heroEl=document.querySelector('.album-hero'); if(heroVid){ heroVid.addEventListener('canplay',function(){heroEl.classList.add('video-ready')}); heroVid.play().catch(function(){}); }
-})();
-</script>
+
 </body>
 </html>
