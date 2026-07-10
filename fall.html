@@ -109,7 +109,8 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-video{display:none}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
-<link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">\n</head>
+<link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
+</head>
 <body>
 <nav class="slap-nav" aria-label="Site"><a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a><div class="slap-nav-links"><a class="lnk" data-page="index.html" href="/">Home</a><a class="lnk" data-page="warning.html" href="/warning/">The Warning</a><a class="lnk" data-page="glass-rose.html" href="/glass-rose/">The Glass Rose</a><a class="lnk" data-page="fall.html" href="/fall/">The Fall</a><a class="lnk" data-page="woods.html" href="/woods/">Welcome to the Woods<span class="new">New</span></a><a class="lnk" data-page="wall.html" href="/wall/">The Wall</a><a class="lnk" data-page="dirt-road.html" href="/dirt-road/">The Dirt Road</a></div></nav>
 <script>(function(){var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
@@ -151,7 +152,7 @@ const AUDIO_DIR = "";
   var tcEl = document.getElementById('trackCount'); if(tcEl) tcEl.textContent = TRACKS.length;
   const ALBUM_NAME = "The Fall";
   // Temporary square fallback until album-specific lock-screen art is approved.
-const ALBUM_ART = "https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
+  const ALBUM_ART = "https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
   function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
