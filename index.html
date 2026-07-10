@@ -54,17 +54,16 @@
 <div class="fplayer" id="fplayer" aria-label="Audio player"><div class="fp-inner"><div class="fp-controls"><button class="fp-btn" id="fpPrev" aria-label="Previous"><svg viewBox="0 0 16 16"><path d="M2 2h2v12H2zM14 2v12L5 8z"/></svg></button><button class="fp-btn" id="fpPlay" aria-label="Play or pause"><svg id="fpIcon" viewBox="0 0 16 16"><path d="M3 2l11 6-11 6z"/></svg></button><button class="fp-btn" id="fpNext" aria-label="Next"><svg viewBox="0 0 16 16"><path d="M12 2h2v12h-2zM2 2l9 6-9 6z"/></svg></button></div><div class="fp-meta"><div class="fp-title" id="fpTitle">—</div><div class="fp-bar" id="fpBar" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="fp-fill" id="fpFill"></div></div></div><div class="fp-time" id="fpTime">0:00 / 0:00</div></div></div><audio id="fAudio" preload="none"></audio>
 <script>
 var FOUNDATIONS=[
- {rec:"Record One · The Warning",title:"The Warning",why:"Where the road first shows its teeth. \u201CThis ain\u2019t a story. It\u2019s a warning.\u201D",file: "/01 - The Warning.mp3"},
- {rec:"Record Two · The Glass Rose",title:"Gravel and Grace",why:"Ryder and Unc, down where the road turns clay. \u201CForgiven ain\u2019t a feeling, son. Drive.\u201D",file: "/11 - Gravel and Grace.mp3"},
- {rec:"Record Three · The Fall",title:"If That Ain\u2019t Slapout",why:"What it costs the kids. \u201CWatching a child learn the sound of a drawer opening.\u201D",file: "/04 - If That Ain't Slapout.mp3"},
- {rec:"Record Four · Welcome to the Woods",title:"Welcome to the Woods",why:"The trail opens and the headlights go quiet. \u201CWelcome to the woods.\u201D",file: "/01 - Welcome to the Woods.mp3"}
+ {rec:"Record One · The Warning",title:"The Warning",why:"Where the road first shows its teeth. \u201CThis ain\u2019t a story. It\u2019s a warning.\u201D",file: "/01 - The Warning.mp3",art:"/warning-cover.jpg"},
+ {rec:"Record Two · The Glass Rose",title:"Gravel and Grace",why:"Ryder and Unc, down where the road turns clay. \u201CForgiven ain\u2019t a feeling, son. Drive.\u201D",file: "/11 - Gravel and Grace.mp3",art:"/glass-rose-cover.jpg"},
+ {rec:"Record Three · The Fall",title:"If That Ain\u2019t Slapout",why:"What it costs the kids. \u201CWatching a child learn the sound of a drawer opening.\u201D",file: "/04 - If That Ain't Slapout.mp3",art:"/fall-cover.jpg"},
+ {rec:"Record Four · Welcome to the Woods",title:"Welcome to the Woods",why:"The trail opens and the headlights go quiet. \u201CWelcome to the woods.\u201D",file: "/01 - Welcome to the Woods.mp3",art:"/woods-cover.jpg"}
 ];
 (function(){
  var audio=document.getElementById('fAudio'),list=document.getElementById('fList'),player=document.getElementById('fplayer');
  var pTitle=document.getElementById('fpTitle'),pFill=document.getElementById('fpFill'),pBar=document.getElementById('fpBar'),pTime=document.getElementById('fpTime'),fpIcon=document.getElementById('fpIcon');
  var PLAY='M3 2l11 6-11 6z',PAUSE='M3 2h3.5v12H3zM9.5 2H13v12H9.5z',current=-1;
- // Temporary square fallback until album-specific lock-screen art is approved.
-var ALBUM_ART="https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
+ var ALBUM_ART="https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
  function fmt(s){if(!isFinite(s))return'0:00';s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
  function states(){document.querySelectorAll('.f-track').forEach(function(r,i){var on=(i===current);r.classList.toggle('active',on);var p=r.querySelector('.f-play svg path');if(p)p.setAttribute('d',(on&&!audio.paused)?PAUSE:PLAY);});var ip=fpIcon.querySelector('path');if(ip)ip.setAttribute('d',audio.paused?PLAY:PAUSE);if('mediaSession' in navigator){navigator.mediaSession.playbackState=audio.paused?'paused':'playing';}}
@@ -76,7 +75,7 @@ var ALBUM_ART="https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
        title: t.title,
        artist: "The Ryder McCoy Band",
        album: t.rec.split(' \u00b7 ')[1] || t.rec,
-       artwork: [{ src: ALBUM_ART }]
+       artwork: [{ src: t.art || ALBUM_ART }]
      });
      navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
      navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });

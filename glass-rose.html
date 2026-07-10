@@ -369,8 +369,7 @@ const TRACKS = [
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const ALBUM_NAME = "The Glass Rose Sessions";
-  // Temporary square fallback until album-specific lock-screen art is approved.
-  const ALBUM_ART = "https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
+  const ALBUM_ART = "/glass-rose-cover.jpg";
 
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE = 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
@@ -446,7 +445,7 @@ const TRACKS = [
         title: t.title,
         artist: "The Ryder McCoy Band",
         album: ALBUM_NAME,
-        artwork: [{ src: ALBUM_ART }]
+        artwork: [{ src: t.art || ALBUM_ART }]
       });
       navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
       navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });

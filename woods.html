@@ -161,8 +161,7 @@ const AUDIO_DIR = "";
   const deckIcon = document.getElementById('deckIcon');
   var tcEl = document.getElementById('trackCount'); if(tcEl) tcEl.textContent = TRACKS.length;
   const ALBUM_NAME = "Welcome to the Woods";
-  // Temporary square fallback until album-specific lock-screen art is approved.
-  const ALBUM_ART = "https://rydermccoy.com/ryder-mccoy-logo-hero-square.webp";
+  const ALBUM_ART = "/woods-cover.jpg";
   const PLAY = 'M3 2l11 6-11 6z';
   const PAUSE= 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
   function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
@@ -189,7 +188,7 @@ const AUDIO_DIR = "";
         title: t.title,
         artist: "The Ryder McCoy Band",
         album: ALBUM_NAME,
-        artwork: [{ src: ALBUM_ART }]
+        artwork: [{ src: t.art || ALBUM_ART }]
       });
       navigator.mediaSession.setActionHandler('play', function(){ audio.play(); });
       navigator.mediaSession.setActionHandler('pause', function(){ audio.pause(); });
