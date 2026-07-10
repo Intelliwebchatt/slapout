@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Wall of Warnings — The Ryder McCoy Band</title>
 <meta name="description" content="The Wall of Warnings — the sharpest lines from The Ryder McCoy Band, pulled cold from the songs. Outlaw country, swamp blues, and Southern trap out of Slapout, Alabama.">
-<link rel="canonical" href="https://rydermccoy.com/wall.html">
+<link rel="canonical" href="https://rydermccoy.com/wall/">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b0a08">
 <meta property="og:site_name" content="The Ryder McCoy Band">
 <meta property="og:title" content="The Wall of Warnings — The Ryder McCoy Band">
 <meta property="og:description" content="The lines, pulled cold from the songs. Slapout, Alabama.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rydermccoy.com/wall.html">
+<meta property="og:url" content="https://rydermccoy.com/wall/">
 <meta property="og:image" content="https://rydermccoy.com/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Wall of Warnings — The Ryder McCoy Band">
@@ -77,6 +77,7 @@
   .slap-nav a.lnk.here::after{content:"";position:absolute;left:13px;right:13px;bottom:8px;height:2px;background:#ff8a2a;box-shadow:0 0 8px rgba(255,138,42,.7)}
   .slap-nav a.lnk .new{display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle}
 </style>
+<link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
 </head>
 <body>
 <nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
@@ -91,14 +92,15 @@
     { file:"wall.html",       label:"The Wall" },
     { file:"dirt-road.html",  label:"The Dirt Road" }
   ];
-  var path = location.pathname.split('/').pop().toLowerCase();
-  if(path === "" || path === "/") path = "index.html";
+  var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
+  if(path && !path.endsWith('.html')) path += '.html';
+  if(!path) path='index.html';
   var nav = document.getElementById('slapNav');
-  var home = '<a class="slap-nav-home" href="index.html"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
+  var home = '<a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
   var links = '<div class="slap-nav-links">';
   NAV_LINKS.forEach(function(l){
     var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+l.file+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
+    links += '<a class="lnk'+here+'" href="'+(l.file==='index.html'?'/':'/'+l.file.replace(/\.html$/,'')+'/')+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
   });
   links += '</div>';
   nav.innerHTML = home + links;
@@ -135,7 +137,7 @@
 
 <footer>
   <p class="label-mark">Biloxi Blues Records</p>
-  <p><a href="index.html">The Ryder McCoy Band</a> &middot; Slapout, Alabama</p>
+  <p><a href="/">The Ryder McCoy Band</a> &middot; Slapout, Alabama</p>
   <p class="fine">No fake saints. No clean endings. Backroads know.</p>
 </footer>
 

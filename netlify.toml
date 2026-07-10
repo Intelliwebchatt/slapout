@@ -1,5 +1,8 @@
 # Static deploy only.
-# Edge runtime cleanup disabled; source files are now direct Fable exports.
+# Keep Netlify clean URLs explicit so canonical, sitemap, and navigation URLs agree.
+
+[build.processing.html]
+  pretty_urls = true
 
 [[redirects]]
 from = "/warning-sign.mp4"
