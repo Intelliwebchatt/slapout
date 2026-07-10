@@ -102,6 +102,11 @@
   :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
+<script src="/js/player-state.js" defer></script>
+<script src="/js/site-nav.js" defer></script>
+<script src="/data/notes.js" defer></script>
+<script src="/js/notes-page.js" defer></script>
+<script src="/js/resume-player.js" defer></script>
 </head>
 <body>
 
@@ -149,35 +154,8 @@
     color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle;
   }
 </style>
-<nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
-<script>
-(function(){
-  // EDIT THIS LIST to add records/pages. Order = left-to-right.
-  // file: the page filename. label: what shows. new:true adds a NEW tag.
-  const NAV_LINKS = [
-    { file: "index.html",      label:"Home" },
-    { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose" },
-    { file:"fall.html",       label:"The Fall" },
-    { file:"woods.html",      label:"Welcome to the Woods", new:true },
-    { file:"wall.html",       label:"The Wall" },
-    { file:"dirt-road.html",  label:"The Dirt Road" }
-  ];
-  // which file are we on?
-  var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
-  if(path && !path.endsWith('.html')) path += '.html';
-  if(!path) path='index.html';
-  var nav = document.getElementById('slapNav');
-  var home = '<a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
-  var links = '<div class="slap-nav-links">';
-  NAV_LINKS.forEach(function(l){
-    var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+(l.file==='index.html'?'/':'/'+l.file.replace(/\.html$/,'')+'/')+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
-  });
-  links += '</div>';
-  nav.innerHTML = home + links;
-})();
-</script>
+<nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
+
 <!-- ============ END SLAPOUT TOP NAV BAR ============ -->
 
 
@@ -201,89 +179,6 @@
   <p class="fine">No fake saints. No clean endings. Backroads know.</p>
 </footer>
 
-<script>
-const NOTES = [
 
-  { type:"photo", who:"Ryder", date:"Jun 2026", img:"/welcome-to-slapout-1.jpg",
-    text:"We didn't start this to be popular. We started it because we had things to say about these backroads that didn't fit anywhere else. If you recognize the view, you're in the right place. Welcome to Slapout." }
-
-];
-
-(function(){
-  var grid = document.getElementById('grid');
-  var filterWrap = document.getElementById('filters');
-  var activeWho = 'All';
-
-  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function nl(s){ return esc(s).replace(/\n/g,'<br>'); }
-
-  function cardHTML(n){
-    var who = n.who ? esc(n.who) : '';
-    var date = n.date ? '<span class="date">'+esc(n.date)+'</span>' : '';
-    var t = (n.type||'note').toLowerCase();
-
-    if(t==='quote'){
-      return '<article class="card c-quote" data-who="'+who.toLowerCase()+'">'
-        +'<div class="body">'+esc(n.text)+'</div>'
-        +(who?'<div class="who">&mdash; '+who+'</div>':'')
-        +'</article>';
-    }
-    if(t==='lyric'){
-      return '<article class="card c-lyric" data-who="'+who.toLowerCase()+'">'
-        +'<span class="stamp">Work Tape</span>'
-        +'<div class="body">'+nl(n.lyric||n.text)+'</div>'
-        +(who?'<div class="who">'+who+'</div>':'')
-        +'</article>';
-    }
-    if(t==='photo'){
-      var imgblock = n.img
-        ? '<img class="ph" src="'+esc(n.img)+'" alt="'+esc(n.text||'')+'" loading="lazy">'
-        : '<div class="ph ph-missing">no image set</div>';
-      return '<article class="card c-photo" data-who="'+who.toLowerCase()+'">'
-        +imgblock
-        +(n.text?'<div class="cap">'+esc(n.text)+'</div>':'')
-        +(who?'<div class="who">'+who+'</div>':'')
-        +'</article>';
-    }
-    return '<article class="card c-note" data-who="'+who.toLowerCase()+'">'
-      +'<div class="who">'+who+date+'</div>'
-      +'<div class="body">'+esc(n.text)+'</div>'
-      +'</article>';
-  }
-
-  function render(){
-    var list = NOTES.filter(function(n){
-      if(activeWho==='All') return true;
-      return (n.who||'').toLowerCase()===activeWho.toLowerCase();
-    });
-    if(!list.length){ grid.innerHTML='<div class="empty">Nothing tacked up here yet.</div>'; return; }
-    grid.innerHTML = list.map(cardHTML).join('');
-    grid.querySelectorAll('img.ph').forEach(function(img){
-      img.addEventListener('error', function(){
-        var d = document.createElement('div');
-        d.className = 'ph ph-missing';
-        d.innerHTML = 'image not found:<br>' + esc(img.getAttribute('src')||'');
-        img.replaceWith(d);
-      });
-    });
-  }
-
-  var whos = ['All'];
-  NOTES.forEach(function(n){ if(n.who && whos.indexOf(n.who)<0) whos.push(n.who); });
-  whos.forEach(function(w){
-    var c=document.createElement('button');
-    c.className='chip'+(w==='All'?' on':'');
-    c.textContent=w;
-    c.addEventListener('click', function(){
-      activeWho=w;
-      Array.prototype.forEach.call(filterWrap.children,function(ch){ch.classList.toggle('on',ch.textContent===w);});
-      render();
-    });
-    filterWrap.appendChild(c);
-  });
-
-  render();
-})();
-</script>
 </body>
 </html>

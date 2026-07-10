@@ -78,34 +78,13 @@
   .slap-nav a.lnk .new{display:inline-block;margin-left:6px;font-size:.5rem;letter-spacing:.12em;color:#08070a;background:#ff3b6b;padding:2px 5px;border-radius:2px;vertical-align:middle}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
+<script src="/js/player-state.js" defer></script>
+<script src="/js/site-nav.js" defer></script>
+<script src="/js/resume-player.js" defer></script>
 </head>
 <body>
-<nav class="slap-nav" id="slapNav" aria-label="Site"></nav>
-<script>
-(function(){
-  const NAV_LINKS = [
-    { file:"index.html",      label:"Home" },
-    { file:"warning.html",    label:"The Warning" },
-    { file:"glass-rose.html", label:"The Glass Rose" },
-    { file:"fall.html",       label:"The Fall" },
-    { file:"woods.html",      label:"Welcome to the Woods", new:true },
-    { file:"wall.html",       label:"The Wall" },
-    { file:"dirt-road.html",  label:"The Dirt Road" }
-  ];
-  var path=location.pathname.replace(/^\/+|\/+$/g,'').split('/').pop().toLowerCase();
-  if(path && !path.endsWith('.html')) path += '.html';
-  if(!path) path='index.html';
-  var nav = document.getElementById('slapNav');
-  var home = '<a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a>';
-  var links = '<div class="slap-nav-links">';
-  NAV_LINKS.forEach(function(l){
-    var here = (l.file.toLowerCase() === path) ? ' here' : '';
-    links += '<a class="lnk'+here+'" href="'+(l.file==='index.html'?'/':'/'+l.file.replace(/\.html$/,'')+'/')+'">'+l.label+(l.new?'<span class="new">New</span>':'')+'</a>';
-  });
-  links += '</div>';
-  nav.innerHTML = home + links;
-})();
-</script>
+<nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
+
 
 <header class="wall-head">
   <p class="eyebrow">Slapout, Alabama &middot; Biloxi Blues Records</p>
