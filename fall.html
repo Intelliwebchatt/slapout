@@ -31,6 +31,7 @@
   "byArtist": { "@type": "MusicGroup", "name": "The Ryder McCoy Band", "url": "https://rydermccoy.com/" }
 }
 </script>
+<link rel="preload" as="image" href="/fall-cover.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&display=swap">
@@ -118,7 +119,7 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 <body>
 <nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
 
-<header class="album-hero" id="top"><h1 class="sr-only">The Fall</h1><video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="/fall-cover.jpg" aria-hidden="true"><source src="/fall-hero.mp4" type="video/mp4"></video></header>
+<header class="album-hero" id="top"><h1 class="sr-only">The Fall</h1><video class="hero-video" id="heroVideo" muted loop playsinline preload="none" poster="/fall-cover.jpg" aria-hidden="true"><source data-src="/fall-hero.mp4" type="video/mp4"></video></header>
 <div class="genre-strip"><div class="wrap"><span class="genre-tag hot">Southern Gothic</span><span class="genre-tag">Dark Country</span><span class="genre-tag">Swamp Blues</span><span class="genre-tag">Slow Trap Drums</span><span class="genre-tag">Backroad Alabama</span></div></div>
 <section id="listen"><div class="wrap"><p class="sec-label">Record Three &middot; Biloxi Blues Records</p><h2 class="sec-title display">The Fall</h2><p class="lede"><span id="trackCount">13</span> tracks. The warning is over &mdash; welcome to the fall. Tap a song to play it. Open <strong style="color:var(--bone)">Field Notes</strong> for the case file &mdash; and to keep the track.</p><div class="cards" id="trackList"></div><p class="dl-note">Tap a card to play &middot; open Field Notes to download &middot; free &middot; no email &middot; no catch</p></div></section>
 <section id="story" class="bg-photo"><div class="wrap"><p class="sec-label">Field Notes</p><h2 class="sec-title display">What This Record Is</h2><p class="lede"><em>The Fall</em> is Record Three &mdash; one life's descent down the backroads past the church and the water tower. Every exit gets tried and proven false. It does not end on escape or rescue. It ends on the curse handed down.</p><p class="lede" style="margin-top:16px">We don't write songs. We report from the brink.</p></div></section>
