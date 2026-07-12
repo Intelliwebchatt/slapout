@@ -1,7 +1,7 @@
 window.RYDER_ALBUM = {
   name: "The Glass Rose Sessions",
   art: "/glass-rose-cover.jpg",
-  page: "/glass-rose/",
+  page: "/glass-rose",
   variant: "glass",
   tracks: [
   { n:"01", title:"Sinner's Secrets", file:"/01 - Sinner's Secrets.mp3", notes:"<p class='c-from'>Recovered from: The Glass Rose, Slap Out. A bottle on the porch floor, still rolling; the stage mic left hot.</p><p><span class='c-k'>Subject:</span> the narrator mid-confession &mdash; been thinking, been drinking, same problems riding \"all the way into the ground.\"</p><p><span class='c-k'>Objects logged:</span> a loaded bowl, a butane torch (clicked once at the end), a secret buried in the yard next to the car &mdash; roots grew up and found the bar.</p><p><span class='c-k'>On the record:</span> \"The secret is the glue. The secret is the rot. The only thing you have that the Law ain't got.\"</p><p class='c-status'>Status: asked Unc how deep they had to dig. Unc said deep enough to hit the Glitch. Narrator said he was already there.</p>" },

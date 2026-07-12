@@ -1,12 +1,50 @@
-# Common alternate URLs
-/glassrose.html /glass-rose/ 301!
-/glass-rose-sessions.html /glass-rose/ 301!
-/the-glass-rose.html /glass-rose/ 301!
-/the-warning.html /warning/ 301!
+# Canonical clean-page redirects
+/index / 301!
+/index.html / 301!
+/home / 301!
+/home.html / 301!
+/warning.html /warning 301!
+/fall.html /fall 301!
+/woods.html /woods 301!
+/glass-rose.html /glass-rose 301!
+/wall.html /wall 301!
+/dirt-road.html /dirt-road 301!
 
-# Retired page now consolidated into Notes from the Dirt Road.
-/dispatches.html /dirt-road/ 301!
-/dispatches /dirt-road/ 301!
+# The Warning legacy names and common misspellings
+/thewarnning /warning 301!
+/thewarnning.html /warning 301!
+/thewarning /warning 301!
+/thewarning.html /warning 301!
+/the-warning /warning 301!
+/the-warning.html /warning 301!
+
+# The Fall legacy names
+/thefall /fall 301!
+/thefall.html /fall 301!
+/the-fall /fall 301!
+/the-fall.html /fall 301!
+
+# Welcome to the Woods legacy names
+/welcome /woods 301!
+/welcome.html /woods 301!
+/welcome-to-the-woods /woods 301!
+/welcome-to-the-woods.html /woods 301!
+/welcometothewoods /woods 301!
+/welcometothewoods.html /woods 301!
+
+# The Glass Rose Sessions legacy names
+/glassrose /glass-rose 301!
+/glassrose.html /glass-rose 301!
+/glass-rose-sessions /glass-rose 301!
+/glass-rose-sessions.html /glass-rose 301!
+/the-glass-rose /glass-rose 301!
+/the-glass-rose.html /glass-rose 301!
+
+# Retired dispatch page and simple Notes alias
+/dispatches /dirt-road 301!
+/dispatches.html /dirt-road 301!
+/notes /dirt-road 301!
+/notes.html /dirt-road 301!
 
 # Optimized Glass Rose background image
 /glass-rose-bg.jpg /glass-rose-bg.webp 301!

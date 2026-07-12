@@ -1,7 +1,7 @@
 window.RYDER_ALBUM = {
   name: "The Fall",
   art: "/fall-cover.jpg",
-  page: "/fall/",
+  page: "/fall",
   variant: "casefile",
   tracks: [
   { title: "The Fall", file: "/01 - The Fall.mp3", notes: "<p class='fn-from'>Recovered from: a muddy stretch of road past the chapel and the water tower &mdash; the exact ground Record One warned about. Long shadows. Thunder already come and gone.</p><p><span class='fn-k'>Subject:</span> a country boy under a heavy load, walking away from a holy kind of grace. Saw the dust kicking up behind him. Did not turn around.</p><p><span class='fn-k'>Objects logged:</span> an apple with the caved-in side, held out by the serpent; a garden traded for a pocket of mud; venom settling, roots going deep; a toll the congregation already collected.</p><p><span class='fn-k'>The beast's testimony:</span> didn't hunt &mdash; waited in the clay, knowing the route. The rattle was a courtesy, not a threat. Keep walking past it and it stops being an accident.</p><p class='fn-status'>Status: the warning was the thunder; the bite is the flood. Record One is closed. Welcome to the fall.</p>" },

@@ -1,7 +1,7 @@
 window.RYDER_ALBUM = {
   name: "The Warning",
   art: "/warning-cover.jpg",
-  page: "/warning/",
+  page: "/warning",
   variant: "casefile",
   tracks: [
   { title: "The Warning",             file: "/01 - The Warning.mp3", notes: "<p class='fn-from'>Recovered from: a house with no windows, no light. Later, a ditch off a dirt road.</p><p><span class='fn-k'>Subject's state:</span> flies in the skull, teeth grinding all night, mud in the veins, ash in the soul, a mark on the neck.</p><p><span class='fn-k'>Objects recovered:</span> a sack, a glass pipe lit like a prayer, a Bible with every page stained. Wallpaper peeled back like a serpent's skin.</p><p><span class='fn-k'>Also logged:</span> a man with a snake tattoo on his face &mdash; \"the Dragon sleeps under the nuclear base.\" Preachers on the corner selling dimebag psalms. Seven crows on a powerline, singing end-time songs.</p><p><span class='fn-k'>Transmission intercepted:</span> \"Ride, boy, ride with the Horsemen four.\" The sky split, the moon bled red. Gabriel's trumpet, heard from a strip-club pole.</p><p class='fn-status'>Status: crawled from the wreck. Came back &mdash; brief. This ain't a story. It's a warning.</p>" },
