@@ -17,7 +17,7 @@
   var html = '<a class="slap-nav-home" href="/"><span class="rose">&#129685;</span> Ryder McCoy Band</a><div class="slap-nav-links">';
   links.forEach(function(link){
     var here = link.file.toLowerCase() === path;
-    var href = link.file === 'index.html' ? '/' : '/' + link.file.replace(/\.html$/,'') + '/';
+    var href = link.file === 'index.html' ? '/' : '/' + link.file.replace(/\.html$/,'');
     html += '<a class="lnk' + (here ? ' here' : '') + '" href="' + href + '"' + (here ? ' aria-current="page"' : '') + '>' +
       link.label + (link.isNew ? '<span class="new">New</span>' : '') + '</a>';
   });
