@@ -44,6 +44,10 @@
     if(deck) deck.classList.toggle('playing', hasTrack && !paused);
   }
 
+  // Replace any server-rendered track headers in one synchronous pass.
+  // This keeps the list's initial height stable while preserving the full player UI.
+  list.textContent = '';
+
   tracks.forEach(function(track,index){
     var card = document.createElement('article');
     card.className = 'card';

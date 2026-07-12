@@ -42,6 +42,10 @@
     if(deck) deck.classList.toggle('playing', hasTrack && !paused);
   }
 
+  // Replace pre-rendered track headers in one synchronous pass.
+  // Song titles stay visible to search engines without duplicating the player cards.
+  list.textContent = '';
+
   tracks.forEach(function(track,index){
     var card = document.createElement('article');
     card.className = 'card';
