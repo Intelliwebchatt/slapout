@@ -1,7 +1,7 @@
 window.RYDER_ALBUM = {
   name: "Welcome to the Woods",
   art: "/woods-cover.jpg",
-  page: "/woods/",
+  page: "/woods",
   variant: "casefile",
   tracks: [
   { title: "Welcome to the Woods", file: "/01 - Welcome to the Woods.mp3", notes: "<p class='fn-from'>Recovered from: the thicket past the river bridge, Elmore County. Slapout midnight, a butane flame for light, kudzu crawling up the trailer and swallowing the signs.</p><p><span class='fn-k'>Subject:</span> the cook &mdash; West Coast cadence, work boots caked in clay. Found grinding in the lab, mixing the pseudo with the sulfur on a bloodstained slab. Shotgun by the door. Telling the voices to hush.</p><p><span class='fn-k'>The trade, logged:</span> doesn't slang on the corner &mdash; drops it at the stump, past the river bridge, behind the pump. Hands off to a runner hollow as a husk, shaking through the famine, needing just a taste.</p><p><span class='fn-k'>The interruption:</span> state trooper blues. Headlights cutting the swamp fog. The holy ghost fades when the sheriff passes.</p><p><span class='fn-k'>Objects logged:</span> a butane torch, mason jars bubbling, aluminum foil burning, a glass pipe, a shotgun by the door.</p><p class='fn-status'>Status: forty hours, no sleep. Still striking the spark. Some folks kneel. Some folks run. I just strike the spark. Welcome to the woods.</p>" },
