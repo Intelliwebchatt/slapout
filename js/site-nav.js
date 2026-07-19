@@ -5,9 +5,10 @@
     { file:'warning.html', label:'The Warning' },
     { file:'glass-rose.html', label:'The Glass Rose' },
     { file:'fall.html', label:'The Fall' },
-    { file:'woods.html', label:'Welcome to the Woods', isNew:true },
+    { file:'woods.html', label:'Welcome to the Woods' },
     { file:'wall.html', label:'The Wall' },
-    { file:'dirt-road.html', label:'The Dirt Road' }
+    { file:'dirt-road.html', label:'The Dirt Road' },
+    { file:'slapout-run.html', label:'After Midnight', isNew:true }
   ];
   var nav = document.getElementById('slapNav');
   if(!nav) return;
