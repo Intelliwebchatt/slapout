@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>RYDER: WELCOME TO SLAPOUT</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    width: 100%; height: 100%;
+    background: #1a120c;
+    color: #f5e6c8;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    overflow: hidden;
+    touch-action: none;
+  }
+  #wrap {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background:
+      radial-gradient(ellipse at 50% 0%, #3a2818 0%, #1a120c 55%, #0e0a07 100%);
+  }
+  #title {
+    font-size: clamp(14px, 3.2vw, 22px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e8c878;
+    text-shadow: 0 2px 0 #3a2010, 0 0 18px rgba(232,200,120,0.35);
+    margin-bottom: 8px;
+    text-align: center;
+    padding: 0 12px;
+  }
+  canvas {
+    display: block;
+    width: min(960px, 100vw);
+    height: auto;
+    max-height: min(540px, 62vh);
+    background: #87ceeb;
+    border: 3px solid #5a3a22;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.55);
+    image-rendering: pixelated;
+  }
+  #hudHint {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.75;
+    text-align: center;
+    padding: 0 10px;
+  }
+  #mobile {
+    display: none;
+    width: min(960px, 100vw);
+    margin-top: 10px;
+    gap: 12px;
+    justify-content: space-between;
+    padding: 0 10px 12px;
+  }
+  #mobile .group { display: flex; gap: 12px; }
+  .btn {
+    width: 72px; height: 72px;
+    border: 2px solid #c9a66b;
+    border-radius: 12px;
+    background: rgba(90, 58, 34, 0.85);
+    color: #f5e6c8;
+    font-size: 28px;
+    font-weight: bold;
+    user-select: none;
+    touch-action: none;
+  }
+  .btn:active { background: rgba(160, 100, 50, 0.95); }
+  .btn.jump { width: 110px; }
+  @media (max-width: 820px), (pointer: coarse) {
+    #mobile { display: flex; }
+    #hudHint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="title">RYDER: WELCOME TO SLAPOUT</div>
+  <canvas id="game" width="960" height="540"></canvas>
+  <div id="hudHint">Arrows / A-D move · Space / W / Up jump · Touch enemy = reset · Reach Jessie to win</div>
+  <div id="mobile">
+    <div class="group">
+      <button class="btn" id="btnLeft" aria-label="Left">◀</button>
+      <button class="btn" id="btnRight" aria-label="Right">▶</button>
+    </div>
+    <div class="group">
+      <button class="btn jump" id="btnJump" aria-label="Jump">JUMP</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width;
+  const H = canvas.height;
+
+  const GRAVITY = 0.55;
+  const MOVE_SPEED = 4.2;
+  const JUMP_V = -11.2;
+  const FRICTION = 0.82;
+
+  const keys = Object.create(null);
+  const mobile = { left: false, right: false, jump: false };
+
+  let won = false;
+  let winFlash = 0;
+  let cameraX = 0;
+
+  const LEVEL_W = 4200;
+  const GROUND_Y = 470;
+
+  const spawn = { x: 80, y: GROUND_Y - 48 };
+
+  const player = {
+    x: spawn.x,
+    y: spawn.y,
+    w: 28,
+    h: 44,
+    vx: 0,
+    vy: 0,
+    onGround: false,
+    facing: 1,
+    name: "Ryder"
+  };
+
+  // Red dirt ground segments + glass pipe platforms
+  const platforms = [
+    { x: 0, y: GROUND_Y, w: LEVEL_W, h: 80, type: "dirt" },
+    { x: 280, y: 390, w: 140, h: 18, type: "pipe" },
+    { x: 520, y: 330, w: 120, h: 18, type: "pipe" },
+    { x: 740, y: 280, w: 160, h: 18, type: "pipe" },
+    { x: 1020, y: 360, w: 150, h: 18, type: "pipe" },
+    { x: 1280, y: 300, w: 130, h: 18, type: "pipe" },
+    { x: 1520, y: 240, w: 180, h: 18, type: "pipe" },
+    { x: 1820, y: 350, w: 140, h: 18, type: "pipe" },
+    { x: 2100, y: 290, w: 160, h: 18, type: "pipe" },
+    { x: 2400, y: 360, w: 120, h: 18, type: "pipe" },
+    { x: 2650, y: 300, w: 200, h: 18, type: "pipe" },
+    { x: 2950, y: 250, w: 140, h: 18, type: "pipe" },
+    { x: 3200, y: 340, w: 160, h: 18, type: "pipe" },
+    { x: 3500, y: 280, w: 180, h: 18, type: "pipe" },
+    // Raised platform for Hat Man at end
+    { x: 3880, y: 220, w: 200, h: 20, type: "pipe" },
+    { x: 3850, y: 380, w: 260, h: 18, type: "pipe" }
+  ];
+
+  // Glass rose hazards
+  const roses = [
+    { x: 420, y: GROUND_Y - 36 },
+    { x: 900, y: GROUND_Y - 36 },
+    { x: 1180, y: GROUND_Y - 36 },
+    { x: 1600, y: 240 - 36 },
+    { x: 1980, y: GROUND_Y - 36 },
+    { x: 2300, y: GROUND_Y - 36 },
+    { x: 2720, y: 300 - 36 },
+    { x: 3100, y: GROUND_Y - 36 },
+    { x: 3450, y: GROUND_Y - 36 },
+    { x: 3700, y: GROUND_Y - 36 }
+  ].map(r => ({ ...r, w: 22, h: 36 }));
+
+  // County cop car enemies (patrol)
+  const enemies = [
+    { x: 600, y: GROUND_Y - 30, w: 56, h: 30, minX: 560, maxX: 850, vx: 1.6, dir: 1 },
+    { x: 1400, y: GROUND_Y - 30, w: 56, h: 30, minX: 1350, maxX: 1750, vx: 2.0, dir: -1 },
+    { x: 2200, y: GROUND_Y - 30, w: 56, h: 30, minX: 2150, maxX: 2550, vx: 1.8, dir: 1 },
+    { x: 3000, y: GROUND_Y - 30, w: 56, h: 30, minX: 2920, maxX: 3350, vx: 2.2, dir: -1 },
+    { x: 2100, y: 290 - 30, w: 56, h: 30, minX: 2100, maxX: 2240, vx: 1.2, dir: 1 }
+  ];
+
+  // Jessie at the end (goal)
+  const jessie = { x: 3920, y: GROUND_Y - 48, w: 30, h: 48 };
+
+  // Hat Man on raised platform
+  const hatMan = { x: 3940, y: 220 - 56, w: 32, h: 56 };
+
+  function resetPlayer() {
+    player.x = spawn.x;
+    player.y = spawn.y;
+    player.vx = 0;
+    player.vy = 0;
+    player.onGround = false;
+    won = false;
+    winFlash = 0;
+    cameraX = 0;
+  }
+
+  function aabb(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  function resolvePlatforms(ent) {
+    ent.onGround = false;
+    for (let i = 0; i < platforms.length; i++) {
+      const p = platforms[i];
+      if (!aabb(ent, p)) continue;
+
+      const prevBottom = ent.y + ent.h - ent.vy;
+      const overlapX = Math.min(ent.x + ent.w, p.x + p.w) - Math.max(ent.x, p.x);
+      const overlapY = Math.min(ent.y + ent.h, p.y + p.h) - Math.max(ent.y, p.y);
+
+      if (overlapX < overlapY) {
+        if (ent.x + ent.w / 2 < p.x + p.w / 2) ent.x = p.x - ent.w;
+        else ent.x = p.x + p.w;
+        ent.vx = 0;
+      } else {
+        if (ent.vy >= 0 && prevBottom <= p.y + 8) {
+          ent.y = p.y - ent.h;
+          ent.vy = 0;
+          ent.onGround = true;
+        } else if (ent.vy < 0) {
+          ent.y = p.y + p.h;
+          ent.vy = 0;
+        }
+      }
+    }
+  }
+
+  function wantLeft() {
+    return !!(keys["ArrowLeft"] || keys["a"] || keys["A"] || mobile.left);
+  }
+  function wantRight() {
+    return !!(keys["ArrowRight"] || keys["d"] || keys["D"] || mobile.right);
+  }
+  function wantJump() {
+    return !!(keys[" "] || keys["Space"] || keys["w"] || keys["W"] || keys["ArrowUp"] || mobile.jump);
+  }
+
+  let jumpLatched = false;
+
+  function update() {
+    if (won) {
+      winFlash++;
+      return;
+    }
+
+    const left = wantLeft();
+    const right = wantRight();
+    const jump = wantJump();
+
+    if (left && !right) {
+      player.vx = -MOVE_SPEED;
+      player.facing = -1;
+    } else if (right && !left) {
+      player.vx = MOVE_SPEED;
+      player.facing = 1;
+    } else {
+      player.vx *= FRICTION;
+      if (Math.abs(player.vx) < 0.15) player.vx = 0;
+    }
+
+    if (jump && player.onGround && !jumpLatched) {
+      player.vy = JUMP_V;
+      player.onGround = false;
+      jumpLatched = true;
+    }
+    if (!jump) jumpLatched = false;
+
+    player.vy += GRAVITY;
+    if (player.vy > 16) player.vy = 16;
+
+    player.x += player.vx;
+    player.y += player.vy;
+
+    if (player.x < 0) player.x = 0;
+    if (player.x + player.w > LEVEL_W) player.x = LEVEL_W - player.w;
+    if (player.y > H + 100) resetPlayer();
+
+    resolvePlatforms(player);
+
+    for (let i = 0; i < enemies.length; i++) {
+      const e = enemies[i];
+      e.x += e.vx * e.dir;
+      if (e.x <= e.minX) { e.x = e.minX; e.dir = 1; }
+      if (e.x + e.w >= e.maxX) { e.x = e.maxX - e.w; e.dir = -1; }
+      if (aabb(player, e)) {
+        resetPlayer();
+        return;
+      }
+    }
+
+    for (let i = 0; i < roses.length; i++) {
+      if (aabb(player, roses[i])) {
+        resetPlayer();
+        return;
+      }
+    }
+
+    if (aabb(player, jessie)) {
+      won = true;
+      winFlash = 0;
+    }
+
+    const targetCam = player.x - W * 0.35;
+    cameraX += (targetCam - cameraX) * 0.12;
+    if (cameraX < 0) cameraX = 0;
+    if (cameraX > LEVEL_W - W) cameraX = LEVEL_W - W;
+  }
+
+  function drawSky() {
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "#6eb6e0");
+    g.addColorStop(0.55, "#b8d9ef");
+    g.addColorStop(1, "#e8c9a0");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    // distant Alabama pines
+    ctx.fillStyle = "rgba(40, 70, 45, 0.45)";
+    for (let i = 0; i < 40; i++) {
+      const tx = ((i * 137 - cameraX * 0.25) % (W + 80)) - 40;
+      const th = 60 + (i % 5) * 18;
+      ctx.beginPath();
+      ctx.moveTo(tx, GROUND_Y - 40);
+      ctx.lineTo(tx + 22, GROUND_Y - 40 - th);
+      ctx.lineTo(tx + 44, GROUND_Y - 40);
+      ctx.fill();
+    }
+
+    // sun
+    ctx.fillStyle = "rgba(255, 220, 120, 0.9)";
+    ctx.beginPath();
+    ctx.arc(W - 90 - cameraX * 0.02, 70, 34, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawDirt(p, sx) {
+    ctx.fillStyle = "#a33a22";
+    ctx.fillRect(sx, p.y, p.w, p.h);
+    ctx.fillStyle = "#c24a2a";
+    ctx.fillRect(sx, p.y, p.w, 10);
+    ctx.fillStyle = "#7a2818";
+    for (let x = 0; x < p.w; x += 28) {
+      ctx.fillRect(sx + x + ((x / 28) % 2) * 6, p.y + 18, 10, 6);
+      ctx.fillRect(sx + x + 14, p.y + 36, 8, 5);
+    }
+  }
+
+  function drawPipe(p, sx) {
+    const g = ctx.createLinearGradient(0, p.y, 0, p.y + p.h);
+    g.addColorStop(0, "rgba(200, 240, 255, 0.85)");
+    g.addColorStop(0.4, "rgba(140, 200, 230, 0.55)");
+    g.addColorStop(1, "rgba(80, 140, 180, 0.7)");
+    ctx.fillStyle = g;
+    ctx.strokeStyle = "rgba(230, 250, 255, 0.9)";
+    ctx.lineWidth = 2;
+    roundRect(sx, p.y, p.w, p.h, 6);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.fillRect(sx + 6, p.y + 3, p.w * 0.35, 4);
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawRose(r) {
+    const sx = r.x - cameraX;
+    if (sx < -40 || sx > W + 40) return;
+    // stem
+    ctx.strokeStyle = "#2f6b3a";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(sx + r.w / 2, r.y + r.h);
+    ctx.quadraticCurveTo(sx + r.w / 2 + 4, r.y + r.h * 0.55, sx + r.w / 2, r.y + 14);
+    ctx.stroke();
+    // glass petals
+    ctx.fillStyle = "rgba(220, 60, 90, 0.55)";
+    ctx.strokeStyle = "rgba(255, 180, 200, 0.9)";
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < 5; i++) {
+      const a = (i / 5) * Math.PI * 2 - Math.PI / 2;
+      const px = sx + r.w / 2 + Math.cos(a) * 7;
+      const py = r.y + 12 + Math.sin(a) * 6;
+      ctx.beginPath();
+      ctx.ellipse(px, py, 7, 5, a, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.beginPath();
+    ctx.arc(sx + r.w / 2 - 2, r.y + 10, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawCop(e) {
+    const sx = e.x - cameraX;
+    if (sx < -80 || sx > W + 80) return;
+    // body
+    ctx.fillStyle = "#1e3a5f";
+    roundRect(sx, e.y + 8, e.w, e.h - 8, 4);
+    ctx.fill();
+    // roof
+    ctx.fillStyle = "#16304f";
+    roundRect(sx + 10, e.y, e.w - 20, 14, 3);
+    ctx.fill();
+    // windows
+    ctx.fillStyle = "rgba(160, 210, 240, 0.7)";
+    ctx.fillRect(sx + 14, e.y + 3, 12, 8);
+    ctx.fillRect(sx + e.w - 26, e.y + 3, 12, 8);
+    // light bar
+    ctx.fillStyle = e.dir > 0 ? "#e22" : "#22e";
+    ctx.fillRect(sx + 18, e.y - 3, 10, 5);
+    ctx.fillStyle = e.dir > 0 ? "#22e" : "#e22";
+    ctx.fillRect(sx + e.w - 28, e.y - 3, 10, 5);
+    // wheels
+    ctx.fillStyle = "#111";
+    ctx.beginPath();
+    ctx.arc(sx + 12, e.y + e.h, 6, 0, Math.PI * 2);
+    ctx.arc(sx + e.w - 12, e.y + e.h, 6, 0, Math.PI * 2);
+    ctx.fill();
+    // badge text
+    ctx.fillStyle = "#f0d060";
+    ctx.font = "bold 8px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("COUNTY", sx + e.w / 2, e.y + 22);
+  }
+
+  function drawPerson(x, y, w, h, palette, label) {
+    const sx = x - cameraX;
+    if (sx < -40 || sx > W + 40) return;
+    // legs
+    ctx.fillStyle = palette.pants;
+    ctx.fillRect(sx + 4, y + h - 16, 8, 16);
+    ctx.fillRect(sx + w - 12, y + h - 16, 8, 16);
+    // body
+    ctx.fillStyle = palette.shirt;
+    roundRect(sx + 2, y + 14, w - 4, h - 28, 4);
+    ctx.fill();
+    // head
+    ctx.fillStyle = palette.skin;
+    ctx.beginPath();
+    ctx.arc(sx + w / 2, y + 10, 9, 0, Math.PI * 2);
+    ctx.fill();
+    // hair
+    ctx.fillStyle = palette.hair;
+    ctx.beginPath();
+    ctx.arc(sx + w / 2, y + 7, 9, Math.PI, 0);
+    ctx.fill();
+    if (palette.hat) {
+      ctx.fillStyle = palette.hat;
+      ctx.fillRect(sx + 2, y + 1, w - 4, 5);
+      ctx.fillRect(sx - 2, y + 5, w + 4, 3);
+    }
+    if (label) {
+      ctx.fillStyle = "#fff8e0";
+      ctx.font = "bold 10px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(label, sx + w / 2, y - 4);
+    }
+  }
+
+  function drawPlayer() {
+    const bob = player.onGround ? 0 : Math.min(3, Math.abs(player.vy) * 0.15);
+    drawPerson(player.x, player.y + bob, player.w, player.h, {
+      skin: "#e0b090",
+      hair: "#2a1a10",
+      shirt: "#3d6b4f",
+      pants: "#2a2a2a",
+      hat: null
+    }, "RYDER");
+    // facing stripe
+    const sx = player.x - cameraX;
+    ctx.fillStyle = "#d4a24a";
+    if (player.facing > 0) ctx.fillRect(sx + player.w - 8, player.y + 20, 4, 10);
+    else ctx.fillRect(sx + 4, player.y + 20, 4, 10);
+  }
+
+  function drawHUD() {
+    ctx.save();
+    ctx.fillStyle = "rgba(20, 12, 8, 0.55)";
+    ctx.fillRect(0, 0, W, 42);
+    ctx.font = "bold 14px Trebuchet MS, sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#f0d878";
+    ctx.fillText("P1 RYDER", 16, 26);
+    ctx.fillStyle = "#c8d8e8";
+    ctx.fillText("P2 UNC", 140, 26);
+    ctx.fillStyle = "#ffe8a0";
+    ctx.textAlign = "center";
+    ctx.fillText("WORLD 1-1 SLAPOUT", W / 2, 26);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#9fd4ff";
+    ctx.fillText("AL", W - 16, 26);
+    ctx.restore();
+  }
+
+  function drawWin() {
+    ctx.fillStyle = "rgba(10, 6, 4, 0.55)";
+    ctx.fillRect(0, 0, W, H);
+    const pulse = 0.85 + Math.sin(winFlash * 0.12) * 0.15;
+    ctx.save();
+    ctx.globalAlpha = pulse;
+    ctx.fillStyle = "#ffe28a";
+    ctx.font = "bold 42px Trebuchet MS, sans-serif";
+    ctx.textAlign = "center";
+    ctx.shadowColor = "#a06020";
+    ctx.shadowBlur = 18;
+    ctx.fillText("YOU FOUND JESSIE", W / 2, H / 2);
+    ctx.shadowBlur = 0;
+    ctx.font = "16px Trebuchet MS, sans-serif";
+    ctx.fillStyle = "#f5e6c8";
+    ctx.fillText("Press R to play again", W / 2, H / 2 + 40);
+    ctx.restore();
+  }
+
+  function draw() {
+    drawSky();
+
+    for (let i = 0; i < platforms.length; i++) {
+      const p = platforms[i];
+      const sx = p.x - cameraX;
+      if (sx + p.w < -20 || sx > W + 20) continue;
+      if (p.type === "dirt") drawDirt(p, sx);
+      else drawPipe(p, sx);
+    }
+
+    for (let i = 0; i < roses.length; i++) drawRose(roses[i]);
+    for (let i = 0; i < enemies.length; i++) drawCop(enemies[i]);
+
+    drawPerson(jessie.x, jessie.y, jessie.w, jessie.h, {
+      skin: "#e8c4a8",
+      hair: "#5a2a18",
+      shirt: "#c45a7a",
+      pants: "#3a3048",
+      hat: null
+    }, "JESSIE");
+
+    drawPerson(hatMan.x, hatMan.y, hatMan.w, hatMan.h, {
+      skin: "#1a1a1a",
+      hair: "#0a0a0a",
+      shirt: "#111111",
+      pants: "#0d0d0d",
+      hat: "#0a0a0a"
+    }, "HAT MAN");
+
+    // tall silhouette brim for Hat Man
+    const hmx = hatMan.x - cameraX;
+    if (hmx > -40 && hmx < W + 40) {
+      ctx.fillStyle = "#050505";
+      ctx.fillRect(hmx - 6, hatMan.y - 2, hatMan.w + 12, 6);
+      ctx.fillRect(hmx + 4, hatMan.y - 14, hatMan.w - 8, 14);
+    }
+
+    drawPlayer();
+    drawHUD();
+    if (won) drawWin();
+  }
+
+  function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // Keyboard
+  window.addEventListener("keydown", function (e) {
+    keys[e.key] = true;
+    if (e.code === "Space") keys[" "] = true;
+    if (e.key === "r" || e.key === "R") {
+      if (won) resetPlayer();
+    }
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key) || e.code === "Space") {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  window.addEventListener("keyup", function (e) {
+    keys[e.key] = false;
+    if (e.code === "Space") keys[" "] = false;
+  });
+
+  function bindBtn(id, prop) {
+    const el = document.getElementById(id);
+    const on = function (ev) {
+      ev.preventDefault();
+      mobile[prop] = true;
+    };
+    const off = function (ev) {
+      ev.preventDefault();
+      mobile[prop] = false;
+    };
+    el.addEventListener("pointerdown", on);
+    el.addEventListener("pointerup", off);
+    el.addEventListener("pointerleave", off);
+    el.addEventListener("pointercancel", off);
+    el.addEventListener("touchstart", on, { passive: false });
+    el.addEventListener("touchend", off, { passive: false });
+  }
+  bindBtn("btnLeft", "left");
+  bindBtn("btnRight", "right");
+  bindBtn("btnJump", "jump");
+
+  // Smoke-check: ensure core objects exist (no crash on boot)
+  if (!ctx) throw new Error("Canvas 2D context unavailable");
+
+  resetPlayer();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
