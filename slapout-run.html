@@ -24,14 +24,19 @@
     background: radial-gradient(ellipse at 50% 20%, #1a0a18 0%, #060308 70%);
   }
   #brand {
-    font-size: clamp(11px, 2.4vw, 16px);
+    font-size: clamp(12px, 2.6vw, 18px);
     font-weight: bold;
-    letter-spacing: 0.08em;
-    color: #ffb040;
-    text-shadow: 2px 2px 0 #2a0810, 0 0 18px rgba(255,100,40,0.35);
+    letter-spacing: 0.06em;
+    color: #6adf4a;
+    text-shadow:
+      0 3px 0 #1a4010,
+      2px 2px 0 #2a0810,
+      0 0 14px rgba(80, 220, 60, 0.35),
+      0 8px 0 rgba(180, 40, 60, 0.35);
     margin-bottom: 8px;
     text-align: center;
   }
+  #brand .rose { color: #ff4060; }
   #screen {
     position: relative;
     width: min(960px, 100vw);
@@ -144,7 +149,7 @@
 <body>
 <button id="snd" title="sound">♪</button>
 <div id="wrap">
-  <div id="brand">RYDER: WELCOME TO SLAPOUT</div>
+  <div id="brand">RYDER: WELCOME TO <span class="rose">✦</span> SLAPOUT <span class="rose">✦</span></div>
   <div id="screen">
     <canvas id="game" width="960" height="540"></canvas>
     <div id="crt"></div>
@@ -272,12 +277,15 @@
     { x: 3280, y: 300, w: 64, h: 14 },
     { x: 3600, y: 250, w: 64, h: 14 },
     { x: 3900, y: 320, w: 64, h: 14 },
-    // Jessie porch
+    // Jessie porch + Hat Man stairs (mockup end scene)
     { x: 4300, y: 350, w: 220, h: 18 },
+    { x: 4520, y: 400, w: 70, h: 14 },
+    { x: 4585, y: 360, w: 70, h: 14 },
+    { x: 4650, y: 320, w: 70, h: 14 },
+    { x: 4715, y: 280, w: 90, h: 14 },
     // boss arena ledges
-    { x: 4620, y: 360, w: 90, h: 14 },
-    { x: 4820, y: 300, w: 90, h: 14 },
-    { x: 4980, y: 360, w: 90, h: 14 }
+    { x: 4840, y: 360, w: 90, h: 14 },
+    { x: 5000, y: 300, w: 90, h: 14 }
   ];
 
   const pipes = [
@@ -322,11 +330,12 @@
   };
 
   const boss = {
-    x: 4900, y: GY - 100, w: 48, h: 100,
+    x: 4740, y: 280 - 100, w: 52, h: 100,
     hp: 5, maxHp: 5, face: -1,
     phase: "idle", // idle | dash | slam | stun | dead
     t: 0, vx: 0, vy: 0, flash: 0
   };
+  let lives = 5, shells = 18, cash = 67, skulls = 2;
   const bolts = []; // shadow projectiles during boss
 
   function resetRun() {
@@ -336,7 +345,8 @@
     checkpoint = { x: 80, y: GY - P.h };
     cars[0].x = 700; cars[1].x = 1550; cars[2].x = 2400;
     cars[3].x = 3200; cars[4].x = 2010;
-    boss.x = 4900; boss.y = GY - boss.h; boss.hp = boss.maxHp;
+    boss.x = 4740; boss.y = 280 - boss.h; boss.hp = boss.maxHp;
+    lives = 5; shells = 18; cash = 67; skulls = 2;
     boss.phase = "idle"; boss.t = 0; boss.vx = 0; boss.vy = 0; boss.flash = 0;
     bolts.length = 0;
     state = "play";
@@ -553,6 +563,9 @@
       blip(140, 0.25, "sawtooth", 0.06);
       boss.phase = "idle";
       boss.t = 0.3;
+      boss.x = 4900;
+      boss.y = GY - boss.h;
+      boss.vx = 0; boss.vy = 0;
     }
 
     if (state === "boss") updateBoss(dt);
@@ -579,32 +592,38 @@
   }
 
   function drawSky() {
-    px(0, 0, W, 95, "#140820");
-    px(0, 95, W, 70, "#2a1040");
-    px(0, 165, W, 70, "#4a1838");
-    px(0, 235, W, 70, "#6a2828");
-    px(0, 305, W, 75, "#8a3820");
-    px(0, 380, W, GY - 380, "#5a2818");
+    // banded purple → orange dusk (mockup)
+    px(0, 0, W, 80, "#10061c");
+    px(0, 80, W, 55, "#241040");
+    px(0, 135, W, 50, "#3a1848");
+    px(0, 185, W, 50, "#5a2040");
+    px(0, 235, W, 55, "#8a3028");
+    px(0, 290, W, 50, "#c05028");
+    px(0, 340, W, GY - 340, "#6a3018");
 
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 30; i++) {
       const sx = ((i * 89 + 20) - ((camX * 0.04) | 0) + W * 4) % W;
-      px(sx, 16 + (i * 37) % 120, 2, 2, "#f0e0b0");
+      px(sx, 14 + (i * 37) % 110, 2, 2, "#f0e0b0");
     }
 
-    // huge moon
-    const mx = (730 - camX * 0.02) | 0, my = 98;
-    ctx.fillStyle = "#f0e2b0";
-    ctx.beginPath(); ctx.arc(mx, my, 74, 0, Math.PI * 2); ctx.fill();
-    px(mx - 28, my - 20, 18, 14, "#d4c490");
-    px(mx + 16, my + 12, 20, 16, "#d4c490");
-    px(mx + 4, my - 36, 14, 12, "#dccaa0");
-    ctx.strokeStyle = "#fff8d0"; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(mx, my, 74, 0, Math.PI * 2); ctx.stroke();
+    // chunky dusk clouds
+    const cx = (-(camX * 0.08) | 0);
+    px(60 + cx, 120, 160, 22, "#7a2848");
+    px(90 + cx, 108, 100, 16, "#a03850");
+    px(280 + (cx % 400), 145, 180, 20, "#903028");
+    px(320 + (cx % 400), 132, 110, 16, "#b04830");
+    px(520 + (cx % 350), 160, 150, 18, "#802838");
 
-    // orange cloud blocks
-    px(40 - (camX * 0.08 % 200), 150, 120, 18, "#a04828");
-    px(80 - (camX * 0.08 % 200), 138, 70, 14, "#c05830");
-    px(400 - (camX * 0.1 % 300), 170, 140, 16, "#903828");
+    // huge pale moon
+    const mx = (740 - camX * 0.02) | 0, my = 100;
+    ctx.fillStyle = "#f2e6c0";
+    ctx.beginPath(); ctx.arc(mx, my, 78, 0, Math.PI * 2); ctx.fill();
+    px(mx - 30, my - 22, 20, 16, "#d8c8a0");
+    px(mx + 18, my + 14, 22, 18, "#d8c8a0");
+    px(mx + 6, my - 38, 16, 12, "#e0d0a8");
+    px(mx - 12, my + 32, 18, 12, "#d8c8a0");
+    ctx.strokeStyle = "#fff8d8"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(mx, my, 78, 0, Math.PI * 2); ctx.stroke();
   }
 
   function pine(x, base, s, color) {
@@ -620,134 +639,185 @@
     }
   }
 
+  function drawMoss(wx, topY, len) {
+    const x = (wx - camX) | 0;
+    if (x < -20 || x > W + 20) return;
+    const sway = Math.sin(T * 1.4 + wx * 0.01) * 3;
+    ctx.strokeStyle = "#2a5030";
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.moveTo(x + i * 5, topY);
+      ctx.quadraticCurveTo(x + i * 5 + sway, topY + len * 0.5, x + i * 5 + sway * 0.3, topY + len);
+      ctx.stroke();
+    }
+  }
+
   function drawPines() {
-    const far = [60, 140, 1020, 1200, 1480, 1760, 2100, 2450, 2800, 3200, 3600, 4000, 4700, 5050];
+    // keep landmark gaps clear on start screen
+    const far = [40, 100, 1040, 1220, 1500, 1780, 2120, 2460, 2820, 3220, 3620, 4020, 4780, 5080];
     for (let i = 0; i < far.length; i++) {
       const x = (far[i] - camX * 0.25) | 0;
-      if (x > -50 && x < W + 50) pine(x, GY, 1.35, "#101418");
+      if (x > -50 && x < W + 50) pine(x, GY, 1.4 + (i % 3) * 0.15, "#0c1014");
+    }
+    // utility poles
+    for (let i = 0; i < 8; i++) {
+      const wx = 350 + i * 580;
+      const x = (wx - camX * 0.55) | 0;
+      if (x < -20 || x > W + 20) continue;
+      px(x, GY - 110, 6, 110, "#1a1418");
+      px(x - 18, GY - 112, 42, 5, "#2a2028");
+      drawMoss(wx - 10, GY - 108, 40 + (i % 3) * 12);
     }
   }
 
   function drawChurchSign() {
-    const x = (210 - camX) | 0, y = GY - 120;
-    if (x < -90 || x > W + 40) return;
-    px(x + 34, y + 56, 12, 64, "#2a1810");
-    px(x, y, 80, 62, "#4a3020");
-    outline(x, y, 80, 62, "#c08040");
-    px(x + 5, y + 5, 70, 52, "#5a3a28");
+    const x = (200 - camX) | 0, y = GY - 128;
+    if (x < -100 || x > W + 40) return;
+    px(x + 38, y + 64, 12, 64, "#2a1810");
+    px(x, y, 88, 70, "#4a3020");
+    outline(x, y, 88, 70, "#d09050");
+    px(x + 5, y + 5, 78, 60, "#5a3a28");
+    // cross
+    px(x + 40, y + 8, 6, 14, "#ffe080");
+    px(x + 36, y + 12, 14, 5, "#ffe080");
     ctx.fillStyle = "#ffe080";
     ctx.font = "bold 11px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("FIRST BAPTIST", x + 40, y + 20);
-    ctx.fillText("OF SLAPOUT", x + 40, y + 34);
+    ctx.fillText("FIRST BAPTIST", x + 44, y + 32);
+    ctx.fillText("OF SLAPOUT", x + 44, y + 46);
     ctx.fillStyle = "#ffb040";
-    ctx.font = "bold 9px Courier New, monospace";
-    ctx.fillText("WATCH YOUR BACK", x + 40, y + 50);
+    ctx.font = "bold 8px Courier New, monospace";
+    ctx.fillText("WATCH YOUR BACK", x + 44, y + 60);
   }
 
   function drawWaterTower() {
-    const x = (480 - camX) | 0, base = GY;
-    if (x < -120 || x > W + 40) return;
-    px(x + 18, base - 145, 10, 145, "#2a2030");
-    px(x + 86, base - 145, 10, 145, "#2a2030");
-    px(x + 24, base - 105, 66, 6, "#3a3040");
-    px(x + 24, base - 65, 66, 6, "#3a3040");
-    px(x + 8, base - 210, 98, 72, "#3a2840");
-    outline(x + 8, base - 210, 98, 72, "#c07050");
-    px(x + 14, base - 204, 86, 12, "#4a3850");
-    px(x + 18, base - 178, 78, 28, "#241828");
+    const x = (500 - camX) | 0, base = GY;
+    if (x < -130 || x > W + 40) return;
+    px(x + 20, base - 155, 10, 155, "#2a2838");
+    px(x + 90, base - 155, 10, 155, "#2a2838");
+    px(x + 26, base - 115, 68, 6, "#3a3848");
+    px(x + 26, base - 70, 68, 6, "#3a3848");
+    px(x + 30, base - 135, 60, 4, "#2a2838");
+    px(x + 30, base - 90, 60, 4, "#2a2838");
+    // tank
+    px(x + 6, base - 220, 108, 76, "#3a3848");
+    outline(x + 6, base - 220, 108, 76, "#c08060");
+    px(x + 12, base - 214, 96, 12, "#4a4858");
+    px(x + 16, base - 188, 88, 30, "#222030");
     ctx.fillStyle = "#ff9040";
-    ctx.font = "bold 14px Courier New, monospace";
+    ctx.font = "bold 15px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("SLAPOUT", x + 57, base - 160);
-    ctx.font = "bold 11px Courier New, monospace";
-    ctx.fillText("ALABAMA", x + 57, base - 146);
-    px(x + 44, base - 236, 24, 26, "#2a2030");
-    px(x + 30, base - 218, 54, 12, "#3a2840");
+    ctx.fillText("SLAPOUT", x + 60, base - 170);
+    ctx.font = "bold 12px Courier New, monospace";
+    ctx.fillText("ALABAMA", x + 60, base - 154);
+    px(x + 48, base - 248, 24, 28, "#2a2838");
+    px(x + 32, base - 228, 56, 12, "#3a3848");
   }
 
   function drawTrailer() {
-    const x = (820 - camX) | 0, y = GY - 86;
+    const x = (840 - camX) | 0, y = GY - 90;
     if (x < -180 || x > W + 40) return;
-    px(x, y + 20, 160, 60, "#1c1824");
-    outline(x, y + 20, 160, 60, "#706070");
-    px(x - 8, y + 14, 176, 10, "#100c14");
-    px(x + 18, y + 36, 30, 22, "#0a0810");
-    px(x + 108, y + 36, 32, 22, "#ffcc40");
-    outline(x + 108, y + 36, 32, 22, "#fff0a0");
-    px(x + 24, y + 76, 20, 14, "#0a0a0c");
-    px(x + 116, y + 76, 20, 14, "#0a0a0c");
+    // tucked in foliage feel
+    pine((x + 140 + camX * 0.25) | 0, GY, 1.1, "#080c0c");
+    px(x, y + 22, 155, 58, "#18141c");
+    outline(x, y + 22, 155, 58, "#685868");
+    px(x - 8, y + 16, 171, 10, "#0e0a10");
+    px(x - 24, y + 48, 26, 6, "#2a2228");
+    px(x + 16, y + 38, 28, 20, "#0a0810");
+    outline(x + 16, y + 38, 28, 20, "#383840");
+    px(x + 105, y + 38, 32, 20, "#ffcc40");
+    outline(x + 105, y + 38, 32, 20, "#fff0a0");
+    px(x + 119, y + 38, 3, 20, "#806020");
+    px(x + 22, y + 76, 18, 14, "#0a0a0c");
+    px(x + 112, y + 76, 18, 14, "#0a0a0c");
   }
 
   function drawGround() {
     px(0, GY, W, H - GY, "#8a3020");
-    px(0, GY, W, 10, "#b04828");
+    px(0, GY, W, 10, "#b85030");
     px(0, GY + 10, W, 4, "#5a1810");
-    for (let i = 0; i < 36; i++) {
-      const gx = (((i * 52) - (camX | 0)) % (W + 52) + W + 52) % (W + 52) - 26;
-      px(gx, GY + 22 + (i % 3) * 12, 16, 4, "#602010");
+    // rocky red dirt blocks
+    for (let i = 0; i < 40; i++) {
+      const gx = (((i * 48) - (camX | 0)) % (W + 48) + W + 48) % (W + 48) - 24;
+      px(gx, GY + 18 + (i % 4) * 10, 18, 5, "#602010");
+      px(gx + 10, GY + 8, 8, 5, "#9a4030");
     }
-    // kudzu patches
-    for (let i = 0; i < 12; i++) {
-      const kx = (((i * 180 + 40) - (camX | 0)) % (W + 100) + W + 100) % (W + 100) - 40;
-      px(kx, GY - 8, 28, 8, "#1e4828");
-      px(kx + 8, GY - 14, 18, 6, "#286038");
+    // kudzu / vines
+    for (let i = 0; i < 14; i++) {
+      const kx = (((i * 170 + 30) - (camX | 0)) % (W + 120) + W + 120) % (W + 120) - 40;
+      px(kx, GY - 10, 32, 10, "#1e4828");
+      px(kx + 6, GY - 18, 22, 8, "#286038");
+      px(kx + 14, GY - 26, 14, 8, "#1a4020");
     }
   }
 
   function drawGlassPipe(pipe) {
     const x = (pipe.x - camX) | 0, top = pipe.top, h = GY - top;
-    if (x < -60 || x > W + 60) return;
-    px(x, top, 44, h, "#2a6878");
-    px(x + 4, top + 4, 12, h - 8, "#78c8d8");
-    px(x + 18, top + 4, 10, h - 8, "#4890a0");
-    px(x + 32, top + 4, 8, h - 8, "#183848");
-    outline(x, top, 44, h, "#a8e8f8");
-    px(x + 14, top + 18, 3, 56, "#f0ffff");
-    px(x + 14, top + 74, 12, 3, "#f0ffff");
-    px(x + 26, top + 44, 3, 80, "#f0ffff");
-    px(x - 8, top - 10, 60, 14, "#b0e8f8");
-    px(x - 6, top - 8, 56, 10, "#70b8c8");
-    outline(x - 8, top - 10, 60, 14, "#ffffff");
-    px(x - 6, GY - 10, 56, 12, "#3a1810");
+    if (x < -70 || x > W + 70) return;
+    // cylindrical glass tube — bright readable cyan
+    px(x + 2, top, 48, h, "#2a7080");
+    px(x + 6, top + 4, 14, h - 8, "#88d8e8");
+    px(x + 22, top + 4, 12, h - 8, "#58a8b8");
+    px(x + 36, top + 4, 10, h - 8, "#184050");
+    outline(x + 2, top, 48, h, "#d0f8ff");
+    // cracks
+    px(x + 16, top + 20, 3, 60, "#ffffff");
+    px(x + 16, top + 80, 14, 3, "#ffffff");
+    px(x + 30, top + 50, 3, 90, "#f0ffff");
+    px(x + 18, top + 130, 16, 3, "#e8ffff");
+    // lip / standable rim
+    px(x - 6, top - 12, 64, 16, "#c8f0ff");
+    px(x - 4, top - 10, 60, 12, "#78c0d0");
+    outline(x - 6, top - 12, 64, 16, "#ffffff");
+    px(x - 4, GY - 12, 60, 14, "#3a1810");
+    outline(x - 4, GY - 12, 60, 14, "#805030");
+    drawMoss(pipe.x + 8, top + 24, 36);
   }
 
   function drawRose(r) {
     const x = (r.x - camX) | 0, y = r.y | 0;
     if (x < -40 || x > W + 40) return;
-    px(x + 15, y + 22, 5, 26, "#287838");
-    px(x + 6, y + 6, 22, 18, "#e01838");
-    px(x + 2, y + 10, 10, 12, "#ff3048");
-    px(x + 22, y + 10, 10, 12, "#ff3048");
-    px(x + 10, y + 2, 14, 10, "#ff6078");
-    px(x + 12, y + 10, 10, 10, "#a01028");
-    // teeth
-    px(x + 10, y + 16, 3, 5, "#fff0f0");
-    px(x + 16, y + 16, 3, 5, "#fff0f0");
-    px(x + 22, y + 16, 3, 5, "#fff0f0");
-    outline(x + 2, y + 2, 30, 24, "#ff90a8");
+    px(x + 16, y + 24, 5, 28, "#287838");
+    px(x + 10, y + 34, 12, 5, "#1e6030");
+    // carnivorous glass rose head
+    px(x + 4, y + 4, 28, 22, "#d01030");
+    px(x, y + 10, 12, 14, "#ff2848");
+    px(x + 24, y + 10, 12, 14, "#ff2848");
+    px(x + 10, y, 16, 12, "#ff6080");
+    px(x + 12, y + 10, 12, 12, "#8a1028");
+    // white teeth
+    px(x + 10, y + 18, 4, 7, "#fff8f8");
+    px(x + 17, y + 18, 4, 7, "#fff8f8");
+    px(x + 24, y + 18, 4, 7, "#fff8f8");
+    px(x + 8, y + 6, 5, 5, "#ffd0d8");
+    outline(x, y, 36, 28, "#ff90a8");
   }
 
   function drawCop(c) {
     const x = (c.x - camX) | 0, y = c.y | 0;
     if (x < -80 || x > W + 80) return;
+    // black & white county cruiser
     px(x, y + 12, c.w, c.h - 12, "#1a1a22");
-    outline(x, y + 12, c.w, c.h - 12, "#c0c0d0");
+    px(x + 2, y + 14, c.w - 4, 8, "#e8e8f0");
+    outline(x, y + 12, c.w, c.h - 12, "#c8c8d8");
     px(x + 10, y, c.w - 20, 16, "#101018");
-    px(x + 14, y + 4, 14, 9, "#90d0f0");
-    px(x + c.w - 28, y + 4, 14, 9, "#90d0f0");
-    // angry eyes
-    px(x + 16, y + 6, 4, 4, "#ff2040");
-    px(x + c.w - 24, y + 6, 4, 4, "#ff2040");
+    px(x + 14, y + 3, 14, 10, "#80c0e0");
+    px(x + c.w - 28, y + 3, 14, 10, "#80c0e0");
+    // angry headlight eyes
+    px(x + 6, y + 18, 10, 8, "#ffe060");
+    px(x + c.w - 16, y + 18, 10, 8, "#ffe060");
+    px(x + 8, y + 20, 4, 4, "#ff2030");
+    px(x + c.w - 14, y + 20, 4, 4, "#ff2030");
     const blink = ((T * 8) | 0) % 2;
     px(x + 18, y - 5, 12, 6, blink ? "#ff2030" : "#501018");
     px(x + c.w - 30, y - 5, 12, 6, blink ? "#2040ff" : "#101850");
     px(x + 6, y + c.h - 4, 14, 12, "#101018");
     px(x + c.w - 20, y + c.h - 4, 14, 12, "#101018");
-    ctx.fillStyle = "#ffd040";
-    ctx.font = "bold 10px Courier New, monospace";
+    ctx.fillStyle = "#101018";
+    ctx.font = "bold 9px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("COPS", x + c.w / 2, y + 26);
+    ctx.fillText("COUNTY", x + c.w / 2, y + 28);
   }
 
   function drawPerson(x, y, w, h, pal, label, face) {
@@ -782,57 +852,112 @@
     const x = (P.x - camX) | 0, y = P.y | 0;
     const flash = P.inv > 0 && ((T * 20) | 0) % 2 === 0;
     if (flash) return;
-    const pal = who === "unc"
-      ? { coat: "#3a1820", shirt: "#5a2030", pants: "#2a2030", hair: "#e8e0d0", skin: "#d0a080", cap: "#c02828", boot: "#1a1010" }
-      : { coat: "#18141c", shirt: "#2a2230", pants: "#202028", hair: "#1a1010", skin: "#d0a080", hat: "#3a2414", hat2: "#4a3020", boot: "#1a1010" };
-    drawPerson(x, y, P.w, P.h, pal, who === "unc" ? "UNC" : "RYDER", P.face);
-    if (who === "ryder") {
-      // vest detail
-      px(x + 10, y + 30, 8, 18, "#0e0c12");
-      px(x + 30, y + 30, 8, 18, "#0e0c12");
+    const step = P.ground && Math.abs(P.vx) > 40 ? ((T * 10) | 0) % 2 * 3 : 0;
+    // larger, mockup-like Ryder: hat, vest, boots, beard
+    px(x + 6, y + P.h, 38, 5, "#281010");
+    px(x + (P.face > 0 ? 4 : 8), y + 66, 18, 14, "#1a1010");
+    px(x + (P.face > 0 ? 28 : 22) + step, y + 66, 18, 14, "#1a1010");
+    px(x + 10, y + 48, 14, 22, "#202028");
+    px(x + 28 + (step ? 1 : 0), y + 48, 14, 22, "#202028");
+    if (who === "unc") {
+      px(x + 4, y + 26, 40, 30, "#3a1820");
+      px(x + 8, y + 30, 32, 22, "#5a2030");
+      px(x + 12, y + 10, 24, 16, "#d0a080");
+      px(x + 12, y + 8, 24, 6, "#e8e0d0");
+      px(x + 10, y + 4, 30, 10, "#c02828");
+      px(x + (P.face > 0 ? 30 : 4), y + 8, 14, 5, "#c02828");
+      ctx.fillStyle = "#ffe080";
+      ctx.font = "bold 10px Courier New, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("UNC", x + 24, y + 12);
+    } else {
+      px(x + 4, y + 26, 40, 30, "#141018");
+      px(x + 8, y + 28, 32, 14, "#0e0c12"); // open vest
+      px(x + 14, y + 30, 20, 18, "#2a2230");
+      px(x + 12, y + 10, 24, 16, "#d0a080");
+      px(x + 14, y + 20, 20, 6, "#8a6048"); // beard
+      px(x + 12, y + 8, 24, 6, "#1a1010");
+      px(x + 2, y + 8, 44, 6, "#3a2414");
+      px(x + 12, y - 4, 24, 14, "#4a3020");
+      outline(x + 2, y + 8, 44, 6, "#8a6040");
     }
+    ctx.fillStyle = "#ffe080";
+    ctx.font = "bold 11px Courier New, monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(who === "unc" ? "UNC" : "RYDER", x + 24, y - 10);
   }
 
   function drawPorch() {
     const x = (porch.x - camX) | 0;
-    if (x < -240 || x > W + 40) return;
-    px(x + 12, 280, 12, 70, "#3a2418");
-    px(x + 196, 280, 12, 70, "#3a2418");
-    px(x - 4, 276, 228, 12, "#2a1810");
-    px(x + 30, 258, 160, 20, "#1a1010");
-    px(x + 54, 242, 112, 18, "#1a1010");
+    if (x < -280 || x > W + 40) return;
+    // house mass behind porch
+    px(x + 40, 210, 150, 140, "#2a1a18");
+    outline(x + 40, 210, 150, 140, "#6a4030");
+    px(x + 70, 240, 30, 40, "#1a1010");
+    px(x + 130, 240, 30, 40, "#ffcc50"); // lit window
+    outline(x + 130, 240, 30, 40, "#fff0a0");
+    // posts + roof
+    px(x + 12, 270, 12, 80, "#3a2418");
+    px(x + 196, 270, 12, 80, "#3a2418");
+    px(x - 6, 266, 232, 12, "#2a1810");
+    px(x + 24, 248, 172, 20, "#1a1010");
+    px(x + 50, 230, 120, 20, "#1a1010");
+    // floor + rail
     px(x, 350, 220, 18, "#6a4430");
     outline(x, 350, 220, 18, "#c09050");
-    px(x, 368, 220, 12, "#3a2010");
-    px(x + 20, 328, 180, 5, "#7a5030");
-    for (let i = 0; i < 9; i++) px(x + 24 + i * 20, 328, 4, 22, "#4a3020");
+    px(x, 368, 220, 14, "#3a2010");
+    px(x + 20, 324, 180, 5, "#7a5030");
+    for (let i = 0; i < 9; i++) px(x + 24 + i * 20, 324, 4, 26, "#4a3020");
+    drawMoss(porch.x + 20, 268, 48);
+    drawMoss(porch.x + 180, 268, 40);
 
-    // neon-ish sign
-    ctx.fillStyle = "#ff60a0";
-    ctx.font = "bold 12px Courier New, monospace";
+    // pink neon
+    ctx.fillStyle = "#ff60a8";
+    ctx.font = "bold 13px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("JESSIE WAITIN'", x + 110, 236);
-    ctx.fillText("ON A HERO →", x + 110, 250);
+    ctx.shadowColor = "#ff2080";
+    ctx.shadowBlur = 8;
+    ctx.fillText("JESSIE WAITIN'", x + 110, 222);
+    ctx.fillText("ON A HERO  →", x + 110, 238);
+    ctx.shadowBlur = 0;
+
+    // stairs to Hat Man perch
+    const steps = [
+      { x: 4520, y: 400, w: 70 },
+      { x: 4585, y: 360, w: 70 },
+      { x: 4650, y: 320, w: 70 },
+      { x: 4715, y: 280, w: 90 }
+    ];
+    for (let i = 0; i < steps.length; i++) {
+      const s = steps[i];
+      const sx = (s.x - camX) | 0;
+      if (sx < -100 || sx > W + 40) continue;
+      px(sx, s.y, s.w, 14, "#1c1424");
+      outline(sx, s.y, s.w, 14, "#605070");
+      px(sx, s.y + 14, s.w, GY - s.y - 14, "#100c14");
+    }
 
     // beware sign
-    const sx = x + 230;
-    px(sx, GY - 70, 70, 40, "#3a2418");
-    outline(sx, GY - 70, 70, 40, "#a06040");
+    const bx = x + 228;
+    px(bx, GY - 78, 78, 48, "#3a2418");
+    outline(bx, GY - 78, 78, 48, "#c07040");
     ctx.fillStyle = "#ffb040";
-    ctx.font = "bold 9px Courier New, monospace";
-    ctx.fillText("BEWARE", sx + 35, GY - 52);
-    ctx.fillText("HAT MAN", sx + 35, GY - 40);
+    ctx.font = "bold 10px Courier New, monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("BEWARE", bx + 39, GY - 56);
+    ctx.fillText("THE HAT MAN", bx + 39, GY - 42);
   }
 
   function drawJessie() {
     const x = (jessie.x - camX) | 0, y = jessie.y | 0;
     if (x < -50 || x > W + 50) return;
-    px(x + 8, y + 54, 12, 20, "#301820");
-    px(x + 22, y + 54, 12, 20, "#301820");
-    px(x + 6, y + 26, 30, 34, "#e05080");
-    px(x + 8, y + 30, 26, 12, "#ff78a0");
-    px(x + 10, y + 8, 22, 20, "#f0c8a0");
-    px(x + 10, y + 4, 22, 10, "#f0d060");
+    px(x + 8, y + 54, 12, 20, "#f0b0c0");
+    px(x + 22, y + 54, 12, 20, "#f0b0c0");
+    px(x + 4, y + 24, 34, 36, "#ff70a0"); // pink dress
+    px(x + 8, y + 28, 26, 12, "#ff98b8");
+    px(x + 10, y + 8, 22, 18, "#f0c8a0");
+    px(x + 8, y + 4, 26, 10, "#f0d060"); // blonde
+    px(x + 6, y + 10, 8, 10, "#f0d060");
     ctx.fillStyle = "#ffe080";
     ctx.font = "bold 12px Courier New, monospace";
     ctx.textAlign = "center";
@@ -840,35 +965,43 @@
   }
 
   function drawHatMan() {
-    const x = (boss.x - camX) | 0, y = boss.y | 0;
-    if (x < -60 || x > W + 60) return;
-    const flash = boss.flash > 0 && ((T * 30) | 0) % 2 === 0;
-    const body = flash ? "#602040" : "#08080c";
-    px(x + 8, y + 30, 32, 62, body);
-    outline(x + 8, y + 30, 32, 62, "#403048");
-    px(x + 8, y + 90, 10, 10, body);
-    px(x + 30, y + 90, 10, 10, body);
-    px(x + 10, y + 14, 28, 20, "#0c0c12");
-    px(x + 6, y - 8, 36, 26, "#040406");
-    px(x - 2, y + 14, 52, 8, "#000000");
-    outline(x - 2, y + 14, 52, 8, "#504058");
-    px(x + 16, y + 22, 5, 5, "#ff4060");
-    px(x + 28, y + 22, 5, 5, "#ff4060");
-    // coat flare
-    px(x + 2, y + 40, 8, 40, body);
-    px(x + 38, y + 40, 8, 40, body);
+    // before boss: stand on stairs in shadow; during boss: active fighter
+    let hx = boss.x, hy = boss.y;
+    if (state === "play") {
+      hx = 4740; hy = 280 - boss.h;
+    }
+    const x = (hx - camX) | 0, y = hy | 0;
+    if (x < -70 || x > W + 70) return;
 
-    ctx.fillStyle = boss.phase === "stun" ? "#ffe080" : "#e07080";
+    // shadow pool
+    px(x - 10, y + 20, 70, 90, "rgba(0,0,0,0.35)");
+
+    const flash = boss.flash > 0 && ((T * 30) | 0) % 2 === 0;
+    const body = flash ? "#602040" : "#06060a";
+    // tall trench + wide hat (mockup)
+    px(x + 6, y + 28, 40, 68, body);
+    outline(x + 6, y + 28, 40, 68, "#403048");
+    px(x + 0, y + 36, 10, 50, body);
+    px(x + 42, y + 36, 10, 50, body);
+    px(x + 8, y + 94, 12, 8, body);
+    px(x + 32, y + 94, 12, 8, body);
+    px(x + 12, y + 14, 28, 18, "#0a0a10");
+    px(x + 8, y - 10, 36, 28, "#020204"); // tall crown
+    px(x - 6, y + 12, 64, 8, "#000000"); // wide brim
+    outline(x - 6, y + 12, 64, 8, "#504058");
+    px(x + 18, y + 22, 5, 5, "#ff4060");
+    px(x + 30, y + 22, 5, 5, "#ff4060");
+
+    ctx.fillStyle = (state === "boss" && boss.phase === "stun") ? "#ffe080" : "#e07080";
     ctx.font = "bold 12px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText(boss.phase === "stun" ? "STOMP!" : "HAT MAN", x + 24, y - 14);
+    ctx.fillText((state === "boss" && boss.phase === "stun") ? "STOMP!" : "HAT MAN", x + 26, y - 16);
 
-    // boss HP bar when in fight
     if (state === "boss") {
-      const bx = W / 2 - 120, by = 56;
-      px(bx - 2, by - 2, 244, 18, "#1a0810");
-      px(bx, by, 240, 14, "#301018");
-      px(bx, by, (240 * boss.hp / boss.maxHp) | 0, 14, "#c02040");
+      const bx = W / 2 - 130, by = 72;
+      px(bx - 2, by - 2, 264, 18, "#1a0810");
+      px(bx, by, 260, 14, "#301018");
+      px(bx, by, (260 * boss.hp / boss.maxHp) | 0, 14, "#c02040");
       ctx.fillStyle = "#ffe080";
       ctx.font = "bold 11px Courier New, monospace";
       ctx.textAlign = "center";
@@ -885,44 +1018,97 @@
     }
   }
 
-  function drawHUD() {
-    px(0, 0, W, 48, "#0c0814");
-    px(0, 48, W, 3, "#804030");
+  function drawPortrait(x, y, ch) {
+    px(x, y, 34, 34, "#1a1018");
+    outline(x, y, 34, 34, "#805040");
+    px(x + 8, y + 12, 18, 14, "#d0a080");
+    if (ch === "unc") {
+      px(x + 6, y + 6, 22, 8, "#c02828");
+      px(x + 8, y + 20, 18, 6, "#e8e0d0");
+    } else {
+      px(x + 4, y + 8, 26, 5, "#3a2414");
+      px(x + 10, y + 2, 14, 10, "#4a3020");
+      px(x + 10, y + 22, 14, 5, "#8a6048");
+    }
+  }
 
-    // P1
+  function drawHUD() {
+    // taller mockup-style cartridge HUD
+    px(0, 0, W, 62, "#0a0610");
+    px(0, 62, W, 3, "#904030");
+
+    // P1 panel
     ctx.textAlign = "left";
-    ctx.font = "bold 13px Courier New, monospace";
-    ctx.fillStyle = "#ff6060";
-    ctx.fillText("P1 " + (who === "unc" ? "UNC" : "RYDER"), 14, 18);
+    ctx.font = "bold 12px Courier New, monospace";
+    ctx.fillStyle = "#ff5050";
+    ctx.fillText("P1 RYDER", 12, 16);
     ctx.fillStyle = "#ffe080";
-    ctx.fillText(("00000000" + score).slice(-8), 14, 34);
-    // hearts / HP
+    ctx.fillText(("00000000" + score).slice(-8), 12, 30);
+    drawPortrait(12, 34, who === "ryder" ? "ryder" : "unc");
+    ctx.fillStyle = "#ff8080";
+    ctx.fillText("x0" + lives, 52, 46);
     for (let i = 0; i < 6; i++) {
-      px(120 + i * 14, 10, 11, 10, i < P.hp ? "#e02840" : "#301018");
+      px(52 + i * 12, 50, 10, 8, i < P.hp ? "#e02840" : "#301018");
     }
 
-    // P2 ghost panel
-    ctx.fillStyle = "#6090d0";
-    ctx.fillText("P2 UNC", 240, 18);
-    ctx.fillStyle = "#a0c0e0";
-    ctx.fillText("WAITING", 240, 34);
+    // P2 panel
+    ctx.fillStyle = "#5090e0";
+    ctx.fillText("P2 UNC", 200, 16);
+    ctx.fillStyle = "#a0c8ff";
+    ctx.fillText("00031240", 200, 30);
+    drawPortrait(200, 34, "unc");
+    ctx.fillStyle = "#80b0ff";
+    ctx.fillText("x04", 240, 46);
+    for (let i = 0; i < 6; i++) px(240 + i * 12, 50, 10, 8, i < 4 ? "#3060c0" : "#101828");
 
-    // center world
+    // center inventory (flavor from mockup)
+    px(W / 2 - 70, 18, 28, 16, "#303038");
+    outline(W / 2 - 70, 18, 28, 16, "#808088");
+    px(W / 2 - 64, 22, 16, 8, "#606068"); // shotgun block
+    ctx.fillStyle = "#ffe080";
+    ctx.font = "bold 11px Courier New, monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("x" + shells, W / 2 - 38, 30);
+    px(W / 2 + 10, 16, 18, 18, "#d0a040");
+    outline(W / 2 + 10, 16, 18, 18, "#ffe080");
+    ctx.fillStyle = "#201808";
+    ctx.textAlign = "center";
+    ctx.fillText("$", W / 2 + 19, 29);
+    ctx.fillStyle = "#ffe080";
+    ctx.textAlign = "left";
+    ctx.fillText("x" + cash, W / 2 + 34, 30);
+
+    // WORLD box top-right
+    px(W - 210, 10, 198, 42, "#14101c");
+    outline(W - 210, 10, 198, 42, "#c08040");
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffe080";
-    ctx.font = "bold 14px Courier New, monospace";
-    ctx.fillText("WORLD 1-1 SLAPOUT, AL", W / 2, 30);
+    ctx.font = "bold 13px Courier New, monospace";
+    ctx.fillText("WORLD 1-1", W - 111, 28);
+    ctx.font = "bold 12px Courier New, monospace";
+    ctx.fillText("SLAPOUT, AL", W - 111, 44);
 
-    // flavor bottom
-    px(0, H - 28, W, 28, "#0c0814");
-    px(0, H - 28, W, 2, "#5a3040");
+    // bottom status bar (mockup)
+    px(0, H - 34, W, 34, "#0a0610");
+    px(0, H - 34, W, 2, "#5a3040");
+    // boot box
+    px(8, H - 30, 26, 26, "#2a1810");
+    outline(8, H - 30, 26, 26, "#805030");
+    px(12, H - 18, 16, 10, "#3a2414");
     ctx.textAlign = "left";
-    ctx.font = "bold 10px Courier New, monospace";
     ctx.fillStyle = "#c09060";
-    ctx.fillText("RED DIRT. BAD BLOOD. NOBODY LEAVES SLAPOUT.", 12, H - 10);
+    ctx.font = "bold 10px Courier New, monospace";
+    ctx.fillText("RED DIRT. BAD BLOOD. NOBODY LEAVES SLAPOUT.", 40, H - 12);
+    // skull
+    px(W / 2 - 30, H - 28, 18, 18, "#e8e0d0");
+    px(W / 2 - 26, H - 22, 4, 4, "#101010");
+    px(W / 2 - 18, H - 22, 4, 4, "#101010");
+    ctx.fillStyle = "#ffe080";
+    ctx.fillText("x0" + skulls, W / 2 - 8, H - 14);
+    // music credit
     ctx.textAlign = "right";
     ctx.fillStyle = "#887060";
-    ctx.fillText(state === "boss" ? "BOSS: STOMP HAT MAN" : "FIND JESSIE →", W - 12, H - 10);
+    ctx.fillText("♪ BACKROADS GOSPEL — THE SWAMP SAINTS", W - 10, H - 12);
   }
 
   function drawScanlines() {
@@ -956,20 +1142,20 @@
     }
     drawPorch();
     drawJessie();
-    if (state === "boss" || state === "win" || P.x > BOSS_X - 200) {
-      drawHatMan();
-      drawBolts();
+    // Hat Man visible on stairs approaching end, then becomes boss
+    if (state === "boss" || state === "win" || state === "play") {
+      if (state !== "play" || P.x > 4000) drawHatMan();
     }
+    if (state === "boss") drawBolts();
     drawRyder();
     drawHUD();
     drawScanlines();
 
-    // arena banner
     if (state === "boss") {
       ctx.fillStyle = "#ff4060";
-      ctx.font = "bold 16px Courier New, monospace";
+      ctx.font = "bold 15px Courier New, monospace";
       ctx.textAlign = "center";
-      ctx.fillText("FREE JESSIE — STOMP THE HAT MAN", W / 2, 78);
+      ctx.fillText("FREE JESSIE — STOMP THE HAT MAN", W / 2, 98);
     }
   }
 
