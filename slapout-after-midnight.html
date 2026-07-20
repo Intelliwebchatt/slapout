@@ -72,9 +72,9 @@ const CONFIG = {
   /* --- Display --- */
   W: 400, H: 240, TILE: 16, CRT: true,
 
-  /* --- Audio --- */
-  MUSIC_URL: "./the-warning.mp3",
-  MUSIC_FALLBACKS: ["/01%20-%20The%20Warning.mp3", "/01 - The Warning.mp3"],
+  /* --- Audio (try repo MP3 first; synth only after all URLs fail) --- */
+  MUSIC_URL: "/01 - The Warning.mp3",
+  MUSIC_FALLBACKS: ["/01%20-%20The%20Warning.mp3", "./the-warning.mp3"],
   MUSIC_VOL: 0.5,
 
   /* --- Momentum (px/s, px/s²). Full-speed jump clears 5 tiles; standing does not. --- */
@@ -360,11 +360,23 @@ const SFX = {
   thunder() { noise(0.45, 0.1, 280); blip(48, 0.4, "sine", 0.05); },
 };
 
+let musicGen = 0; // invalidates stale async play() / URL fallbacks
+
+function stopMusicElement() {
+  if (!music) return;
+  try { music.pause(); music.removeAttribute("src"); music.load(); } catch (e) {}
+  music = null;
+}
 function stopSynth() {
   if (synthTimer) { clearInterval(synthTimer); synthTimer = 0; }
   if (!synthNodes) return;
   try { synthNodes.forEach(n => { try { n.stop && n.stop(); } catch (e) {} }); } catch (e) {}
   synthNodes = null;
+}
+function stopAllAudio() {
+  stopMusicElement();
+  stopSynth();
+  musicOk = false;
 }
 function startSynthLoop() {
   if (!audioOn) return;
@@ -378,8 +390,9 @@ function startSynthLoop() {
   synthNodes = [bass, lead];
   let step = 0;
   const notes = [55, 55, 65.4, 55, 49, 49, 58.3, 55];
+  const gen = musicGen;
   synthTimer = setInterval(() => {
-    if (!audioOn || !synthNodes) return;
+    if (!audioOn || !synthNodes || gen !== musicGen) return;
     try {
       bass.frequency.setValueAtTime(notes[step % notes.length], AC.currentTime);
       if (step % 4 === 0) lead.frequency.setValueAtTime(165 + (step % 8) * 10, AC.currentTime);
@@ -389,36 +402,55 @@ function startSynthLoop() {
 }
 function startMusic() {
   ensureAC();
-  stopSynth();
-  if (music) { try { music.pause(); } catch (e) {} music = null; }
-  musicOk = false;
+  const gen = ++musicGen;
+  stopAllAudio();
   if (!audioOn) return;
   const urls = [CONFIG.MUSIC_URL, ...CONFIG.MUSIC_FALLBACKS];
   let i = 0;
   function tryNext() {
-    if (i >= urls.length) { startSynthLoop(); return; }
+    if (gen !== musicGen || !audioOn) return;
+    if (i >= urls.length) {
+      if (gen === musicGen && audioOn) startSynthLoop();
+      return;
+    }
     const a = new Audio(urls[i++]);
     a.loop = true; a.volume = CONFIG.MUSIC_VOL;
-    a.play().then(() => { music = a; musicOk = true; }).catch(() => tryNext());
+    a.play().then(() => {
+      if (gen !== musicGen || !audioOn) {
+        try { a.pause(); a.removeAttribute("src"); a.load(); } catch (e) {}
+        return;
+      }
+      music = a; musicOk = true;
+    }).catch(() => tryNext());
   }
   tryNext();
 }
 function setMute(on) {
-  audioOn = on;
   muteBtn.classList.toggle("on", on);
   localStorage.setItem("sam_mute", on ? "0" : "1");
-  if (music) { if (on) music.play().catch(() => {}); else music.pause(); }
-  if (!on) stopSynth();
-  else if (!musicOk) startSynthLoop();
+  if (!on) {
+    audioOn = false;
+    musicGen++; // drop any in-flight play() / fallback
+    stopAllAudio();
+    return;
+  }
+  audioOn = true;
+  // Unmute always retries the real MP3 path (synth only after all URLs fail).
+  startMusic();
 }
-muteBtn.onclick = (e) => { e.stopPropagation(); ensureAC(); if (!music && !synthNodes) startMusic(); setMute(!audioOn); };
+muteBtn.onclick = (e) => { e.stopPropagation(); ensureAC(); setMute(!audioOn); };
 
 /* =====================================================================
    INPUT
    ===================================================================== */
 const key = { l: false, r: false, j: false, x: false };
 let jumpDown = false, jumpPressed = false, chordHeld = false, usingTouch = false;
-let pausePressed = false;
+
+/** Clear held/edge input so screen transitions do not leak into the next state. */
+function clearTransientInput() {
+  key.l = false; key.r = false; key.j = false; key.x = false;
+  jumpDown = false; jumpPressed = false; chordHeld = false;
+}
 
 function showPads(on) {
   if (on) padsEl.style.display = "block";
@@ -430,8 +462,7 @@ addEventListener("keydown", e => {
   if (["ArrowRight", "KeyD"].includes(e.code)) key.r = true;
   if (["Space", "ArrowUp", "KeyW"].includes(e.code)) { key.j = true; e.preventDefault(); }
   if (["KeyX", "ShiftLeft", "ShiftRight"].includes(e.code)) key.x = true;
-  if (e.code === "KeyP") pausePressed = true;
-  if (e.code === "KeyM") { ensureAC(); if (!music && !synthNodes) startMusic(); setMute(!audioOn); }
+  if (e.code === "KeyM" && !e.repeat) { ensureAC(); setMute(!audioOn); }
   handleScreenKey(e);
 });
 addEventListener("keyup", e => {
@@ -677,6 +708,7 @@ function hurt() {
   SFX.hurt();
   player.inv = CONFIG.INVULN_MS / 1000;
   flash = 0.4;
+  chain = 0; // any damage breaks the stomp chain (Amped→Risen, Risen→Walking, or life loss)
   if (player.state > 1) setPowerState(player.state - 1, true);
   else die();
 }
@@ -705,10 +737,11 @@ function bumpBlock(s) {
   if (!s.active) return;
   SFX.bump();
   bumpAnims[s.tx + "," + s.ty] = 0.09;
+  // Block-bump kills award a flat cruiser score and do not extend an airborne stomp chain.
   for (let i = 0; i < entities.length; i++) {
     const e = entities[i];
     if (e.kind === "cruiser" && e.alive && e.x + e.w > s.x && e.x < s.x + s.w && Math.abs(e.y + e.h - s.y) < 6) {
-      e.alive = false; e.squash = 0.3; stompScore(); SFX.stomp(); SFX.siren();
+      e.alive = false; e.squash = 0.3; addScore(CONFIG.SCORE_CRUISER); SFX.stomp(); SFX.siren();
     }
   }
   if (s.type === "block") {
@@ -1413,33 +1446,58 @@ const TICKER_LINES = [
 let tickerI = 0, tickerT = 0;
 
 function startGame() {
-  ensureAC(); startMusic();
+  clearTransientInput();
+  ensureAC();
+  startMusic();
   lastCheckpoint = { x: 48, y: GROUND_Y - 24 };
   resetRun(true);
   screen = "game";
 }
 
+/** Clear-screen "RUN IT BACK" — fresh run immediately (not via title). */
+function runItBack() {
+  startGame();
+}
+
 function continueFromCheckpoint() {
+  clearTransientInput();
   score = Math.floor(score / 2);
   lives = CONFIG.START_LIVES;
   resetRun(false);
   screen = "game";
 }
 
+/** Single authoritative pause path (keyboard KeyP). Touch uses enterPause/resumePause. */
+function enterPause() {
+  if (screen === "game") screen = "pause";
+}
+function resumePause() {
+  if (screen === "pause") { screen = "countdown"; countdown = 3; }
+}
+
 function handleScreenKey(e) {
   if (screen === "title") {
-    if (["ArrowLeft", "KeyA", "ArrowRight", "KeyD"].includes(e.code)) who = who === "ryder" ? "unc" : "ryder";
-    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code)) startGame();
-  } else if (screen === "game" && e.code === "KeyP") {
-    screen = "pause";
-  } else if (screen === "pause" && e.code === "KeyP") {
-    screen = "countdown"; countdown = 3;
-  } else if (screen === "gameover") {
-    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code)) continueFromCheckpoint();
-    if (["ArrowLeft", "KeyA"].includes(e.code)) screen = "title";
-  } else if (screen === "clear") {
-    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code)) screen = "title";
-    if (["ArrowRight", "KeyD"].includes(e.code)) location.href = "https://rydermccoy.com/woods";
+    if (["ArrowLeft", "KeyA", "ArrowRight", "KeyD"].includes(e.code) && !e.repeat) {
+      who = who === "ryder" ? "unc" : "ryder";
+    }
+    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code) && !e.repeat) startGame();
+    return;
+  }
+  // One pause transition path — ignore key-repeat; do not also queue via pausePressed.
+  if (e.code === "KeyP") {
+    if (e.repeat) return;
+    if (screen === "game") enterPause();
+    else if (screen === "pause") resumePause();
+    return;
+  }
+  if (screen === "gameover") {
+    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code) && !e.repeat) continueFromCheckpoint();
+    if (["ArrowLeft", "KeyA"].includes(e.code) && !e.repeat) { clearTransientInput(); screen = "title"; }
+    return;
+  }
+  if (screen === "clear") {
+    if (["Space", "Enter", "ArrowUp", "KeyW"].includes(e.code) && !e.repeat) runItBack();
+    if (["ArrowRight", "KeyD"].includes(e.code) && !e.repeat) location.href = "/woods";
   }
 }
 
@@ -1461,25 +1519,25 @@ cv.addEventListener("pointerdown", e => {
   }
   if (screen === "game") {
     // Tap top HUD bar to pause (phone)
-    if (p.y < 22) { screen = "pause"; return; }
+    if (p.y < 22) { enterPause(); return; }
     return;
   }
   if (screen === "pause") {
-    screen = "countdown"; countdown = 3; return;
+    resumePause(); return;
   }
   if (screen === "gameover") {
-    if (p.x < CONFIG.W / 2) screen = "title";
+    if (p.x < CONFIG.W / 2) { clearTransientInput(); screen = "title"; }
     else continueFromCheckpoint();
     return;
   }
   if (screen === "clear") {
-    if (p.x < CONFIG.W / 2) screen = "title";
-    else location.href = "https://rydermccoy.com/woods";
+    if (p.x < CONFIG.W / 2) runItBack();
+    else location.href = "/woods";
   }
 });
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden && screen === "game") screen = "pause";
+  if (document.hidden && screen === "game") enterPause();
 });
 
 let acc = 0, last = performance.now();
@@ -1490,6 +1548,7 @@ function tryClear() {
   if (!jessieZone || !aabb(player, jessieZone)) return;
   if (arena && !(boss && boss.state === "dead")) return;
   clearAwarded = true;
+  clearTransientInput();
   screen = "clear";
   SFX.clear();
   addScore(CONFIG.SCORE_CLEAR);
@@ -1507,11 +1566,6 @@ function frame(now) {
   if (tickerT > 4) { tickerT = 0; tickerI = (tickerI + 1) % TICKER_LINES.length; tickerEl.textContent = TICKER_LINES[tickerI]; }
 
   while (acc >= STEP) {
-    if (pausePressed) {
-      pausePressed = false;
-      if (screen === "game") screen = "pause";
-      else if (screen === "pause") { screen = "countdown"; countdown = 3; }
-    }
     if (screen === "game") {
       timeSec += STEP;
       updatePlayer(STEP);
@@ -1522,7 +1576,10 @@ function frame(now) {
       tryClear();
     } else if (screen === "countdown") {
       countdown -= STEP;
-      if (countdown <= 0) screen = "game";
+      if (countdown <= 0) {
+        clearTransientInput();
+        screen = "game";
+      }
     } else {
       updateLightning(STEP * 0.5);
     }
