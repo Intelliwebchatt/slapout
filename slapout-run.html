@@ -168,7 +168,7 @@
         </div>
       </div>
       <button class="btn" id="startBtn">PRESS START</button>
-      <div class="tag" style="margin-top:14px;font-size:11px;opacity:.7">ARROWS / A-D MOVE · SPACE / W / UP JUMP<br>STOMP THE HAT MAN TO FREE JESSIE</div>
+      <div class="tag" style="margin-top:14px;font-size:11px;opacity:.7">ARROWS / A-D MOVE · SPACE / W / UP JUMP<br>STOMP THE HAT MAN TO FREE JESSIE<br>♪ THE WARNING PLAYS IN-GAME — TAP ♪ TO MUTE</div>
     </div>
 
     <div class="overlay hidden" id="endOv">
@@ -178,7 +178,7 @@
       <a class="btn" href="/woods" style="text-decoration:none;margin-top:12px">ENTER THE WOODS</a>
     </div>
   </div>
-  <div id="hint">ARROWS / A-D · SPACE / W / UP JUMP · STOMP HAT MAN IN THE BOSS ARENA</div>
+  <div id="hint">ARROWS / A-D · SPACE / W / UP JUMP · STOMP HAT MAN · ♪ THE WARNING</div>
   <div id="pads">
     <div class="g">
       <button class="pad" id="padL">◀</button>
@@ -231,35 +231,122 @@
   bindPad("padJ", v => key.j = v);
 
   // ---------- audio ----------
-  let AC = null, audioOn = false, music = null;
+  // Song lives on main/repo root (same path After Midnight uses).
+  const WARNING_SRC = "/01%20-%20The%20Warning.mp3";
+  const WARNING_SRC_ALT = "/01 - The Warning.mp3";
+  let AC = null, audioOn = false, music = null, musicOk = false, sfxBus = null;
   const sndBtn = document.getElementById("snd");
+
   function ensureAC() {
     if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
-    AC.resume();
+    if (AC.state === "suspended") AC.resume();
+    if (!sfxBus) {
+      sfxBus = AC.createGain();
+      sfxBus.gain.value = 0.9;
+      sfxBus.connect(AC.destination);
+    }
+    return AC;
   }
+
   function setAudio(on) {
     audioOn = on;
     sndBtn.classList.toggle("on", on);
-    if (music) { if (on) music.play().catch(() => {}); else music.pause(); }
+    if (!music) return;
+    if (on) music.play().catch(() => {});
+    else music.pause();
   }
-  sndBtn.addEventListener("click", () => setAudio(!audioOn));
+  sndBtn.addEventListener("click", () => {
+    ensureAC();
+    if (!music && !audioOn) startMusic();
+    else setAudio(!audioOn);
+  });
+
   function startMusic() {
     ensureAC();
-    audioOn = true; sndBtn.classList.add("on");
-    if (music) { music.pause(); music = null; }
-    music = new Audio("/01 - The Warning.mp3");
-    music.loop = true; music.volume = 0.5;
-    music.play().catch(() => { music = null; });
+    audioOn = true;
+    sndBtn.classList.add("on");
+    musicOk = false;
+    if (music) { try { music.pause(); } catch (e) {} music = null; }
+
+    function bind(src) {
+      const a = new Audio(src);
+      a.loop = true;
+      a.preload = "auto";
+      a.volume = 0.55;
+      return a;
+    }
+
+    music = bind(WARNING_SRC_ALT);
+    const tryPlay = () => music.play()
+      .then(() => { musicOk = true; })
+      .catch(() => {
+        // encoded-space fallback, then keep UI ready for next gesture
+        music = bind(WARNING_SRC);
+        music.play().then(() => { musicOk = true; }).catch(() => { musicOk = false; });
+      });
+    tryPlay();
   }
+
+  function setMusicVolume(v) {
+    if (music) music.volume = Math.max(0, Math.min(1, v));
+  }
+
   function blip(f, d, type, vol) {
-    if (!audioOn || !AC) return;
-    const o = AC.createOscillator(), g = AC.createGain();
-    o.type = type || "square"; o.frequency.value = f;
-    g.gain.setValueAtTime(vol || 0.05, AC.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + d);
-    o.connect(g); g.connect(AC.destination);
-    o.start(); o.stop(AC.currentTime + d);
+    if (!audioOn) return;
+    ensureAC();
+    const t0 = AC.currentTime;
+    const o = AC.createOscillator();
+    const g = AC.createGain();
+    o.type = type || "square";
+    o.frequency.setValueAtTime(f, t0);
+    g.gain.setValueAtTime(vol || 0.05, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+    o.connect(g); g.connect(sfxBus || AC.destination);
+    o.start(t0); o.stop(t0 + d + 0.02);
   }
+
+  function noiseBurst(d, vol, filterFreq) {
+    if (!audioOn) return;
+    ensureAC();
+    const t0 = AC.currentTime;
+    const n = Math.max(1, (AC.sampleRate * d) | 0);
+    const buf = AC.createBuffer(1, n, AC.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = AC.createBufferSource();
+    src.buffer = buf;
+    const filt = AC.createBiquadFilter();
+    filt.type = "lowpass";
+    filt.frequency.value = filterFreq || 1200;
+    const g = AC.createGain();
+    g.gain.setValueAtTime(vol || 0.08, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+    src.connect(filt); filt.connect(g); g.connect(sfxBus || AC.destination);
+    src.start(t0); src.stop(t0 + d + 0.02);
+  }
+
+  // Named SFX — cartridge-style beeps over The Warning
+  const sfx = {
+    start() { blip(440, 0.1, "triangle", 0.05); setTimeout(() => blip(660, 0.12, "triangle", 0.045), 70); },
+    jump() { blip(320, 0.07, "square", 0.035); blip(480, 0.05, "triangle", 0.025); },
+    land() { noiseBurst(0.06, 0.05, 800); blip(120, 0.05, "triangle", 0.03); },
+    hurt() { blip(110, 0.22, "sawtooth", 0.07); noiseBurst(0.12, 0.06, 600); },
+    checkpoint() { blip(700, 0.07, "triangle", 0.04); setTimeout(() => blip(980, 0.1, "triangle", 0.035), 60); },
+    bossEnter() { blip(90, 0.28, "sawtooth", 0.07); setTimeout(() => blip(70, 0.2, "square", 0.05), 100); },
+    bossDash() { noiseBurst(0.14, 0.07, 900); blip(80, 0.12, "sawtooth", 0.05); },
+    bossSlam() { noiseBurst(0.2, 0.1, 500); blip(60, 0.18, "sawtooth", 0.07); },
+    stomp() {
+      blip(520, 0.08, "square", 0.05);
+      setTimeout(() => blip(780, 0.1, "triangle", 0.04), 50);
+      noiseBurst(0.08, 0.05, 1400);
+    },
+    win() {
+      blip(523, 0.12, "triangle", 0.05);
+      setTimeout(() => blip(659, 0.12, "triangle", 0.05), 100);
+      setTimeout(() => blip(784, 0.18, "triangle", 0.055), 200);
+      setTimeout(() => blip(1046, 0.28, "triangle", 0.05), 320);
+    }
+  };
 
   // ---------- level ----------
   const platforms = [
@@ -357,16 +444,17 @@
     P.hp--;
     hurtFlash = 1;
     P.inv = 1.4;
-    blip(110, 0.28, "sawtooth", 0.07);
+    sfx.hurt();
     if (P.hp <= 0) {
       deaths++;
+      lives = Math.max(0, lives - 1);
       P.hp = 6;
       P.x = checkpoint.x;
       P.y = checkpoint.y;
       P.vx = 0; P.vy = 0;
       if (state === "boss") {
         // stay in boss, reset boss position lightly
-        boss.x = 4900; boss.phase = "idle"; boss.t = 0; bolts.length = 0;
+        boss.x = 4900; boss.y = GY - boss.h; boss.phase = "idle"; boss.t = 0; bolts.length = 0;
       }
     }
   }
@@ -406,13 +494,12 @@
     if (boss.hp <= 0) {
       boss.phase = "dead";
       state = "win";
-      blip(660, 0.2, "triangle", 0.06);
-      setTimeout(() => blip(880, 0.25, "triangle", 0.05), 80);
+      sfx.win();
+      setMusicVolume(0.35);
       document.getElementById("endTag").textContent =
         "Hat Man down. " + deaths + (deaths === 1 ? " fall" : " falls") +
         ". Jessie steps into the porch light.";
       document.getElementById("endOv").classList.remove("hidden");
-      if (music) music.volume = 0.25;
       return;
     }
 
@@ -428,11 +515,11 @@
         if (Math.random() < 0.55) {
           boss.phase = "dash";
           boss.vx = boss.face * 280;
-          blip(90, 0.15, "sawtooth", 0.05);
+          sfx.bossDash();
         } else {
           boss.phase = "slam";
           boss.vy = -420;
-          blip(200, 0.12, "square", 0.04);
+          blip(200, 0.1, "square", 0.035);
         }
       }
     } else if (boss.phase === "dash") {
@@ -456,7 +543,7 @@
             life: 2.2
           });
         }
-        blip(70, 0.22, "sawtooth", 0.07);
+        sfx.bossSlam();
         boss.phase = "stun";
         boss.t = 0;
       }
@@ -487,8 +574,7 @@
         boss.t = 0;
         P.vy = -520;
         score += 1000;
-        blip(520, 0.1, "square", 0.05);
-        setTimeout(() => blip(780, 0.12, "triangle", 0.04), 50);
+        sfx.stomp();
       } else if (P.inv <= 0) {
         hurt();
         P.vx = (P.x < boss.x ? -1 : 1) * 220;
@@ -516,11 +602,12 @@
       P.ground = false;
       P.coyote = 0;
       P.jumpCut = false;
-      blip(300, 0.08, "square", 0.03);
+      sfx.jump();
     }
     if (!J && P.vy < 0 && !P.jumpCut) { P.vy *= 0.55; P.jumpCut = true; }
     jumpHeld = J;
 
+    const wasGround = P.ground;
     P.prevB = P.y + P.h;
     P.vy += 1450 * dt;
     if (P.vy > 900) P.vy = 900;
@@ -532,6 +619,7 @@
     if (state === "boss" && P.x < BOSS_X + 40) P.x = BOSS_X + 40;
 
     resolvePlatforms(P);
+    if (!wasGround && P.ground && P.vy >= 0) sfx.land();
     if (!P.ground) P.coyote = Math.max(0, P.coyote - dt);
     if (P.ground && Math.abs(P.vx) > 20) P.run += dt * 10; else if (P.ground) P.run = 0;
     if (P.y > H + 100) {
@@ -541,7 +629,10 @@
 
     // checkpoints
     for (const lp of lamps) {
-      if (P.x > lp.x && checkpoint.x < lp.x) checkpoint = { x: lp.x, y: GY - P.h };
+      if (P.x > lp.x && checkpoint.x < lp.x) {
+        checkpoint = { x: lp.x, y: GY - P.h };
+        sfx.checkpoint();
+      }
     }
 
     // cars
@@ -560,7 +651,8 @@
     // trigger boss at porch / arena
     if (state === "play" && P.x > BOSS_X) {
       state = "boss";
-      blip(140, 0.25, "sawtooth", 0.06);
+      sfx.bossEnter();
+      setMusicVolume(0.45);
       boss.phase = "idle";
       boss.t = 0.3;
       boss.x = 4900;
@@ -1197,13 +1289,14 @@
     document.getElementById("titleOv").classList.add("hidden");
     resetRun();
     startMusic();
-    blip(440, 0.12, "triangle", 0.05);
+    sfx.start();
   };
   document.getElementById("againBtn").onclick = () => {
     document.getElementById("endOv").classList.add("hidden");
-    if (music) music.volume = 0.5;
     resetRun();
     startMusic();
+    setMusicVolume(0.55);
+    sfx.start();
   };
 
   // ---------- loop ----------
