@@ -457,12 +457,25 @@ function showPads(on) {
   else if (!usingTouch) padsEl.style.display = "none";
 }
 addEventListener("keydown", e => {
-  usingTouch = false; showPads(false);
-  if (["ArrowLeft", "KeyA"].includes(e.code)) key.l = true;
-  if (["ArrowRight", "KeyD"].includes(e.code)) key.r = true;
-  if (["Space", "ArrowUp", "KeyW"].includes(e.code)) { key.j = true; e.preventDefault(); }
-  if (["KeyX", "ShiftLeft", "ShiftRight"].includes(e.code)) key.x = true;
-  if (e.code === "KeyM" && !e.repeat) { ensureAC(); setMute(!audioOn); }
+  usingTouch = false;
+  showPads(false);
+
+  if (["Space", "ArrowUp", "KeyW"].includes(e.code)) {
+    e.preventDefault();
+  }
+
+  if (!e.repeat) {
+    if (["ArrowLeft", "KeyA"].includes(e.code)) key.l = true;
+    if (["ArrowRight", "KeyD"].includes(e.code)) key.r = true;
+    if (["Space", "ArrowUp", "KeyW"].includes(e.code)) key.j = true;
+    if (["KeyX", "ShiftLeft", "ShiftRight"].includes(e.code)) key.x = true;
+  }
+
+  if (e.code === "KeyM" && !e.repeat) {
+    ensureAC();
+    setMute(!audioOn);
+  }
+
   handleScreenKey(e);
 });
 addEventListener("keyup", e => {
