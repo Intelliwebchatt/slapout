@@ -557,14 +557,14 @@
 
     if (state === "boss") updateBoss(dt);
 
-    // camera
+    // camera — in boss, keep porch + Jessie + Hat Man framed
     let target = P.x - W * 0.32;
-    if (state === "boss") target = BOSS_X - 20;
-    camX += (target - camX) * 0.1;
+    if (state === "boss") target = Math.min(P.x - W * 0.28, LEVEL_W - W);
+    camX += (target - camX) * 0.12;
     if (camX < 0) camX = 0;
     if (camX > LEVEL_W - W) camX = LEVEL_W - W;
     if (state === "boss") {
-      camX = Math.max(BOSS_X - 80, Math.min(camX, LEVEL_W - W));
+      camX = Math.max(porch.x - 40, Math.min(camX, LEVEL_W - W));
     }
   }
 
@@ -1037,9 +1037,9 @@
     gotoBoss() {
       if (state === "title") document.getElementById("startBtn").click();
       resetRun();
-      P.x = BOSS_X + 80;
+      P.x = BOSS_X + 100;
       state = "boss";
-      camX = BOSS_X - 80;
+      camX = porch.x - 40;
     },
     getState() { return { state, bossHp: boss.hp, hp: P.hp, x: P.x }; }
   };
