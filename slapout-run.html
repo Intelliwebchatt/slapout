@@ -276,12 +276,12 @@
       return a;
     }
 
-    music = bind(WARNING_SRC_ALT);
+    // Prefer URL-encoded path (spaces); fall back to literal filename.
+    music = bind(WARNING_SRC);
     const tryPlay = () => music.play()
       .then(() => { musicOk = true; })
       .catch(() => {
-        // encoded-space fallback, then keep UI ready for next gesture
-        music = bind(WARNING_SRC);
+        music = bind(WARNING_SRC_ALT);
         music.play().then(() => { musicOk = true; }).catch(() => { musicOk = false; });
       });
     tryPlay();
