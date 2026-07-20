@@ -156,7 +156,7 @@
 
     <div class="overlay" id="titleOv">
       <h1>RYDER:<br><span class="red">WELCOME TO SLAPOUT</span></h1>
-      <div class="tag">Red dirt. Bad blood. Glass roses in the pipes.<br>Get to Jessie's porch — then make the Hat Man let her go.</div>
+      <div class="tag">Red dirt. Bad blood. Glass roses in the pipes.<br>Climb the pipes. Beat the Hat Man in the middle. Free Jessie at the end.</div>
       <div class="chars">
         <div class="charcard sel" id="cardR">
           <canvas width="70" height="90" id="pvR"></canvas>
@@ -198,9 +198,12 @@
   ctx.imageSmoothingEnabled = false;
 
   const W = 960, H = 540;
-  const LEVEL_W = 5200;
+  const LEVEL_W = 5800;
   const GY = 455;
-  const BOSS_X = 4550; // arena start
+  // Hat Man blocks the road mid-level; Jessie waits at the far end
+  const BOSS_L = 2350;
+  const BOSS_R = 3180;
+  const BOSS_X = BOSS_L; // trigger
 
   // ---------- input ----------
   const key = { l: false, r: false, j: false };
@@ -349,66 +352,66 @@
   };
 
   // ---------- level ----------
+  // All glass pipes rise from the dirt and are solid standable platforms.
+  const pipes = [
+    // approach climb
+    { x: 280, top: 360 }, { x: 480, top: 300 }, { x: 700, top: 340 },
+    { x: 920, top: 270 }, { x: 1140, top: 320 }, { x: 1360, top: 250 },
+    { x: 1580, top: 300 }, { x: 1800, top: 240 }, { x: 2020, top: 290 },
+    // mid climb into boss arena
+    { x: 2220, top: 330 },
+    // boss arena pipes (in play)
+    { x: 2500, top: 340 }, { x: 2720, top: 280 }, { x: 2940, top: 340 },
+    // after boss — climb toward Jessie
+    { x: 3300, top: 320 }, { x: 3520, top: 260 }, { x: 3740, top: 300 },
+    { x: 3960, top: 240 }, { x: 4180, top: 290 }, { x: 4400, top: 230 },
+    { x: 4620, top: 280 }, { x: 4840, top: 220 }, { x: 5060, top: 270 },
+    // final climb onto Jessie's porch approach
+    { x: 5280, top: 310 }, { x: 5480, top: 250 }
+  ];
+
   const platforms = [
     { x: 0, y: GY, w: LEVEL_W, h: 90 },
-    { x: 320, y: 340, w: 64, h: 14 },
-    { x: 560, y: 280, w: 64, h: 14 },
-    { x: 820, y: 320, w: 64, h: 14 },
-    { x: 1100, y: 250, w: 64, h: 14 },
-    { x: 1400, y: 300, w: 64, h: 14 },
-    { x: 1700, y: 240, w: 64, h: 14 },
-    { x: 2000, y: 290, w: 64, h: 14 },
-    { x: 2320, y: 250, w: 64, h: 14 },
-    { x: 2640, y: 310, w: 64, h: 14 },
-    { x: 2960, y: 260, w: 64, h: 14 },
-    { x: 3280, y: 300, w: 64, h: 14 },
-    { x: 3600, y: 250, w: 64, h: 14 },
-    { x: 3900, y: 320, w: 64, h: 14 },
-    // Jessie porch + Hat Man stairs (mockup end scene)
-    { x: 4300, y: 350, w: 220, h: 18 },
-    { x: 4520, y: 400, w: 70, h: 14 },
-    { x: 4585, y: 360, w: 70, h: 14 },
-    { x: 4650, y: 320, w: 70, h: 14 },
-    { x: 4715, y: 280, w: 90, h: 14 },
-    // boss arena ledges
-    { x: 4840, y: 360, w: 90, h: 14 },
-    { x: 5000, y: 300, w: 90, h: 14 }
+    // pipe tops (wide lips for play)
+    ...pipes.map(p => ({ x: p.x - 8, y: p.top, w: 68, h: 14 })),
+    // boss arena side ledges
+    { x: 2420, y: 380, w: 80, h: 14 },
+    { x: 3040, y: 380, w: 80, h: 14 },
+    // Jessie porch at the TRUE end
+    { x: 5560, y: 340, w: 220, h: 18 }
   ];
 
-  const pipes = [
-    { x: 330, top: 340 }, { x: 570, top: 280 }, { x: 830, top: 320 },
-    { x: 1110, top: 250 }, { x: 1410, top: 300 }, { x: 1710, top: 240 },
-    { x: 2010, top: 290 }, { x: 2330, top: 250 }, { x: 2650, top: 310 },
-    { x: 2970, top: 260 }, { x: 3290, top: 300 }, { x: 3610, top: 250 },
-    { x: 3910, top: 320 }
-  ];
-
+  // Roses grow out of some pipe mouths / dirt — hazards in the play lane
   const roses = [
-    { x: 340, y: 340 - 48 }, { x: 580, y: 280 - 48 }, { x: 840, y: 320 - 48 },
-    { x: 450, y: GY - 48 }, { x: 1120, y: 250 - 48 }, { x: 1300, y: GY - 48 },
-    { x: 1720, y: 240 - 48 }, { x: 1900, y: GY - 48 }, { x: 2340, y: 250 - 48 },
-    { x: 2550, y: GY - 48 }, { x: 2980, y: 260 - 48 }, { x: 3450, y: GY - 48 },
-    { x: 3620, y: 250 - 48 }, { x: 4050, y: GY - 48 }
+    { x: 292, y: 360 - 48 }, { x: 492, y: 300 - 48 }, { x: 712, y: 340 - 48 },
+    { x: 600, y: GY - 48 }, { x: 932, y: 270 - 48 }, { x: 1200, y: GY - 48 },
+    { x: 1372, y: 250 - 48 }, { x: 1700, y: GY - 48 }, { x: 1812, y: 240 - 48 },
+    { x: 2232, y: 330 - 48 }, { x: 2512, y: 340 - 48 }, { x: 2732, y: 280 - 48 },
+    { x: 3400, y: GY - 48 }, { x: 3532, y: 260 - 48 }, { x: 3972, y: 240 - 48 },
+    { x: 4300, y: GY - 48 }, { x: 4632, y: 280 - 48 }, { x: 5072, y: 270 - 48 },
+    { x: 5492, y: 250 - 48 }
   ].map(r => ({ ...r, w: 34, h: 48 }));
 
   const cars = [
-    { x: 700, y: GY - 34, w: 64, h: 34, min: 650, max: 980, sp: 95, dir: 1 },
-    { x: 1550, y: GY - 34, w: 64, h: 34, min: 1480, max: 1900, sp: 110, dir: -1 },
-    { x: 2400, y: GY - 34, w: 64, h: 34, min: 2320, max: 2750, sp: 105, dir: 1 },
-    { x: 3200, y: GY - 34, w: 64, h: 34, min: 3120, max: 3550, sp: 120, dir: -1 },
-    { x: 2010, y: 290 - 34, w: 64, h: 34, min: 2000, max: 2140, sp: 70, dir: 1 }
+    { x: 800, y: GY - 34, w: 64, h: 34, min: 750, max: 1100, sp: 95, dir: 1 },
+    { x: 1500, y: GY - 34, w: 64, h: 34, min: 1450, max: 1950, sp: 110, dir: -1 },
+    { x: 2100, y: GY - 34, w: 64, h: 34, min: 2050, max: 2300, sp: 90, dir: 1 },
+    // after boss road
+    { x: 3600, y: GY - 34, w: 64, h: 34, min: 3500, max: 4100, sp: 115, dir: -1 },
+    { x: 4600, y: GY - 34, w: 64, h: 34, min: 4500, max: 5100, sp: 105, dir: 1 }
   ];
 
-  const lamps = [{ x: 1200 }, { x: 2500 }, { x: 3800 }];
+  const lamps = [{ x: 1000 }, { x: 2000 }, { x: 3400 }, { x: 4700 }];
 
-  const jessie = { x: 4400, y: 350 - 74, w: 40, h: 74 };
-  const porch = { x: 4300, y: 350, w: 220 };
+  const jessie = { x: 5640, y: 340 - 74, w: 40, h: 74 };
+  const porch = { x: 5560, y: 340, w: 220 };
 
   // ---------- state ----------
-  let state = "title"; // title | play | boss | win
+  let state = "title"; // title | play | boss | chase | win
   let who = "ryder";
   let T = 0, camX = 0, hurtFlash = 0, deaths = 0, score = 0;
   let checkpoint = { x: 80, y: GY - 80 };
+  let bossCleared = false;
 
   const P = {
     x: 80, y: GY - 80, w: 48, h: 78,
@@ -417,7 +420,7 @@
   };
 
   const boss = {
-    x: 4740, y: 280 - 100, w: 52, h: 100,
+    x: 2700, y: GY - 100, w: 52, h: 100,
     hp: 5, maxHp: 5, face: -1,
     phase: "idle", // idle | dash | slam | stun | dead
     t: 0, vx: 0, vy: 0, flash: 0
@@ -430,9 +433,10 @@
     P.inv = 0; P.hp = 6; P.ground = false; P.coyote = 0;
     deaths = 0; score = 0; camX = 0; hurtFlash = 0;
     checkpoint = { x: 80, y: GY - P.h };
-    cars[0].x = 700; cars[1].x = 1550; cars[2].x = 2400;
-    cars[3].x = 3200; cars[4].x = 2010;
-    boss.x = 4740; boss.y = 280 - boss.h; boss.hp = boss.maxHp;
+    bossCleared = false;
+    cars[0].x = 800; cars[1].x = 1500; cars[2].x = 2100;
+    cars[3].x = 3600; cars[4].x = 4600;
+    boss.x = 2700; boss.y = GY - boss.h; boss.hp = boss.maxHp;
     lives = 5; shells = 18; cash = 67; skulls = 2;
     boss.phase = "idle"; boss.t = 0; boss.vx = 0; boss.vy = 0; boss.flash = 0;
     bolts.length = 0;
@@ -453,8 +457,7 @@
       P.y = checkpoint.y;
       P.vx = 0; P.vy = 0;
       if (state === "boss") {
-        // stay in boss, reset boss position lightly
-        boss.x = 4900; boss.y = GY - boss.h; boss.phase = "idle"; boss.t = 0; bolts.length = 0;
+        boss.x = 2700; boss.y = GY - boss.h; boss.phase = "idle"; boss.t = 0; bolts.length = 0;
       }
     }
   }
@@ -493,19 +496,21 @@
     boss.flash = Math.max(0, boss.flash - dt);
     if (boss.hp <= 0) {
       boss.phase = "dead";
-      state = "win";
-      sfx.win();
-      setMusicVolume(0.35);
-      document.getElementById("endTag").textContent =
-        "Hat Man down. " + deaths + (deaths === 1 ? " fall" : " falls") +
-        ". Jessie steps into the porch light.";
-      document.getElementById("endOv").classList.remove("hidden");
+      bossCleared = true;
+      state = "chase";
+      bolts.length = 0;
+      sfx.stomp();
+      setTimeout(() => sfx.checkpoint(), 80);
+      setMusicVolume(0.55);
+      checkpoint = { x: BOSS_R + 40, y: GY - P.h };
+      score += 2500;
       return;
     }
 
-    // enter arena clamp
-    const arenaL = BOSS_X + 40, arenaR = LEVEL_W - 40;
+    // mid-level arena clamp — he blocks the road to Jessie
+    const arenaL = BOSS_L + 20, arenaR = BOSS_R - 20;
     if (P.x < arenaL) P.x = arenaL;
+    if (P.x + P.w > arenaR) P.x = arenaR - P.w;
 
     if (boss.phase === "idle") {
       boss.face = P.x < boss.x ? -1 : 1;
@@ -586,7 +591,7 @@
   // ---------- update ----------
   function update(dt) {
     T += dt;
-    if (state !== "play" && state !== "boss") return;
+    if (state !== "play" && state !== "boss" && state !== "chase") return;
     hurtFlash = Math.max(0, hurtFlash - dt * 2);
     P.inv = Math.max(0, P.inv - dt);
 
@@ -616,7 +621,22 @@
 
     if (P.x < 0) P.x = 0;
     if (P.x + P.w > LEVEL_W) P.x = LEVEL_W - P.w;
-    if (state === "boss" && P.x < BOSS_X + 40) P.x = BOSS_X + 40;
+
+    // Can't slip past Hat Man until he's beaten
+    if (state === "play" && !bossCleared && P.x > BOSS_L + 60) {
+      state = "boss";
+      sfx.bossEnter();
+      setMusicVolume(0.45);
+      boss.phase = "idle";
+      boss.t = 0.3;
+      boss.x = 2700;
+      boss.y = GY - boss.h;
+      boss.vx = 0; boss.vy = 0;
+    }
+    if (state === "boss") {
+      if (P.x < BOSS_L + 20) P.x = BOSS_L + 20;
+      if (P.x + P.w > BOSS_R - 20) P.x = BOSS_R - 20 - P.w;
+    }
 
     resolvePlatforms(P);
     if (!wasGround && P.ground && P.vy >= 0) sfx.land();
@@ -635,9 +655,11 @@
       }
     }
 
-    // cars
-    if (state === "play") {
+    // cars + roses active in play and chase (after boss)
+    if (state === "play" || state === "chase") {
       for (const c of cars) {
+        // skip cars inside uncleared boss arena
+        if (!bossCleared && c.x > BOSS_L && c.x < BOSS_R) continue;
         c.x += c.sp * c.dir * dt;
         if (c.x < c.min) { c.x = c.min; c.dir = 1; }
         if (c.x + c.w > c.max) { c.x = c.max - c.w; c.dir = -1; }
@@ -648,28 +670,29 @@
       }
     }
 
-    // trigger boss at porch / arena
-    if (state === "play" && P.x > BOSS_X) {
-      state = "boss";
-      sfx.bossEnter();
-      setMusicVolume(0.45);
-      boss.phase = "idle";
-      boss.t = 0.3;
-      boss.x = 4900;
-      boss.y = GY - boss.h;
-      boss.vx = 0; boss.vy = 0;
-    }
-
     if (state === "boss") updateBoss(dt);
 
-    // camera — in boss, keep porch + Jessie + Hat Man framed
+    // Reach Jessie at the end AFTER Hat Man is cleared
+    if ((state === "chase" || (state === "play" && bossCleared)) && aabb(P, jessie)) {
+      state = "win";
+      sfx.win();
+      setMusicVolume(0.35);
+      document.getElementById("endTag").textContent =
+        "Hat Man down. " + deaths + (deaths === 1 ? " fall" : " falls") +
+        ". Jessie is free on the porch light.";
+      document.getElementById("endOv").classList.remove("hidden");
+    }
+
+    // camera
     let target = P.x - W * 0.32;
-    if (state === "boss") target = Math.min(P.x - W * 0.28, LEVEL_W - W);
+    if (state === "boss") target = (BOSS_L + BOSS_R) / 2 - W / 2;
     camX += (target - camX) * 0.12;
     if (camX < 0) camX = 0;
     if (camX > LEVEL_W - W) camX = LEVEL_W - W;
     if (state === "boss") {
-      camX = Math.max(porch.x - 40, Math.min(camX, LEVEL_W - W));
+      camX = Math.max(BOSS_L - 80, Math.min(camX, BOSS_R - W + 80));
+      if (camX > LEVEL_W - W) camX = LEVEL_W - W;
+      if (camX < 0) camX = 0;
     }
   }
 
@@ -745,21 +768,60 @@
     }
   }
 
-  function drawPines() {
-    // keep landmark gaps clear on start screen
-    const far = [40, 100, 1040, 1220, 1500, 1780, 2120, 2460, 2820, 3220, 3620, 4020, 4780, 5080];
-    for (let i = 0; i < far.length; i++) {
-      const x = (far[i] - camX * 0.25) | 0;
-      if (x > -50 && x < W + 50) pine(x, GY, 1.4 + (i % 3) * 0.15, "#0c1014");
+  function drawChurchSilhouette(wx, scale, parallax) {
+    const x = (wx - camX * parallax) | 0;
+    const s = scale;
+    if (x < -160 || x > W + 160) return;
+    const base = GY + 2;
+    const bodyW = (90 * s) | 0;
+    const bodyH = (110 * s) | 0;
+    const steepleW = (22 * s) | 0;
+    const steepleH = (70 * s) | 0;
+    // nave
+    px(x, base - bodyH, bodyW, bodyH, "#08060c");
+    // steeple
+    px(x + ((bodyW - steepleW) / 2) | 0, base - bodyH - steepleH, steepleW, steepleH, "#06040a");
+    // steeple point
+    const tipX = x + (bodyW / 2) | 0;
+    const tipY = base - bodyH - steepleH;
+    for (let row = 0; row < (28 * s) | 0; row++) {
+      const half = (((28 * s) - row) / 2) | 0;
+      px(tipX - half, tipY - ((28 * s) | 0) + row, half * 2, 1, "#050308");
     }
-    // utility poles
-    for (let i = 0; i < 8; i++) {
-      const wx = 350 + i * 580;
-      const x = (wx - camX * 0.55) | 0;
+    // cross
+    px(tipX - 2, tipY - ((36 * s) | 0), 4, (18 * s) | 0, "#0a0810");
+    px(tipX - 7, tipY - ((30 * s) | 0), 14, 4, "#0a0810");
+    // dark windows
+    px(x + 12, base - bodyH + 30, 14, 22, "#040208");
+    px(x + bodyW - 26, base - bodyH + 30, 14, 22, "#040208");
+    px(x + ((bodyW / 2) | 0) - 8, base - 40, 16, 28, "#030106");
+  }
+
+  function drawBackgroundSilhouettes() {
+    // far church shadows across Slapout dusk — no water tower / trailer
+    const churches = [
+      { x: 180, s: 1.1 }, { x: 520, s: 0.85 }, { x: 900, s: 1.35 },
+      { x: 1400, s: 0.95 }, { x: 1900, s: 1.2 }, { x: 2600, s: 1.0 },
+      { x: 3200, s: 1.4 }, { x: 3800, s: 0.9 }, { x: 4400, s: 1.15 },
+      { x: 5000, s: 1.05 }, { x: 5450, s: 1.3 }
+    ];
+    for (let i = 0; i < churches.length; i++) {
+      drawChurchSilhouette(churches[i].x, churches[i].s, 0.28);
+    }
+    // sparse black pines between steeples
+    const far = [60, 360, 720, 1100, 1600, 2200, 2900, 3500, 4100, 4700, 5300];
+    for (let i = 0; i < far.length; i++) {
+      const x = (far[i] - camX * 0.22) | 0;
+      if (x > -50 && x < W + 50) pine(x, GY, 1.15 + (i % 3) * 0.12, "#0a0c10");
+    }
+    // powerline shadows
+    for (let i = 0; i < 10; i++) {
+      const wx = 300 + i * 520;
+      const x = (wx - camX * 0.5) | 0;
       if (x < -20 || x > W + 20) continue;
-      px(x, GY - 110, 6, 110, "#1a1418");
-      px(x - 18, GY - 112, 42, 5, "#2a2028");
-      drawMoss(wx - 10, GY - 108, 40 + (i % 3) * 12);
+      px(x, GY - 100, 5, 100, "#121018");
+      px(x - 16, GY - 102, 38, 4, "#1a1620");
+      drawMoss(wx - 8, GY - 98, 36 + (i % 3) * 10);
     }
   }
 
@@ -770,7 +832,6 @@
     px(x, y, 88, 70, "#4a3020");
     outline(x, y, 88, 70, "#d09050");
     px(x + 5, y + 5, 78, 60, "#5a3a28");
-    // cross
     px(x + 40, y + 8, 6, 14, "#ffe080");
     px(x + 36, y + 12, 14, 5, "#ffe080");
     ctx.fillStyle = "#ffe080";
@@ -781,48 +842,6 @@
     ctx.fillStyle = "#ffb040";
     ctx.font = "bold 8px Courier New, monospace";
     ctx.fillText("WATCH YOUR BACK", x + 44, y + 60);
-  }
-
-  function drawWaterTower() {
-    const x = (500 - camX) | 0, base = GY;
-    if (x < -130 || x > W + 40) return;
-    px(x + 20, base - 155, 10, 155, "#2a2838");
-    px(x + 90, base - 155, 10, 155, "#2a2838");
-    px(x + 26, base - 115, 68, 6, "#3a3848");
-    px(x + 26, base - 70, 68, 6, "#3a3848");
-    px(x + 30, base - 135, 60, 4, "#2a2838");
-    px(x + 30, base - 90, 60, 4, "#2a2838");
-    // tank
-    px(x + 6, base - 220, 108, 76, "#3a3848");
-    outline(x + 6, base - 220, 108, 76, "#c08060");
-    px(x + 12, base - 214, 96, 12, "#4a4858");
-    px(x + 16, base - 188, 88, 30, "#222030");
-    ctx.fillStyle = "#ff9040";
-    ctx.font = "bold 15px Courier New, monospace";
-    ctx.textAlign = "center";
-    ctx.fillText("SLAPOUT", x + 60, base - 170);
-    ctx.font = "bold 12px Courier New, monospace";
-    ctx.fillText("ALABAMA", x + 60, base - 154);
-    px(x + 48, base - 248, 24, 28, "#2a2838");
-    px(x + 32, base - 228, 56, 12, "#3a3848");
-  }
-
-  function drawTrailer() {
-    const x = (840 - camX) | 0, y = GY - 90;
-    if (x < -180 || x > W + 40) return;
-    // tucked in foliage feel
-    pine((x + 140 + camX * 0.25) | 0, GY, 1.1, "#080c0c");
-    px(x, y + 22, 155, 58, "#18141c");
-    outline(x, y + 22, 155, 58, "#685868");
-    px(x - 8, y + 16, 171, 10, "#0e0a10");
-    px(x - 24, y + 48, 26, 6, "#2a2228");
-    px(x + 16, y + 38, 28, 20, "#0a0810");
-    outline(x + 16, y + 38, 28, 20, "#383840");
-    px(x + 105, y + 38, 32, 20, "#ffcc40");
-    outline(x + 105, y + 38, 32, 20, "#fff0a0");
-    px(x + 119, y + 38, 3, 20, "#806020");
-    px(x + 22, y + 76, 18, 14, "#0a0a0c");
-    px(x + 112, y + 76, 18, 14, "#0a0a0c");
   }
 
   function drawGround() {
@@ -1013,31 +1032,22 @@
     ctx.fillText("ON A HERO  →", x + 110, 238);
     ctx.shadowBlur = 0;
 
-    // stairs to Hat Man perch
-    const steps = [
-      { x: 4520, y: 400, w: 70 },
-      { x: 4585, y: 360, w: 70 },
-      { x: 4650, y: 320, w: 70 },
-      { x: 4715, y: 280, w: 90 }
-    ];
-    for (let i = 0; i < steps.length; i++) {
-      const s = steps[i];
-      const sx = (s.x - camX) | 0;
-      if (sx < -100 || sx > W + 40) continue;
-      px(sx, s.y, s.w, 14, "#1c1424");
-      outline(sx, s.y, s.w, 14, "#605070");
-      px(sx, s.y + 14, s.w, GY - s.y - 14, "#100c14");
-    }
+    // porch steps up from last pipes
+    px(x - 40, 390, 40, 12, "#4a3020");
+    px(x - 24, 370, 24, 12, "#5a3a28");
+  }
 
-    // beware sign
-    const bx = x + 228;
-    px(bx, GY - 78, 78, 48, "#3a2418");
-    outline(bx, GY - 78, 78, 48, "#c07040");
+  function drawBewareSign() {
+    // Mid-level warning before the boss arena
+    const x = (BOSS_L - 120 - camX) | 0;
+    if (x < -90 || x > W + 40) return;
+    px(x, GY - 78, 78, 48, "#3a2418");
+    outline(x, GY - 78, 78, 48, "#c07040");
     ctx.fillStyle = "#ffb040";
     ctx.font = "bold 10px Courier New, monospace";
     ctx.textAlign = "center";
-    ctx.fillText("BEWARE", bx + 39, GY - 56);
-    ctx.fillText("THE HAT MAN", bx + 39, GY - 42);
+    ctx.fillText("BEWARE", x + 39, GY - 56);
+    ctx.fillText("THE HAT MAN", x + 39, GY - 42);
   }
 
   function drawJessie() {
@@ -1057,20 +1067,16 @@
   }
 
   function drawHatMan() {
-    // before boss: stand on stairs in shadow; during boss: active fighter
-    let hx = boss.x, hy = boss.y;
-    if (state === "play") {
-      hx = 4740; hy = 280 - boss.h;
-    }
+    if (bossCleared && state !== "boss") return;
+    const hx = state === "play" ? 2700 : boss.x;
+    const hy = state === "play" ? GY - boss.h : boss.y;
     const x = (hx - camX) | 0, y = hy | 0;
     if (x < -70 || x > W + 70) return;
 
-    // shadow pool
     px(x - 10, y + 20, 70, 90, "rgba(0,0,0,0.35)");
 
     const flash = boss.flash > 0 && ((T * 30) | 0) % 2 === 0;
     const body = flash ? "#602040" : "#06060a";
-    // tall trench + wide hat (mockup)
     px(x + 6, y + 28, 40, 68, body);
     outline(x + 6, y + 28, 40, 68, "#403048");
     px(x + 0, y + 36, 10, 50, body);
@@ -1078,8 +1084,8 @@
     px(x + 8, y + 94, 12, 8, body);
     px(x + 32, y + 94, 12, 8, body);
     px(x + 12, y + 14, 28, 18, "#0a0a10");
-    px(x + 8, y - 10, 36, 28, "#020204"); // tall crown
-    px(x - 6, y + 12, 64, 8, "#000000"); // wide brim
+    px(x + 8, y - 10, 36, 28, "#020204");
+    px(x - 6, y + 12, 64, 8, "#000000");
     outline(x - 6, y + 12, 64, 8, "#504058");
     px(x + 18, y + 22, 5, 5, "#ff4060");
     px(x + 30, y + 22, 5, 5, "#ff4060");
@@ -1200,7 +1206,11 @@
     // music credit
     ctx.textAlign = "right";
     ctx.fillStyle = "#887060";
-    ctx.fillText("♪ BACKROADS GOSPEL — THE SWAMP SAINTS", W - 10, H - 12);
+    let tip = "CLIMB THE PIPES →";
+    if (state === "boss") tip = "STOMP HAT MAN";
+    else if (state === "chase") tip = "FIND JESSIE →";
+    else if (!bossCleared && P.x > 1800) tip = "HAT MAN AHEAD";
+    ctx.fillText(tip + "  ♪ THE WARNING", W - 10, H - 12);
   }
 
   function drawScanlines() {
@@ -1221,23 +1231,25 @@
 
   function draw() {
     drawSky();
-    drawPines();
+    drawBackgroundSilhouettes();
     drawChurchSign();
-    drawWaterTower();
-    drawTrailer();
     drawGround();
     for (const lp of lamps) drawLamp(lp);
+    // pipes are foreground play platforms rising from dirt
     for (const p of pipes) drawGlassPipe(p);
-    if (state === "play") {
+    if (state === "play" || state === "chase") {
       for (const r of roses) drawRose(r);
-      for (const c of cars) drawCop(c);
+      for (const c of cars) {
+        if (!bossCleared && c.x > BOSS_L && c.x < BOSS_R) continue;
+        drawCop(c);
+      }
     }
-    drawPorch();
-    drawJessie();
-    // Hat Man visible on stairs approaching end, then becomes boss
-    if (state === "boss" || state === "win" || state === "play") {
-      if (state !== "play" || P.x > 4000) drawHatMan();
+    drawBewareSign();
+    if (bossCleared || state === "chase" || state === "win" || P.x > 4800) {
+      drawPorch();
+      drawJessie();
     }
+    if (!bossCleared || state === "boss") drawHatMan();
     if (state === "boss") drawBolts();
     drawRyder();
     drawHUD();
@@ -1245,9 +1257,14 @@
 
     if (state === "boss") {
       ctx.fillStyle = "#ff4060";
-      ctx.font = "bold 15px Courier New, monospace";
+      ctx.font = "bold 14px Courier New, monospace";
       ctx.textAlign = "center";
-      ctx.fillText("FREE JESSIE — STOMP THE HAT MAN", W / 2, 98);
+      ctx.fillText("HAT MAN BLOCKS THE ROAD — STOMP HIM", W / 2, 98);
+    } else if (state === "chase") {
+      ctx.fillStyle = "#ffe080";
+      ctx.font = "bold 13px Courier New, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("ROAD OPEN — CLIMB THE PIPES TO JESSIE", W / 2, 78);
     }
   }
 
@@ -1316,11 +1333,20 @@
     gotoBoss() {
       if (state === "title") document.getElementById("startBtn").click();
       resetRun();
-      P.x = BOSS_X + 100;
+      P.x = BOSS_L + 120;
       state = "boss";
-      camX = porch.x - 40;
+      boss.x = 2700; boss.y = GY - boss.h;
+      camX = BOSS_L - 40;
     },
-    getState() { return { state, bossHp: boss.hp, hp: P.hp, x: P.x }; }
+    gotoJessie() {
+      if (state === "title") document.getElementById("startBtn").click();
+      resetRun();
+      bossCleared = true;
+      state = "chase";
+      P.x = 5400; P.y = GY - P.h;
+      camX = LEVEL_W - W;
+    },
+    getState() { return { state, bossHp: boss.hp, hp: P.hp, x: P.x, bossCleared }; }
   };
 })();
 </script>
