@@ -7,8 +7,7 @@
     { file:'fall.html', label:'The Fall' },
     { file:'woods.html', label:'Welcome to the Woods' },
     { file:'wall.html', label:'The Wall' },
-    { file:'dirt-road.html', label:'The Dirt Road' },
-    { file:'slapout-run.html', label:'After Midnight', isNew:true }
+    { file:'dirt-road.html', label:'The Dirt Road' }
   ];
   var nav = document.getElementById('slapNav');
   if(!nav) return;
