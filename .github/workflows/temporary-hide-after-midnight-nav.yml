@@ -1,0 +1,83 @@
+name: Temporary hide After Midnight nav
+
+on:
+  push:
+    branches:
+      - hide-after-midnight-nav
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out navigation branch
+        uses: actions/checkout@v4
+        with:
+          ref: hide-after-midnight-nav
+          fetch-depth: 0
+
+      - name: Remove old game from all navigation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          target = '<a href="/slapout-run">After Midnight</a>'
+          count = text.count(target)
+          if count != 2:
+              raise SystemExit(f'Expected two homepage nav links, found {count}')
+          index.write_text(text.replace(target, ''), encoding='utf-8')
+
+          nav = Path('js/site-nav.js')
+          text = nav.read_text(encoding='utf-8')
+          old = "    { file:'dirt-road.html', label:'The Dirt Road' },\n    { file:'slapout-run.html', label:'After Midnight', isNew:true }"
+          new = "    { file:'dirt-road.html', label:'The Dirt Road' }"
+          if text.count(old) != 1:
+              raise SystemExit('Shared nav entry block not found exactly once')
+          nav.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          pages = [
+              'warning.html',
+              'glass-rose.html',
+              'fall.html',
+              'woods.html',
+              'wall.html',
+              'dirt-road.html',
+          ]
+          old_version = '/js/site-nav.js?v=20260719-1'
+          new_version = '/js/site-nav.js?v=20260722-1'
+          for page_name in pages:
+              page = Path(page_name)
+              page_text = page.read_text(encoding='utf-8')
+              if page_text.count(old_version) != 1:
+                  raise SystemExit(f'Expected one nav asset reference in {page_name}')
+              page.write_text(page_text.replace(old_version, new_version, 1), encoding='utf-8')
+          PY
+
+      - name: Validate navigation cleanup
+        shell: bash
+        run: |
+          ! grep -q 'slapout-run.*After Midnight' index.html
+          ! grep -q "slapout-run.html.*After Midnight" js/site-nav.js
+          grep -q "The Dirt Road' }" js/site-nav.js
+          for page in warning.html glass-rose.html fall.html woods.html wall.html dirt-road.html; do
+            grep -q '/js/site-nav.js?v=20260722-1' "$page"
+          done
+          node --check js/site-nav.js
+          git diff --check
+
+      - name: Commit cleanup and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/temporary-hide-after-midnight-nav.yml
+          git add index.html js/site-nav.js warning.html glass-rose.html fall.html woods.html wall.html dirt-road.html
+          git commit -m 'Hide After Midnight from site navigation'
+          git push origin HEAD:hide-after-midnight-nav
