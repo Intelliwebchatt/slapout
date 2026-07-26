@@ -3,7 +3,7 @@
   var foundations = window.RYDER_FOUNDATIONS || [];
   if(!window.RyderPlayback) return;
 
-  var pages = ['/warning/','/glass-rose/','/fall/','/woods/'];
+  var pages = ['/warning/','/glass-rose/','/fall/','/woods/','/other-place/'];
   var tracks = foundations.map(function(track,index){
     return Object.assign({}, track, {
       album: track.rec.split(' \u00b7 ')[1] || track.rec,
