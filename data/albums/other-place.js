@@ -1,6 +1,6 @@
 window.RYDER_ALBUM = {
   name: "Welcome to the Other Place",
-  art: "/other-place-cover.png",
+  art: "/9d12a154-18c5-474d-9244-2c22f9a8bdcd_20260726_074337_0000.png",
   page: "/other-place",
   variant: "casefile",
   tracks: [
