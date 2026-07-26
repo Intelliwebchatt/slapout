@@ -198,6 +198,20 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 @media(max-width:560px){.album-hero{min-height:52vh}section{padding:58px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-video{display:none}}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== FLICKER + FOG (drifts out of the hero image, over the whole page and player) ===== */
+#otherPlaceAtmos{position:fixed;inset:0;z-index:999999;pointer-events:none;overflow:hidden}
+#otherPlaceAtmos .flicker{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,138,42,.34) 0%,rgba(255,138,42,.14) 26%,transparent 60%);mix-blend-mode:screen;opacity:.22;animation:opFlicker 4.4s infinite}
+#otherPlaceAtmos .fog{position:absolute;left:-25%;right:-25%;bottom:-15%;height:65%;background:linear-gradient(to top,rgba(233,224,207,.13),rgba(233,224,207,.05) 45%,transparent 82%);filter:blur(22px);mix-blend-mode:screen;opacity:.55;animation:opFogDrift 34s ease-in-out infinite}
+#otherPlaceAtmos .fog.fog2{bottom:-22%;height:50%;left:-35%;right:-35%;opacity:.35;filter:blur(30px);animation:opFogDrift2 46s ease-in-out infinite}
+@keyframes opFlicker{
+  0%,100%{opacity:.10} 4%{opacity:.42} 7%{opacity:.14} 11%{opacity:.5} 13%{opacity:.16}
+  22%{opacity:.38} 24%{opacity:.12} 38%{opacity:.3} 41%{opacity:.15} 55%{opacity:.44}
+  58%{opacity:.18} 72%{opacity:.28} 75%{opacity:.11} 88%{opacity:.4} 91%{opacity:.16}
+}
+@keyframes opFogDrift{0%{transform:translateX(-8%)}50%{transform:translateX(8%)}100%{transform:translateX(-8%)}}
+@keyframes opFogDrift2{0%{transform:translateX(6%)}50%{transform:translateX(-9%)}100%{transform:translateX(6%)}}
+@media(prefers-reduced-motion:reduce){#otherPlaceAtmos .flicker{animation:none;opacity:.16}#otherPlaceAtmos .fog,#otherPlaceAtmos .fog.fog2{animation:none}}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
 <script src="/js/player-state.js" defer></script>
@@ -206,6 +220,7 @@ footer{border-top:1px solid var(--line);padding:56px 20px calc(150px + env(safe-
 <script src="/js/casefile-player.js?v=20260712-2" defer></script>
 </head>
 <body>
+<div id="otherPlaceAtmos" aria-hidden="true"><div class="flicker"></div><div class="fog"></div><div class="fog fog2"></div></div>
 <nav class="slap-nav" id="slapNav" aria-label="Site"><noscript><a class="slap-nav-home" href="/">Ryder McCoy Band</a></noscript></nav>
 
 <header class="album-hero" id="top"><h1 class="sr-only">Welcome to the Other Place</h1><video class="hero-video" id="heroVideo" muted loop playsinline preload="none" poster="/.netlify/images?url=/other-place-cover.jpg&amp;w=1400&amp;q=75" aria-hidden="true"><source data-src="/other-place-hero.mp4" type="video/mp4"></video></header>
