@@ -6,6 +6,7 @@
     { file:'glass-rose.html', label:'The Glass Rose' },
     { file:'fall.html', label:'The Fall' },
     { file:'woods.html', label:'Welcome to the Woods' },
+    { file:'other-place.html', label:'Welcome to the Other Place', isNew:true },
     { file:'wall.html', label:'The Wall' },
     { file:'dirt-road.html', label:'The Dirt Road' }
   ];

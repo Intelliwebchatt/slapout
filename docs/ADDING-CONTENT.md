@@ -2,7 +2,7 @@
 
 The site intentionally has two album templates:
 
-- **Case-file template:** The Warning, The Fall, and Welcome to the Woods. Use this for most new albums.
+- **Case-file template:** The Warning, The Fall, Welcome to the Woods, and Welcome to the Other Place. Use this for most new albums.
 - **Glass Rose template:** Reserved for The Glass Rose Sessions and its recognizable glitch/venue effects.
 
 ## Change an album cover
@@ -28,8 +28,9 @@ Album titles, MP3 filenames, Field Notes, and optional song artwork live in:
 - `data/albums/glass-rose.js`
 - `data/albums/fall.js`
 - `data/albums/woods.js`
+- `data/albums/other-place.js`
 
-The three case-file albums share `js/casefile-player.js`. Glass Rose uses `js/glass-player.js`. Avoid putting track lists back into the HTML pages.
+The four case-file albums share `js/casefile-player.js`. Glass Rose uses `js/glass-player.js`. Avoid putting track lists back into the HTML pages.
 
 ## Add a Dirt Road note
 

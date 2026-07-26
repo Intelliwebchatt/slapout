@@ -16,6 +16,9 @@
 /woods/
   Cache-Control: public, max-age=0, must-revalidate
 
+/other-place/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /wall/
   Cache-Control: public, max-age=0, must-revalidate
 
