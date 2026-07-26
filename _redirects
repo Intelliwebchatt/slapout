@@ -6,6 +6,7 @@
 /warning.html /warning 301!
 /fall.html /fall 301!
 /woods.html /woods 301!
+/other-place.html /other-place 301!
 /glass-rose.html /glass-rose 301!
 /wall.html /wall 301!
 /dirt-road.html /dirt-road 301!
@@ -32,6 +33,14 @@
 /welcome-to-the-woods.html /woods 301!
 /welcometothewoods /woods 301!
 /welcometothewoods.html /woods 301!
+
+# Welcome to the Other Place legacy names
+/welcometotheotherplace /other-place 301!
+/welcometotheotherplace.html /other-place 301!
+/welcome-to-the-other-place /other-place 301!
+/welcome-to-the-other-place.html /other-place 301!
+/theotherplace /other-place 301!
+/theotherplace.html /other-place 301!
 
 # The Glass Rose Sessions legacy names
 /glassrose /glass-rose 301!
