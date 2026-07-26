@@ -163,6 +163,9 @@ section[id],header[id]{scroll-margin-top:62px}
 :focus-visible{outline:2px solid var(--neon-hot);outline-offset:3px}
 section{padding:84px 0;border-top:1px solid var(--line)}
 .sec-label{font-family:'Special Elite',monospace;color:var(--neon);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.release-note{margin:0 0 28px;padding:14px 16px;border:1px solid var(--line);background:rgba(255,138,42,.06);border-radius:4px}
+.release-note .sec-label{display:block;margin-bottom:0;font-size:.72rem}
+.release-note p{color:var(--ash);font-size:.85rem;line-height:1.6;margin-top:8px}
 .sec-title{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:18px;color:var(--bone)}
 .lede{color:var(--ash);max-width:62ch}
 .btn{display:inline-block;padding:15px 30px;text-decoration:none;font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:1rem;border:1px solid var(--neon);color:var(--neon-hot);background:transparent;transition:background .2s,color .2s,box-shadow .2s;cursor:pointer}
@@ -263,6 +266,8 @@ footer .fine{font-size:.78rem;margin-top:18px;max-width:52ch;margin-left:auto;ma
     <p class="sec-label">Record One &middot; Biloxi Blues Records</p>
     <h2 class="sec-title display">The Warning</h2>
     <p class="lede"><span id="trackCount">14</span> tracks. Tap a song to play it. Open <strong style="color:var(--bone)">Field Notes</strong> for the case file &mdash; and to keep the track.</p>
+    <!-- WARNING RELEASE STATE: distribution -->
+    <div class="release-note" role="note"><span class="sec-label">The Warning &middot; Distribution Underway</span><p>The Warning is on its way to streaming services. Until it lands, the full record is still here free. No email. No catch.</p></div>
     <div class="cards" id="trackList" data-prerendered="true">
       <article class="card" id="card0">
         <div class="card-head">
