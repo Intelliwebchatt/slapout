@@ -18,6 +18,8 @@
     '<div class="ryder-resume-bar" role="slider" tabindex="0" aria-label="Track position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ryder-resume-fill"></div></div>' +
     '<span class="ryder-resume-time">0:00 / 0:00</span>';
   document.body.appendChild(wrap);
+  var releaseFooterSpace = window.RyderPlayback.reserveFooterSpace ?
+    window.RyderPlayback.reserveFooterSpace(wrap, 40) : function(){};
 
   var audio = document.createElement('audio');
   audio.preload = 'none';
@@ -57,6 +59,7 @@
   wrap.querySelector('.rr-next').addEventListener('click', controller.next);
   wrap.querySelector('.rr-close').addEventListener('click', function(){
     controller.clear();
+    releaseFooterSpace();
     wrap.remove();
     style.remove();
   });
