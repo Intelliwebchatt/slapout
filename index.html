@@ -40,13 +40,17 @@
 .secrets{background:linear-gradient(to bottom,rgba(23,19,16,.5),transparent);text-align:center}
 .secrets .wrap{max-width:640px}
 .secrets .lede{margin:0 auto}
-.secrets-form{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:stretch;margin:26px auto 16px;max-width:560px}
+.secrets-tag{color:var(--gold);font-family:Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:1.1rem;margin-bottom:6px}
+.secrets-form{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:stretch;margin:22px auto 4px;max-width:560px}
 .secrets-form input[type="email"]{flex:1 1 220px;min-width:0;min-height:48px;background:var(--panel);border:1px solid var(--line);color:var(--bone);font:1rem Georgia,serif;padding:0 16px;border-radius:2px}
 .secrets-form input[type="email"]::placeholder{color:var(--ash)}
 .secrets-form input[type="email"]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.secrets-form button{flex:0 0 auto;min-height:48px}
-.secrets-privacy{color:var(--ash);font-size:.78rem;font-family:'Special Elite','Courier New',monospace;letter-spacing:.04em}
-@media(max-width:480px){.secrets-form{flex-direction:column}.secrets-form input[type="email"],.secrets-form button{flex:none;width:100%}}
+.secrets-form input[type="submit"]{flex:0 0 auto;min-height:48px;cursor:pointer}
+.secrets-form input[type="submit"]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.secrets-form .secrets-refer{flex:0 0 100%;margin:4px 0 0;font-family:'Special Elite','Courier New',monospace;font-size:.66rem;letter-spacing:.06em;color:var(--ash)}
+.secrets-form .secrets-refer a{color:var(--ash);text-decoration:underline}
+.secrets-privacy{margin-top:14px;color:var(--ash);font-size:.78rem;font-family:'Special Elite','Courier New',monospace;letter-spacing:.04em}
+@media(max-width:480px){.secrets-form{flex-direction:column}.secrets-form input[type="email"],.secrets-form input[type="submit"]{flex:none;width:100%}}
 </style>
 <link rel="icon" type="image/webp" href="/ryder-mccoy-logo-hero-square.webp">
 <script src="/js/player-state.js" defer></script>
@@ -59,28 +63,42 @@
 <nav class="nav"><a class="brand" href="/"><span>🪕</span><span>Ryder McCoy Band</span></a><div class="links"><a href="/">Home</a><a href="/warning">The Warning</a><a href="/glass-rose">The Glass Rose</a><a href="/fall">The Fall</a><a href="/woods">Welcome to the Woods</a><a href="/other-place">Welcome to the Other Place</a><a href="/wall">The Wall</a><a href="/dirt-road">The Dirt Road</a></div><button class="hamb" id="hamb" aria-label="Open menu"><span></span><span></span><span></span></button></nav>
 <div class="menu" id="menu"><a href="/" class="here">Home</a><a href="/warning">The Warning</a><a href="/glass-rose">The Glass Rose</a><a href="/fall">The Fall</a><a href="/woods">Welcome to the Woods</a><a href="/other-place">Welcome to the Other Place</a><a href="/wall">The Wall</a><a href="/dirt-road">The Dirt Road</a></div>
 <header class="hero"><h1 class="sr-only">The Ryder McCoy Band</h1><div class="hero-img" role="img" aria-label="Ryder McCoy Band crow logo"></div><div class="hero-content"><p class="eyebrow type">Slapout, Alabama · Biloxi Blues Records</p><p class="tag">Outlaw country, swamp blues, and slow trap drums with dirt under their nails.</p><div class="hero-cta"><a class="start-btn" href="#start"><span class="pulse">▶</span> Start Here</a></div></div></header>
-<!-- WARNING RELEASE STATE: distribution -->
-<section id="warning-release" class="release-notice"><div class="wrap"><p class="sec-label">The Warning · Distribution Underway</p><h2>The stores are catching up.</h2><p class="lede">The Warning is on its way to streaming services. Until it lands, the full record is still here free. No email. No catch.</p><div class="cta-row"><a class="btn solid" href="/warning">Listen + Download Free</a></div></div></section>
-<section id="start" class="start"><div class="wrap"><p class="sec-label">First Time Here?</p><h2 class="sec-title display">Start On The Dirt Road</h2><p class="lede">First time down this road? Get in. We'll drive. Five songs — one off each record — enough to know if Slapout's a place you been before.</p><div class="foundations"><div class="f-head"><span>Five Songs To Understand It</span><span>Free · Press Play</span></div><div id="fList"></div><div class="f-foot"><a href="#records">Then choose a full record ↓</a></div></div></div></section>
-<section id="records"><div class="wrap"><p class="sec-label">The Records</p><h2 class="sec-title display">Choose A Record</h2><p class="lede">Five records. Each one's a different stretch of the same road. Pick where you want to get out and walk.</p><div class="grid"><a class="card" href="/warning"><div class="cover"><img src="/warning-cover.jpg" alt="The Warning album cover" loading="lazy"></div><div class="body"><div class="kicker">Record One</div><div class="name">The Warning</div><div class="meta">14 Tracks · Free</div><div class="badge">Distribution Underway</div></div></a><a class="card" href="/glass-rose"><div class="cover"><img src="/glass-rose-cover.jpg" alt="The Glass Rose Sessions album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Two</div><div class="name">The Glass Rose Sessions</div><div class="meta">15 Tracks · Free</div></div></a><a class="card" href="/fall"><div class="cover"><img src="/fall-cover.jpg" alt="The Fall album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Three</div><div class="name">The Fall</div><div class="meta">13 Tracks · Free</div></div></a><a class="card" href="/woods"><div class="cover"><img src="/woods-cover.jpg" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a><a class="card" href="/other-place"><div class="cover"><img src="/other-place-cover.webp" alt="Welcome to the Other Place album cover" width="1600" height="900" loading="lazy"></div><div class="body"><div class="kicker">Record Five</div><div class="name">Welcome to the Other Place</div><div class="meta">13 Tracks · Free</div></div></a></div></div></section>
 <!--
-  Slapout Secrets sign-up. Buttondown account not created yet, so this
-  form's action is intentionally left unset (browser default: submits
-  to this same page, harmlessly, via POST) rather than shipping a fake
-  or invented endpoint. Once the "Slapout Secrets" Buttondown account
-  exists, set the form's action to:
-  https://buttondown.com/api/emails/embed-subscribe/BUTTONDOWN_USERNAME
+  WARNING RELEASE STATE: live
+  Listen Everywhere (HyperFollow), Spotify, and Apple Music buttons are
+  omitted below - the three URLs supplied for them were still the
+  literal template brackets (e.g. "[PASTE THE WARNING SPOTIFY ALBUM
+  URL]"), not real links, so per "never contain placeholder URLs in
+  production" they're left out rather than shipped broken. Add them
+  back the moment real URLs are supplied - markup is commented below.
+-->
+<section id="warning-release" class="release-notice"><div class="wrap"><p class="sec-label">The Warning · Out Now</p><h2>Stream it everywhere. Download it free here.</h2><p class="lede">The Warning is now streaming on Spotify and Apple Music. You can still download the complete album free here. No email. No catch.</p><div class="cta-row"><a class="btn solid" href="/warning">Download Free Here</a>
+  <!-- <a class="btn" href="HYPERFOLLOW_URL" target="_blank" rel="noopener noreferrer">Listen Everywhere</a> -->
+  <!-- <a class="btn" href="SPOTIFY_ALBUM_URL" target="_blank" rel="noopener noreferrer">Spotify</a> -->
+  <!-- <a class="btn" href="APPLE_MUSIC_ALBUM_URL" target="_blank" rel="noopener noreferrer">Apple Music</a> -->
+</div></div></section>
+<section id="start" class="start"><div class="wrap"><p class="sec-label">First Time Here?</p><h2 class="sec-title display">Start On The Dirt Road</h2><p class="lede">First time down this road? Get in. We'll drive. Five songs — one off each record — enough to know if Slapout's a place you been before.</p><div class="foundations"><div class="f-head"><span>Five Songs To Understand It</span><span>Free · Press Play</span></div><div id="fList"></div><div class="f-foot"><a href="#records">Then choose a full record ↓</a></div></div></div></section>
+<section id="records"><div class="wrap"><p class="sec-label">The Records</p><h2 class="sec-title display">Choose A Record</h2><p class="lede">Five records. Each one's a different stretch of the same road. Pick where you want to get out and walk.</p><div class="grid"><a class="card" href="/warning"><div class="cover"><img src="/warning-cover.jpg" alt="The Warning album cover" loading="lazy"></div><div class="body"><div class="kicker">Record One</div><div class="name">The Warning</div><div class="meta">14 Tracks · Free</div><div class="badge">Streaming Now</div></div></a><a class="card" href="/glass-rose"><div class="cover"><img src="/glass-rose-cover.jpg" alt="The Glass Rose Sessions album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Two</div><div class="name">The Glass Rose Sessions</div><div class="meta">15 Tracks · Free</div></div></a><a class="card" href="/fall"><div class="cover"><img src="/fall-cover.jpg" alt="The Fall album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Three</div><div class="name">The Fall</div><div class="meta">13 Tracks · Free</div></div></a><a class="card" href="/woods"><div class="cover"><img src="/woods-cover.jpg" alt="Welcome to the Woods album cover" loading="lazy"></div><div class="body"><div class="kicker">Record Four</div><div class="name">Welcome to the Woods</div><div class="meta">13 Tracks · Free</div></div></a><a class="card" href="/other-place"><div class="cover"><img src="/other-place-cover.webp" alt="Welcome to the Other Place album cover" width="1600" height="900" loading="lazy"></div><div class="body"><div class="kicker">Record Five</div><div class="name">Welcome to the Other Place</div><div class="meta">13 Tracks · Free</div></div></a></div></div></section>
+<!--
+  Slapout Secrets sign-up. Verified working: a real test subscription
+  (aslockhart10@gmail.com) was submitted to this exact endpoint and the
+  Buttondown confirmation email was directly confirmed to have arrived.
+  NOTE: the Buttondown newsletter itself is still named/described as
+  "Shane Lockhart" with an unpolished auto-drafted description in the
+  account's own settings - that's account-side (buttondown.com/lockhart
+  settings), not fixable from this repo. Rename it to "Slapout Secrets"
+  and clean up the description before wider rollout.
 -->
 <section id="slapout-secrets" class="secrets"><div class="wrap">
   <p class="sec-label">Notes From The Dirt Road</p>
   <h2 class="sec-title display">Slapout Secrets</h2>
-  <p class="lede">New records, unreleased cuts, photographs, map locations, and whatever turns up after midnight. No schedule. We send only when something is worth sending.</p>
-  <form class="secrets-form" method="post">
-    <label class="sr-only" for="secretsEmail">Email address</label>
-    <input id="secretsEmail" type="email" name="email" placeholder="your email address" required autocomplete="email" inputmode="email">
-    <input type="hidden" name="embed" value="1">
-    <input type="hidden" name="tag" value="slapout-website">
-    <button type="submit" class="btn solid">Send Me The Next Warning</button>
+  <p class="lede secrets-tag">Get the next warning.</p>
+  <p class="lede">New records, field notes, photographs, and whatever turns up after midnight. No schedule. We only send when something is worth sending.</p>
+  <form action="https://buttondown.com/api/emails/embed-subscribe/lockhart" method="post" class="embeddable-buttondown-form secrets-form">
+    <label class="sr-only" for="bd-email">Enter your email</label>
+    <input type="email" name="email" id="bd-email" autocomplete="email" placeholder="you@example.com" required>
+    <input type="submit" value="Send Me the Next One" class="btn solid">
+    <p class="secrets-refer"><a href="https://buttondown.com/refer/lockhart" target="_blank" rel="noopener noreferrer">Powered by Buttondown.</a></p>
   </form>
   <p class="secrets-privacy">No spam. Leave anytime. The music stays free either way.</p>
 </div></section>
