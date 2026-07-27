@@ -21,6 +21,7 @@
   var icon = document.getElementById('fpIcon');
   var currentLocal = -1;
   var paused = true;
+  var releaseFooterSpace = null;
   var PLAY = 'M3 2l11 6-11 6z';
   var PAUSE = 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
 
@@ -67,6 +68,9 @@
       document.querySelectorAll('.f-fill').forEach(function(item){ item.style.width = '0%'; });
       title.textContent = state.track.title + ' \u2014 ' + state.track.album;
       playerBar.classList.add('show');
+      if(!releaseFooterSpace && window.RyderPlayback.reserveFooterSpace){
+        releaseFooterSpace = window.RyderPlayback.reserveFooterSpace(playerBar, 40);
+      }
       drawState();
     },
     onState: function(state){

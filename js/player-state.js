@@ -45,6 +45,45 @@
     };
   }
 
+  // Keep the final footer action fully visible above any fixed audio player.
+  // Measure the rendered player instead of guessing at mobile/desktop heights.
+  function reserveFooterSpace(player, gap){
+    var footer = document.querySelector('footer');
+    if(!footer || !player) return function(){};
+
+    var previousPadding = footer.style.paddingBottom;
+    var frame = 0;
+    var active = true;
+    gap = isFinite(gap) ? Math.max(0, gap) : 40;
+
+    function apply(){
+      frame = 0;
+      if(!active || !player.isConnected) return;
+      var bottom = parseFloat(w.getComputedStyle(player).bottom);
+      if(!isFinite(bottom) || bottom < 0) bottom = 0;
+      var clearance = Math.ceil(player.offsetHeight + bottom + gap);
+      footer.style.paddingBottom = clearance + 'px';
+    }
+
+    function schedule(){
+      if(!active) return;
+      if(frame) w.cancelAnimationFrame(frame);
+      frame = w.requestAnimationFrame(apply);
+    }
+
+    schedule();
+    w.addEventListener('resize', schedule);
+    if(w.visualViewport) w.visualViewport.addEventListener('resize', schedule);
+
+    return function(){
+      active = false;
+      if(frame) w.cancelAnimationFrame(frame);
+      w.removeEventListener('resize', schedule);
+      if(w.visualViewport) w.visualViewport.removeEventListener('resize', schedule);
+      footer.style.paddingBottom = previousPadding;
+    };
+  }
+
   function create(options){
     options = options || {};
     var audio = options.audio;
@@ -349,6 +388,7 @@
     create: create,
     read: read,
     clear: erase,
+    reserveFooterSpace: reserveFooterSpace,
     storageKey: STORAGE_KEY
   };
 })(window);

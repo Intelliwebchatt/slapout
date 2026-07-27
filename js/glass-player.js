@@ -17,6 +17,7 @@
   var currentLocal = -1;
   var hasTrack = false;
   var paused = true;
+  var releaseFooterSpace = null;
   var PLAY = 'M3 2l11 6-11 6z';
   var PAUSE = 'M3 2h3.5v12H3zM9.5 2H13v12H9.5z';
 
@@ -79,6 +80,9 @@
       deckText.textContent = state.track.title;
       deckProg.innerHTML = 'PROG <b>' + (state.index + 1) + '</b>/' + state.playlistLength;
       deck.classList.add('show');
+      if(!releaseFooterSpace && window.RyderPlayback.reserveFooterSpace){
+        releaseFooterSpace = window.RyderPlayback.reserveFooterSpace(deck, 40);
+      }
       drawState();
     },
     onState: function(state){
