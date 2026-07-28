@@ -25,6 +25,9 @@
 /dirt-road/
   Cache-Control: public, max-age=0, must-revalidate
 
+/press/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /slapout-run/
   Cache-Control: public, max-age=0, must-revalidate
 

@@ -21,14 +21,16 @@
         lines(note.lyric || note.text) + '</div>' + (who ? '<div class="who">' + who + '</div>' : '') + '</article>';
     }
     if(type === 'photo'){
-      var image = note.img ? '<img class="ph" src="' + esc(note.img) + '" alt="' + esc(note.text || '') + '" loading="lazy">' :
+      var image = note.img ? '<img class="ph" src="' + esc(note.img) + '" alt="' + esc(note.alt || note.text || '') + '" loading="lazy">' :
         '<div class="ph ph-missing">no image set</div>';
       return '<article class="card c-photo" data-who="' + who.toLowerCase() + '">' + image +
         (note.text ? '<div class="cap">' + esc(note.text) + '</div>' : '') +
         (who ? '<div class="who">' + who + '</div>' : '') + '</article>';
     }
+    var link = (note.link && note.link.href) ?
+      '<a class="note-link" href="' + esc(note.link.href) + '">' + esc(note.link.label || 'Learn more') + '</a>' : '';
     return '<article class="card c-note" data-who="' + who.toLowerCase() + '"><div class="who">' + who + date +
-      '</div><div class="body">' + esc(note.text) + '</div></article>';
+      '</div><div class="body">' + esc(note.text) + '</div>' + link + '</article>';
   }
 
   function render(){
